@@ -1,22 +1,21 @@
 //
-//  HomeViewController.m
+//  GetBackPassWordViewController.m
 //  caa
 //
 //  Created by xichao on 16/10/28.
 //  Copyright © 2016年 xichao. All rights reserved.
 //
 
-#import "HomeViewController.h"
+#import "GetBackPassWordViewController.h"
 
-@interface HomeViewController ()
+@interface GetBackPassWordViewController ()
 
 @end
 
-@implementation HomeViewController
+@implementation GetBackPassWordViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor  = RGB(0.95, 0.39, 0.21);
     // Do any additional setup after loading the view.
 }
 

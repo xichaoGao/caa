@@ -24,6 +24,14 @@
 		0E38726C1DC328D300698B90 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38726B1DC328D300698B90 /* MineViewController.m */; };
 		0E38726F1DC328E700698B90 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38726E1DC328E700698B90 /* HomeViewController.m */; };
 		0E3872721DC3290500698B90 /* GetDataHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872711DC3290500698B90 /* GetDataHandle.m */; };
+		0E3872761DC32D3700698B90 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872751DC32D3700698B90 /* LoginViewController.m */; };
+		0E3872791DC32D5100698B90 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872781DC32D5100698B90 /* RegisterViewController.m */; };
+		0E38727C1DC32EF500698B90 /* GetBackPassWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38727B1DC32EF500698B90 /* GetBackPassWordViewController.m */; };
+		0E38727F1DC330D300698B90 /* VerLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38727E1DC330D300698B90 /* VerLoginViewController.m */; };
+		0E3872A11DC33E6E00698B90 /* MBProgressHUD+Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38729A1DC33E6E00698B90 /* MBProgressHUD+Package.m */; };
+		0E3872A21DC33E6E00698B90 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38729C1DC33E6E00698B90 /* NSString+Additions.m */; };
+		0E3872A31DC33E6E00698B90 /* UIView+LayerAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38729E1DC33E6E00698B90 /* UIView+LayerAttributes.m */; };
+		0E3872A41DC33E6E00698B90 /* UIViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872A01DC33E6E00698B90 /* UIViewAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5C16BA70F86F124C17075DFC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD18A227BB14C06C5A522C46 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +92,22 @@
 		0E38726E1DC328E700698B90 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = Classes/Home/Controller/HomeViewController.m; sourceTree = "<group>"; };
 		0E3872701DC3290500698B90 /* GetDataHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetDataHandle.h; path = Classes/Service/GetDataHandle.h; sourceTree = "<group>"; };
 		0E3872711DC3290500698B90 /* GetDataHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetDataHandle.m; path = Classes/Service/GetDataHandle.m; sourceTree = "<group>"; };
+		0E3872741DC32D3700698B90 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Classes/Mine/Controller/LoginAndRegister/LoginViewController.h; sourceTree = "<group>"; };
+		0E3872751DC32D3700698B90 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Classes/Mine/Controller/LoginAndRegister/LoginViewController.m; sourceTree = "<group>"; };
+		0E3872771DC32D5100698B90 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterViewController.h; path = Classes/Mine/Controller/LoginAndRegister/RegisterViewController.h; sourceTree = "<group>"; };
+		0E3872781DC32D5100698B90 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterViewController.m; path = Classes/Mine/Controller/LoginAndRegister/RegisterViewController.m; sourceTree = "<group>"; };
+		0E38727A1DC32EF500698B90 /* GetBackPassWordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetBackPassWordViewController.h; path = Classes/Mine/Controller/LoginAndRegister/GetBackPassWordViewController.h; sourceTree = "<group>"; };
+		0E38727B1DC32EF500698B90 /* GetBackPassWordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetBackPassWordViewController.m; path = Classes/Mine/Controller/LoginAndRegister/GetBackPassWordViewController.m; sourceTree = "<group>"; };
+		0E38727D1DC330D300698B90 /* VerLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VerLoginViewController.h; path = Classes/Mine/Controller/LoginAndRegister/VerLoginViewController.h; sourceTree = "<group>"; };
+		0E38727E1DC330D300698B90 /* VerLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VerLoginViewController.m; path = Classes/Mine/Controller/LoginAndRegister/VerLoginViewController.m; sourceTree = "<group>"; };
+		0E3872991DC33E6E00698B90 /* MBProgressHUD+Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MBProgressHUD+Package.h"; path = "Classes/Category/MBProgressHUD+Package.h"; sourceTree = "<group>"; };
+		0E38729A1DC33E6E00698B90 /* MBProgressHUD+Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MBProgressHUD+Package.m"; path = "Classes/Category/MBProgressHUD+Package.m"; sourceTree = "<group>"; };
+		0E38729B1DC33E6E00698B90 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Additions.h"; path = "Classes/Category/NSString+Additions.h"; sourceTree = "<group>"; };
+		0E38729C1DC33E6E00698B90 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Additions.m"; path = "Classes/Category/NSString+Additions.m"; sourceTree = "<group>"; };
+		0E38729D1DC33E6E00698B90 /* UIView+LayerAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+LayerAttributes.h"; path = "Classes/Category/UIView+LayerAttributes.h"; sourceTree = "<group>"; };
+		0E38729E1DC33E6E00698B90 /* UIView+LayerAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+LayerAttributes.m"; path = "Classes/Category/UIView+LayerAttributes.m"; sourceTree = "<group>"; };
+		0E38729F1DC33E6E00698B90 /* UIViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIViewAdditions.h; path = Classes/Category/UIViewAdditions.h; sourceTree = "<group>"; };
+		0E3872A01DC33E6E00698B90 /* UIViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIViewAdditions.m; path = Classes/Category/UIViewAdditions.m; sourceTree = "<group>"; };
 		9A8C8286377303B5211B415D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AD18A227BB14C06C5A522C46 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC1B7E292FDBECF78930FC90 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -259,6 +283,7 @@
 		0E3872241DC310D900698B90 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0E3872801DC33D2700698B90 /* Category */,
 				0E38721E1DC3107600698B90 /* Home */,
 				0E3872231DC310CD00698B90 /* Mine */,
 				0E3872221DC310BD00698B90 /* Service */,
@@ -309,10 +334,41 @@
 		0E38722A1DC3114900698B90 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				0E3872731DC32CF700698B90 /* LoginAndRegister */,
 				0E38726A1DC328D300698B90 /* MineViewController.h */,
 				0E38726B1DC328D300698B90 /* MineViewController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		0E3872731DC32CF700698B90 /* LoginAndRegister */ = {
+			isa = PBXGroup;
+			children = (
+				0E3872741DC32D3700698B90 /* LoginViewController.h */,
+				0E3872751DC32D3700698B90 /* LoginViewController.m */,
+				0E38727D1DC330D300698B90 /* VerLoginViewController.h */,
+				0E38727E1DC330D300698B90 /* VerLoginViewController.m */,
+				0E3872771DC32D5100698B90 /* RegisterViewController.h */,
+				0E3872781DC32D5100698B90 /* RegisterViewController.m */,
+				0E38727A1DC32EF500698B90 /* GetBackPassWordViewController.h */,
+				0E38727B1DC32EF500698B90 /* GetBackPassWordViewController.m */,
+			);
+			name = LoginAndRegister;
+			sourceTree = "<group>";
+		};
+		0E3872801DC33D2700698B90 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				0E3872991DC33E6E00698B90 /* MBProgressHUD+Package.h */,
+				0E38729A1DC33E6E00698B90 /* MBProgressHUD+Package.m */,
+				0E38729B1DC33E6E00698B90 /* NSString+Additions.h */,
+				0E38729C1DC33E6E00698B90 /* NSString+Additions.m */,
+				0E38729D1DC33E6E00698B90 /* UIView+LayerAttributes.h */,
+				0E38729E1DC33E6E00698B90 /* UIView+LayerAttributes.m */,
+				0E38729F1DC33E6E00698B90 /* UIViewAdditions.h */,
+				0E3872A01DC33E6E00698B90 /* UIViewAdditions.m */,
+			);
+			name = Category;
 			sourceTree = "<group>";
 		};
 		32D775FAE73A06FF6B6A76B9 /* Frameworks */ = {
@@ -508,15 +564,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E3872721DC3290500698B90 /* GetDataHandle.m in Sources */,
+				0E3872A11DC33E6E00698B90 /* MBProgressHUD+Package.m in Sources */,
+				0E38727C1DC32EF500698B90 /* GetBackPassWordViewController.m in Sources */,
 				0E38725D1DC328A900698B90 /* EncryptionData.m in Sources */,
+				0E3872761DC32D3700698B90 /* LoginViewController.m in Sources */,
 				0E3872681DC328BC00698B90 /* BaseViewController.m in Sources */,
+				0E3872A31DC33E6E00698B90 /* UIView+LayerAttributes.m in Sources */,
 				0E38726C1DC328D300698B90 /* MineViewController.m in Sources */,
 				0E38725E1DC328A900698B90 /* HYAlertView.m in Sources */,
 				0E3872691DC328BC00698B90 /* TabBarViewController.m in Sources */,
+				0E38727F1DC330D300698B90 /* VerLoginViewController.m in Sources */,
 				0E3872601DC328A900698B90 /* LGReachability.m in Sources */,
+				0E3872A21DC33E6E00698B90 /* NSString+Additions.m in Sources */,
 				0E3871E41DC3033F00698B90 /* AppDelegate.m in Sources */,
 				0E3871E11DC3033F00698B90 /* main.m in Sources */,
 				0E3872671DC328BC00698B90 /* BaseModel.m in Sources */,
+				0E3872A41DC33E6E00698B90 /* UIViewAdditions.m in Sources */,
+				0E3872791DC32D5100698B90 /* RegisterViewController.m in Sources */,
 				0E38725F1DC328A900698B90 /* JSONKit.m in Sources */,
 				0E38726F1DC328E700698B90 /* HomeViewController.m in Sources */,
 			);

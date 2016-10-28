@@ -9,7 +9,7 @@
 #import "UIImageView+WebCache.h"
 #import "MJExtension.h"
 #import "MBProgressHUD.h"
-//#import "MBProgressHUD+Package.h"
+#import "MBProgressHUD+Package.h"
 #import "AppDelegate.h"
 #import "HYAlertView.h"
 #import "MJRefresh.h"
