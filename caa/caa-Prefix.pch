@@ -1,0 +1,32 @@
+//
+//  caa-Prefix.pch
+//  caa
+//
+//  Created by xichao on 16/10/28.
+//  Copyright © 2016年 xichao. All rights reserved.
+//
+
+#ifndef caa_Prefix_pch
+#define caa_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* caa_Prefix_pch */
+#ifdef __OBJC__
+
+#import "CommonDef.h"
+#import "ParamsDef.h"
+#import "Singleton.h"
+//#import "GetDataHandle.h"
+#import "ColorDefines.h"
+
+#import "UIViewAdditions.h"
+
+#ifdef DEBUG
+#define NSLog(...) NSLog(__VA_ARGS__)
+#else
+#define NSLog(...)
+#endif
+
+#endif
