@@ -18,10 +18,10 @@
 #import "CommonDef.h"
 #import "ParamsDef.h"
 #import "Singleton.h"
-//#import "GetDataHandle.h"
-#import "ColorDefines.h"
+#import "GetDataHandle.h"
+#import "ColorDef.h"
 
-#import "UIViewAdditions.h"
+//#import "UIViewAdditions.h"
 
 #ifdef DEBUG
 #define NSLog(...) NSLog(__VA_ARGS__)

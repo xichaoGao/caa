@@ -1,13 +1,13 @@
 //
-//  ColorDef.h
+//  BaseModel.h
 //  caa
 //
 //  Created by xichao on 16/10/28.
 //  Copyright © 2016年 xichao. All rights reserved.
 //
 
-#ifndef ColorDef_h
-#define ColorDef_h
+#import <Foundation/Foundation.h>
 
+@interface BaseModel : NSObject
 
-#endif /* ColorDef_h */
+@end

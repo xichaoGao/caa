@@ -8,6 +8,6 @@
 
 #ifndef ParamsDef_h
 #define ParamsDef_h
-
+#define BASEURL @"http://admin.bjyfkj.net/Doc/"
 
 #endif /* ParamsDef_h */

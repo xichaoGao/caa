@@ -14,6 +14,16 @@
 		0E3871EF1DC3033F00698B90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E3871ED1DC3033F00698B90 /* LaunchScreen.storyboard */; };
 		0E3871FA1DC3033F00698B90 /* caaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3871F91DC3033F00698B90 /* caaTests.m */; };
 		0E3872051DC3033F00698B90 /* caaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872041DC3033F00698B90 /* caaUITests.m */; };
+		0E38725D1DC328A900698B90 /* EncryptionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872561DC328A900698B90 /* EncryptionData.m */; };
+		0E38725E1DC328A900698B90 /* HYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872581DC328A900698B90 /* HYAlertView.m */; };
+		0E38725F1DC328A900698B90 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38725A1DC328A900698B90 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0E3872601DC328A900698B90 /* LGReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38725C1DC328A900698B90 /* LGReachability.m */; };
+		0E3872671DC328BC00698B90 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872621DC328BC00698B90 /* BaseModel.m */; };
+		0E3872681DC328BC00698B90 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872641DC328BC00698B90 /* BaseViewController.m */; };
+		0E3872691DC328BC00698B90 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872661DC328BC00698B90 /* TabBarViewController.m */; };
+		0E38726C1DC328D300698B90 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38726B1DC328D300698B90 /* MineViewController.m */; };
+		0E38726F1DC328E700698B90 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E38726E1DC328E700698B90 /* HomeViewController.m */; };
+		0E3872721DC3290500698B90 /* GetDataHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872711DC3290500698B90 /* GetDataHandle.m */; };
 		5C16BA70F86F124C17075DFC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD18A227BB14C06C5A522C46 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -49,11 +59,31 @@
 		0E3872001DC3033F00698B90 /* caaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = caaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E3872041DC3033F00698B90 /* caaUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = caaUITests.m; sourceTree = "<group>"; };
 		0E3872061DC3033F00698B90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0E38722B1DC3127F00698B90 /* caa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "caa-Prefix.pch"; sourceTree = "<group>"; };
-		0E38722C1DC312DB00698B90 /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
-		0E38722D1DC312F200698B90 /* ParamsDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParamsDef.h; sourceTree = "<group>"; };
-		0E38722E1DC3130900698B90 /* ColorDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorDef.h; sourceTree = "<group>"; };
-		0E38722F1DC3131F00698B90 /* CommonDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonDef.h; sourceTree = "<group>"; };
+		0E3872501DC3247100698B90 /* caa-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "caa-Prefix.pch"; sourceTree = "<group>"; };
+		0E3872511DC3287A00698B90 /* ColorDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorDef.h; path = Classes/Setting/ColorDef.h; sourceTree = "<group>"; };
+		0E3872521DC3287A00698B90 /* CommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonDef.h; path = Classes/Setting/CommonDef.h; sourceTree = "<group>"; };
+		0E3872531DC3287A00698B90 /* ParamsDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParamsDef.h; path = Classes/Setting/ParamsDef.h; sourceTree = "<group>"; };
+		0E3872541DC3287A00698B90 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = Classes/Setting/Singleton.h; sourceTree = "<group>"; };
+		0E3872551DC328A900698B90 /* EncryptionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EncryptionData.h; path = Classes/Thirds/EncryptionData.h; sourceTree = "<group>"; };
+		0E3872561DC328A900698B90 /* EncryptionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EncryptionData.m; path = Classes/Thirds/EncryptionData.m; sourceTree = "<group>"; };
+		0E3872571DC328A900698B90 /* HYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HYAlertView.h; path = Classes/Thirds/HYAlertView.h; sourceTree = "<group>"; };
+		0E3872581DC328A900698B90 /* HYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HYAlertView.m; path = Classes/Thirds/HYAlertView.m; sourceTree = "<group>"; };
+		0E3872591DC328A900698B90 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = Classes/Thirds/JSONKit.h; sourceTree = "<group>"; };
+		0E38725A1DC328A900698B90 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = Classes/Thirds/JSONKit.m; sourceTree = "<group>"; };
+		0E38725B1DC328A900698B90 /* LGReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGReachability.h; path = Classes/Thirds/LGReachability.h; sourceTree = "<group>"; };
+		0E38725C1DC328A900698B90 /* LGReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGReachability.m; path = Classes/Thirds/LGReachability.m; sourceTree = "<group>"; };
+		0E3872611DC328BC00698B90 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseModel.h; path = Classes/BaseCommon/BaseModel.h; sourceTree = "<group>"; };
+		0E3872621DC328BC00698B90 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseModel.m; path = Classes/BaseCommon/BaseModel.m; sourceTree = "<group>"; };
+		0E3872631DC328BC00698B90 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = Classes/BaseCommon/BaseViewController.h; sourceTree = "<group>"; };
+		0E3872641DC328BC00698B90 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = Classes/BaseCommon/BaseViewController.m; sourceTree = "<group>"; };
+		0E3872651DC328BC00698B90 /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabBarViewController.h; path = Classes/BaseCommon/TabBarViewController.h; sourceTree = "<group>"; };
+		0E3872661DC328BC00698B90 /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabBarViewController.m; path = Classes/BaseCommon/TabBarViewController.m; sourceTree = "<group>"; };
+		0E38726A1DC328D300698B90 /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MineViewController.h; path = Classes/Mine/Controller/MineViewController.h; sourceTree = "<group>"; };
+		0E38726B1DC328D300698B90 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MineViewController.m; path = Classes/Mine/Controller/MineViewController.m; sourceTree = "<group>"; };
+		0E38726D1DC328E700698B90 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeViewController.h; path = Classes/Home/Controller/HomeViewController.h; sourceTree = "<group>"; };
+		0E38726E1DC328E700698B90 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = Classes/Home/Controller/HomeViewController.m; sourceTree = "<group>"; };
+		0E3872701DC3290500698B90 /* GetDataHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetDataHandle.h; path = Classes/Service/GetDataHandle.h; sourceTree = "<group>"; };
+		0E3872711DC3290500698B90 /* GetDataHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetDataHandle.m; path = Classes/Service/GetDataHandle.m; sourceTree = "<group>"; };
 		9A8C8286377303B5211B415D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AD18A227BB14C06C5A522C46 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC1B7E292FDBECF78930FC90 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -134,8 +164,8 @@
 		0E3871DF1DC3033F00698B90 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0E3872501DC3247100698B90 /* caa-Prefix.pch */,
 				0E3871E01DC3033F00698B90 /* main.m */,
-				0E38722B1DC3127F00698B90 /* caa-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -171,6 +201,12 @@
 		0E38721F1DC3108E00698B90 /* BaseCommon */ = {
 			isa = PBXGroup;
 			children = (
+				0E3872611DC328BC00698B90 /* BaseModel.h */,
+				0E3872621DC328BC00698B90 /* BaseModel.m */,
+				0E3872631DC328BC00698B90 /* BaseViewController.h */,
+				0E3872641DC328BC00698B90 /* BaseViewController.m */,
+				0E3872651DC328BC00698B90 /* TabBarViewController.h */,
+				0E3872661DC328BC00698B90 /* TabBarViewController.m */,
 			);
 			name = BaseCommon;
 			sourceTree = "<group>";
@@ -178,6 +214,14 @@
 		0E3872201DC310A700698B90 /* Thirds */ = {
 			isa = PBXGroup;
 			children = (
+				0E3872551DC328A900698B90 /* EncryptionData.h */,
+				0E3872561DC328A900698B90 /* EncryptionData.m */,
+				0E3872571DC328A900698B90 /* HYAlertView.h */,
+				0E3872581DC328A900698B90 /* HYAlertView.m */,
+				0E3872591DC328A900698B90 /* JSONKit.h */,
+				0E38725A1DC328A900698B90 /* JSONKit.m */,
+				0E38725B1DC328A900698B90 /* LGReachability.h */,
+				0E38725C1DC328A900698B90 /* LGReachability.m */,
 			);
 			name = Thirds;
 			sourceTree = "<group>";
@@ -185,10 +229,10 @@
 		0E3872211DC310B300698B90 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				0E38722C1DC312DB00698B90 /* Singleton.h */,
-				0E38722D1DC312F200698B90 /* ParamsDef.h */,
-				0E38722E1DC3130900698B90 /* ColorDef.h */,
-				0E38722F1DC3131F00698B90 /* CommonDef.h */,
+				0E3872511DC3287A00698B90 /* ColorDef.h */,
+				0E3872521DC3287A00698B90 /* CommonDef.h */,
+				0E3872531DC3287A00698B90 /* ParamsDef.h */,
+				0E3872541DC3287A00698B90 /* Singleton.h */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -196,6 +240,8 @@
 		0E3872221DC310BD00698B90 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				0E3872701DC3290500698B90 /* GetDataHandle.h */,
+				0E3872711DC3290500698B90 /* GetDataHandle.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -240,6 +286,8 @@
 		0E3872271DC3112400698B90 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				0E38726D1DC328E700698B90 /* HomeViewController.h */,
+				0E38726E1DC328E700698B90 /* HomeViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -261,6 +309,8 @@
 		0E38722A1DC3114900698B90 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				0E38726A1DC328D300698B90 /* MineViewController.h */,
+				0E38726B1DC328D300698B90 /* MineViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -457,8 +507,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E3872721DC3290500698B90 /* GetDataHandle.m in Sources */,
+				0E38725D1DC328A900698B90 /* EncryptionData.m in Sources */,
+				0E3872681DC328BC00698B90 /* BaseViewController.m in Sources */,
+				0E38726C1DC328D300698B90 /* MineViewController.m in Sources */,
+				0E38725E1DC328A900698B90 /* HYAlertView.m in Sources */,
+				0E3872691DC328BC00698B90 /* TabBarViewController.m in Sources */,
+				0E3872601DC328A900698B90 /* LGReachability.m in Sources */,
 				0E3871E41DC3033F00698B90 /* AppDelegate.m in Sources */,
 				0E3871E11DC3033F00698B90 /* main.m in Sources */,
+				0E3872671DC328BC00698B90 /* BaseModel.m in Sources */,
+				0E38725F1DC328A900698B90 /* JSONKit.m in Sources */,
+				0E38726F1DC328E700698B90 /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,6 +603,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -589,6 +650,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -608,6 +670,8 @@
 			baseConfigurationReference = CC1B7E292FDBECF78930FC90 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/caa/caa-Prefix.pch";
 				INFOPLIST_FILE = caa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.bjyfkj.caa;
@@ -620,6 +684,8 @@
 			baseConfigurationReference = 9A8C8286377303B5211B415D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/caa/caa-Prefix.pch";
 				INFOPLIST_FILE = caa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.bjyfkj.caa;
