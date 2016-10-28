@@ -9,5 +9,30 @@
 #import "BaseViewController.h"
 
 @interface RegisterViewController : BaseViewController
+@property(nonatomic,strong)UIView *phoneView;
+@property(nonatomic,strong)UITextField *phoneText;
+@property(nonatomic,strong)UIView *phoneLine;
+@property(nonatomic,strong)UIView *verificationView;
+@property(nonatomic,strong)UITextField *verificationText;
+@property(nonatomic,strong)UIView *verificationLine;
+@property(nonatomic,strong)UIButton *registerBtn;
+@property(nonatomic,strong)UIButton *verificationBtn;
+@property(nonatomic,strong)UIView *passWordView;
+@property(nonatomic,strong)UITextField *passWordText;
+@property(nonatomic,strong)UIView *passWordLine;
+@property(nonatomic,strong)UIView *againPassWordView;
+@property(nonatomic,strong)UITextField *againPassWordText;
+@property(nonatomic,strong)UIView *againPassWordLine;
+
+
+/**
+ *  倒计时按钮
+ */
+#pragma mark - 重新发送验证码;
+@property (nonatomic, retain) UILabel *timeLabel;
+@property (nonatomic, retain) NSTimer *timer;
+@property (nonatomic, assign) NSInteger showTime;
+
+- (void)controlTheTime;
 
 @end

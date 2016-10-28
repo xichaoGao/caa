@@ -16,6 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden = NO;
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = @"找回密码";
     // Do any additional setup after loading the view.
 }
 

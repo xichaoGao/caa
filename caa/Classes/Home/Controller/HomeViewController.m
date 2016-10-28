@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.hidden = YES;
     self.view.backgroundColor  = RGB(0.95, 0.39, 0.21);
     // Do any additional setup after loading the view.
 }

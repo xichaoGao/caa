@@ -21,16 +21,22 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.view.backgroundColor = kBackgroundColor;
+    
     
     
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
-       NSForegroundColorAttributeName:[UIColor blackColor]}];
+       NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.edgesForExtendedLayout=UIRectEdgeNone;
-    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.backgroundColor = RGB(0.95, 0.39, 0.21);
     
+//    self.navigationController.navigationBar.barTintColor = RGB(0.95, 0.39, 0.21);
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, kScreenWidth, 64)];
+        //设置
+        statusBarView.backgroundColor = RGB(0.95, 0.39, 0.21);
+    // 添加到 navigationBar 上
+    [self.navigationController.navigationBar addSubview:statusBarView];
     self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.leftBtn.frame = CGRectMake(0, 0, 44, 44);
     self.leftBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 10);

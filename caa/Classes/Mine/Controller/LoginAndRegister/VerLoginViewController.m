@@ -33,57 +33,60 @@
 }
 -(void)CreateUI{
     //手机号
-    self.phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, 120, kScreenWidth - 2*40, 40)];
-    [self.view addSubview:self.phoneView];
+    _phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, 120, kScreenWidth - 2*40, 40)];
+    [self.view addSubview:_phoneView];
     
-    self.phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,self.phoneView.width , self.phoneView.height-1)];
-    self.phoneText.placeholder = @"请输入您的手机号码";
-    self.phoneText.textColor = UIColorFromHex(0x333333);
-    [self.phoneView addSubview:self.phoneText];
+    _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
+    _phoneText.placeholder = @"请输入您的手机号码";
+    _phoneText.delegate = self;
+    _phoneText.keyboardType = UIKeyboardTypeNumberPad;
+    _phoneText.textColor = UIColorFromHex(0x333333);
+    [_phoneView addSubview:_phoneText];
     
-    self.phoneLine = [[UIView alloc]initWithFrame:CGRectMake(0, self.phoneText.bottom, self.phoneView.width,1 )];
-    self.phoneLine.backgroundColor = RGB(0.95, 0.39, 0.21);
-    [self.phoneView addSubview:self.phoneLine];
+    _phoneLine = [[UIView alloc]initWithFrame:CGRectMake(0, _phoneText.bottom, _phoneView.width,1 )];
+    _phoneLine.backgroundColor = RGB(0.95, 0.39, 0.21);
+    [_phoneView addSubview:_phoneLine];
     //验证码
-    self.verificationView = [[UIView alloc]initWithFrame:CGRectMake(40, self.phoneView.bottom + 40 , kScreenWidth - 2*40, 40)];
-    [self.view addSubview:self.verificationView];
+    _verificationView = [[UIView alloc]initWithFrame:CGRectMake(40, _phoneView.bottom + 40 , kScreenWidth - 2*40, 40)];
+    [self.view addSubview:_verificationView];
     
-    self.verificationText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,self.verificationView.width , self.verificationView.height-1)];
-    self.verificationText.placeholder = @"请输入您的短信验证码";
-    self.verificationText.textColor = UIColorFromHex(0x333333);
-    [self.verificationView addSubview:self.verificationText];
+    _verificationText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_verificationView.width , self.verificationView.height-1)];
+    _verificationText.placeholder = @"请输入您的短信验证码";
+    _verificationText.delegate = self;
+    _verificationText.textColor = UIColorFromHex(0x333333);
+    [_verificationView addSubview:_verificationText];
     
-    self.verificationBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.verificationBtn.frame = CGRectMake(kScreenWidth-180, 0, 110, self.verificationText.height);
-    [self.verificationBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-    self.verificationBtn.titleLabel.font = [UIFont systemFontOfSize:20];
-    [self.verificationBtn  setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
-    [self.verificationBtn addTarget:self action:@selector(GetVerificationClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.verificationView addSubview:self.verificationBtn];
+    _verificationBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _verificationBtn.frame = CGRectMake(kScreenWidth-180, 0, 110, _verificationText.height);
+    [_verificationBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    _verificationBtn.titleLabel.font = [UIFont systemFontOfSize:20];
+    [_verificationBtn  setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
+    [_verificationBtn addTarget:self action:@selector(GetVerificationClick) forControlEvents:UIControlEventTouchUpInside];
+    [_verificationView addSubview:_verificationBtn];
     
-    self.verificationLine = [[UIView alloc]initWithFrame:CGRectMake(0, self.verificationText.bottom, self.verificationView.width,1 )];
-    self.verificationLine.backgroundColor = RGB(0.95, 0.39, 0.21);
-    [self.verificationView addSubview:self.verificationLine];
+    _verificationLine = [[UIView alloc]initWithFrame:CGRectMake(0, _verificationText.bottom, _verificationView.width,1 )];
+    _verificationLine.backgroundColor = RGB(0.95, 0.39, 0.21);
+    [_verificationView addSubview:_verificationLine];
     
     //登录
-    self.loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.loginBtn.frame = CGRectMake(40, self.verificationView.bottom + 110, kScreenWidth - 80, 60);
-    [self.loginBtn setTitle:@"登录" forState: UIControlStateNormal];
-    [self.loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.loginBtn.backgroundColor = RGB(0.95, 0.39, 0.21);
-    self.loginBtn.titleLabel.font = [UIFont systemFontOfSize:20];
-    self.loginBtn.layer.cornerRadius = 30;
-    [self.loginBtn addTarget:self action:@selector(LoginClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.loginBtn];
+    _loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _loginBtn.frame = CGRectMake(40,_verificationView.bottom + 110, kScreenWidth - 80, 60);
+    [_loginBtn setTitle:@"登录" forState: UIControlStateNormal];
+    [_loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _loginBtn.backgroundColor = RGB(0.95, 0.39, 0.21);
+    _loginBtn.titleLabel.font = [UIFont systemFontOfSize:20];
+    _loginBtn.layer.cornerRadius = 30;
+    [_loginBtn addTarget:self action:@selector(LoginClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_loginBtn];
 
 }
 -(void)GetVerificationClick{
     [self resign];
-    if ([self.phoneText.text isEqualToString:@""]) {
+    if ([_phoneText.text isEqualToString:@""]) {
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
-    else if (self.phoneText.text.length <11){
+    else if (_phoneText.text.length <11){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"您输入的不是手机号" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }else{
@@ -112,53 +115,56 @@
 }
 -(void)LoginClick{
     [self resign];
-    if ([self.phoneText.text isEqualToString:@""]) {
+    if ([_phoneText.text isEqualToString:@""]) {
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
-    }else if ([self.verificationText.text isEqualToString:@""]){
+    }else if ([_verificationText.text isEqualToString:@""]){
         
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
     else{
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        self.pramerDic = [NSDictionary dictionary];
-//        _pramerDic = @{@"Mobile":self.phoneText.text,@"Password":_secreatText.text,@"LoginSourceID":@"2",@"PushToken":[[NotificationConfigure sharedNotificationConfigure] getDeviceToken]?[[NotificationConfigure sharedNotificationConfigure] getDeviceToken ]:@""};
-        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-            hud.hidden = YES;
-            [self resign];
-            NSLog(@"loginResult==%@",result);
-            NSString *status = [result objectForKey:@"status"];
-            if ([status isEqualToString:@"success"]) {
-                
-                NSString *passPortId = [[result objectForKey:@"data"]objectForKey:@"Mobile"];
-                NSString *memberStatusID = [[result objectForKey:@"data"]objectForKey:@"MemberStatusID"];
-                NSString *memberID = [[result objectForKey:@"data"]objectForKey:@"MemberID"];
-                //给名字加密
-                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"passPortId":passPortId,@"memberStatusID":memberStatusID,@"memberID":memberID}];
-                EncryptionData *encryptionData = [[EncryptionData alloc] init];
-                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
-                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
-//                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
-               
-                NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
-//                [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
-               
-                [defult synchronize];
-                TabBarViewController * tbVC = [[TabBarViewController alloc]init];
-                [self.navigationController pushViewController:tbVC animated:YES];
-                
-//                if ([self.delegate respondsToSelector:@selector(loginSuccessActionInfo)]) {
-//                    [self.delegate loginSuccessActionInfo];
-//                }
-                
-            }else{
-                NSString *mess = [result objectForKey:@"message"];
-                //                    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
-                //                    [alert showInView:self.view completion:nil];
-                [self errorMessages:mess];
-            }
-        }];
+        
+        TabBarViewController * tbVC = [[TabBarViewController alloc]init];
+        [self.navigationController pushViewController:tbVC animated:YES];
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        self.pramerDic = [NSDictionary dictionary];
+////        _pramerDic = @{@"Mobile":self.phoneText.text,@"Password":_secreatText.text,@"LoginSourceID":@"2",@"PushToken":[[NotificationConfigure sharedNotificationConfigure] getDeviceToken]?[[NotificationConfigure sharedNotificationConfigure] getDeviceToken ]:@""};
+//        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+//            hud.hidden = YES;
+//            [self resign];
+//            NSLog(@"loginResult==%@",result);
+//            NSString *status = [result objectForKey:@"status"];
+//            if ([status isEqualToString:@"success"]) {
+//                
+//                NSString *passPortId = [[result objectForKey:@"data"]objectForKey:@"Mobile"];
+//                NSString *memberStatusID = [[result objectForKey:@"data"]objectForKey:@"MemberStatusID"];
+//                NSString *memberID = [[result objectForKey:@"data"]objectForKey:@"MemberID"];
+//                //给名字加密
+//                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"passPortId":passPortId,@"memberStatusID":memberStatusID,@"memberID":memberID}];
+//                EncryptionData *encryptionData = [[EncryptionData alloc] init];
+//                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
+//                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
+////                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
+//               
+//                NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
+////                [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
+//               
+//                [defult synchronize];
+//                TabBarViewController * tbVC = [[TabBarViewController alloc]init];
+//                [self.navigationController pushViewController:tbVC animated:YES];
+//                
+////                if ([self.delegate respondsToSelector:@selector(loginSuccessActionInfo)]) {
+////                    [self.delegate loginSuccessActionInfo];
+////                }
+//                
+//            }else{
+//                NSString *mess = [result objectForKey:@"message"];
+//                //                    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
+//                //                    [alert showInView:self.view completion:nil];
+//                [self errorMessages:mess];
+//            }
+//        }];
     }
 
     
@@ -169,8 +175,8 @@
     self.showTime = 60;
     NSString *time = [NSString stringWithFormat:@"%ld",(long)self.showTime];
     _verificationBtn.backgroundColor =  RGB(153, 153, 153);
-    [_verificationBtn setTitle:[time stringByAppendingString:@"S"] forState:UIControlStateNormal];
-    [_verificationBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
+    [_verificationBtn setTitle:[time stringByAppendingString:@"s后重发"] forState:UIControlStateNormal];
+    [_verificationBtn setTitleColor:RGB(0.54, 0.54, 0.54) forState:UIControlStateNormal];
     [_verificationBtn.titleLabel setFont:[UIFont systemFontOfSize:20]];
 }
 #pragma mark-- 倒计时关联方法
@@ -183,20 +189,19 @@
 - (void)controlTheTimeFnid:(NSTimer *)time
 {
     self.showTime --;
-    if (self.showTime  == 0) {
-        [self.timer invalidate];
+    if (_showTime  == 0) {
+        [_timer invalidate];
         [_verificationBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         _verificationBtn.userInteractionEnabled = YES;
         [_verificationBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
         [_verificationBtn setBackgroundColor:[UIColor clearColor]];
         [_verificationBtn.titleLabel setFont:[UIFont systemFontOfSize:20]];
     }
-    if (self.showTime > 0) {
-        NSString *time = [NSString stringWithFormat:@"%ld",(long)self.showTime];
-        _verificationBtn.backgroundColor =  RGB(153, 153, 153);
+    if (_showTime > 0) {
+        NSString *time = [NSString stringWithFormat:@"%ld",(long)_showTime];
         _verificationBtn.userInteractionEnabled = NO;
-        [_verificationBtn setTitle:[time stringByAppendingString:@"S"] forState:UIControlStateNormal];
-        [_verificationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_verificationBtn setTitle:[time stringByAppendingString:@"s后重发"] forState:UIControlStateNormal];
+        [_verificationBtn setTitleColor:RGB(0.54, 0.54, 0.54) forState:UIControlStateNormal];
         [_verificationBtn.titleLabel setFont:[UIFont systemFontOfSize:20]];
     }
 }

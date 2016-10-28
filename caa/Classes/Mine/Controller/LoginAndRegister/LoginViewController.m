@@ -12,6 +12,7 @@
 #import "GetBackPassWordViewController.h"
 #import "TabBarViewController.h"
 @interface LoginViewController ()<UITextFieldDelegate>
+@property(nonatomic,strong)NSDictionary *pramerDic;
 
 @end
 
@@ -29,99 +30,168 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 20)];
+    //设置
+    statusBarView.backgroundColor = RGB(0.95, 0.39, 0.21);
+    // 添加到 navigationBar 上
+    [self.view addSubview:statusBarView];
     [self createUI];
     // Do any additional setup after loading the view.
 }
 -(void)createUI{
     //头像
-    self.headImage = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth - 100)/2, 100, 100, 100)];
-    self.headImage.layer.masksToBounds = YES;
-    self.headImage.layer.cornerRadius = 10;
-    self.headImage.backgroundColor = RGB(0.95, 0.39, 0.21);
-    [self.view addSubview:self.headImage];
+    _headImage = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth - 100)/2, 100, 100, 100)];
+    _headImage.layer.masksToBounds = YES;
+    _headImage.layer.cornerRadius = 10;
+    _headImage.backgroundColor = RGB(0.95, 0.39, 0.21);
+    [self.view addSubview:_headImage];
     
     //手机号
-    self.phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, self.headImage.bottom + 90, kScreenWidth - 2*40, 40)];
-    [self.view addSubview:self.phoneView];
+    _phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, _headImage.bottom + 90, kScreenWidth - 2*40, 40)];
+    [self.view addSubview:_phoneView];
     
-    self.phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,self.phoneView.width , self.phoneView.height-1)];
-    self.phoneText.placeholder = @"请输入您的手机号码";
-    self.phoneText.textColor = UIColorFromHex(0x333333);
-    [self.phoneView addSubview:self.phoneText];
+    _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
+    _phoneText.placeholder = @"请输入您的手机号码";
+    _phoneText.delegate = self;
+    _phoneText.keyboardType = UIKeyboardTypeNumberPad;
+    _phoneText.textColor = UIColorFromHex(0x333333);
+    [self.phoneView addSubview:_phoneText];
     
-    self.phoneLine = [[UIView alloc]initWithFrame:CGRectMake(0, self.phoneText.bottom, self.phoneView.width,1 )];
-    self.phoneLine.backgroundColor = RGB(0.95, 0.39, 0.21);
-    [self.phoneView addSubview:self.phoneLine];
+    _phoneLine = [[UIView alloc]initWithFrame:CGRectMake(0, _phoneText.bottom, _phoneView.width,1 )];
+    _phoneLine.backgroundColor = RGB(0.95, 0.39, 0.21);
+    [self.phoneView addSubview:_phoneLine];
     //密码
-    self.passWordView = [[UIView alloc]initWithFrame:CGRectMake(40, self.phoneView.bottom + 40 , kScreenWidth - 2*40, 40)];
-    [self.view addSubview:self.passWordView];
+    _passWordView = [[UIView alloc]initWithFrame:CGRectMake(40, _phoneView.bottom + 40 , kScreenWidth - 2*40, 40)];
+    [self.view addSubview:_passWordView];
     
-    self.passWordText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,self.passWordView.width , self.passWordView.height-1)];
-    self.passWordText.placeholder = @"请输入您的密码";
-    self.passWordText.secureTextEntry = YES;
-    self.passWordText.textColor = UIColorFromHex(0x333333);
-    [self.passWordView addSubview:self.passWordText];
+    _passWordText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_passWordView.width , _passWordView.height-1)];
+    _passWordText.placeholder = @"请输入您的密码";
+    _passWordText.secureTextEntry = YES;
+    _passWordText.delegate = self;
+    _passWordText.textColor = UIColorFromHex(0x333333);
+    [self.passWordView addSubview:_passWordText];
     
-    self.passWordLine = [[UIView alloc]initWithFrame:CGRectMake(0, self.passWordText.bottom, self.passWordView.width,1 )];
-    self.passWordLine.backgroundColor = RGB(0.95, 0.39, 0.21);
-    [self.passWordView addSubview:self.passWordLine];
+    _passWordLine = [[UIView alloc]initWithFrame:CGRectMake(0, _passWordText.bottom,_passWordView.width,1 )];
+    _passWordLine.backgroundColor = RGB(0.95, 0.39, 0.21);
+    [_passWordView addSubview:_passWordLine];
     //忘记密码
-    self.forgetPassWordBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.forgetPassWordBtn.frame = CGRectMake(35, self.passWordView.bottom + 10, 70, 30);
-    [self.forgetPassWordBtn setTitle:@"忘记密码" forState: UIControlStateNormal];
-    [self.forgetPassWordBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
-    self.forgetPassWordBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [self.forgetPassWordBtn addTarget:self action:@selector(ForgetPassWordClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.forgetPassWordBtn];
+    _forgetPassWordBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _forgetPassWordBtn.frame = CGRectMake(35, _passWordView.bottom + 10, 70, 30);
+    [_forgetPassWordBtn setTitle:@"忘记密码" forState: UIControlStateNormal];
+    [_forgetPassWordBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
+    _forgetPassWordBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_forgetPassWordBtn addTarget:self action:@selector(ForgetPassWordClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_forgetPassWordBtn];
     
     //验证码登录
-    self.verificationLoginBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _verificationLoginBtn = [UIButton buttonWithType:UIButtonTypeSystem];
                                  
-    self.verificationLoginBtn.frame = CGRectMake(kScreenWidth - 110, self.passWordView.bottom + 10, 80, 30);
-    [self.verificationLoginBtn setTitle:@"验证码登录" forState: UIControlStateNormal];
-    [self.verificationLoginBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
-    self.verificationLoginBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [self.verificationLoginBtn addTarget:self action:@selector(VerificationLoginClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.verificationLoginBtn];
+    _verificationLoginBtn.frame = CGRectMake(kScreenWidth - 110, _passWordView.bottom + 10, 80, 30);
+    [_verificationLoginBtn setTitle:@"验证码登录" forState: UIControlStateNormal];
+    [_verificationLoginBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
+    _verificationLoginBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_verificationLoginBtn addTarget:self action:@selector(VerificationLoginClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_verificationLoginBtn];
     //登录
-    self.loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.loginBtn.frame = CGRectMake(40, self.passWordView.bottom + 90, kScreenWidth - 80, 40);
-    [self.loginBtn setTitle:@"登录" forState: UIControlStateNormal];
-    [self.loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.loginBtn.backgroundColor = RGB(0.95, 0.39, 0.21);
-    self.loginBtn.titleLabel.font = [UIFont systemFontOfSize:20];
-    self.loginBtn.layer.cornerRadius = 20;
-    [self.loginBtn addTarget:self action:@selector(LoginClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.loginBtn];
+    _loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _loginBtn.frame = CGRectMake(40, _passWordView.bottom + 90, kScreenWidth - 80, 40);
+    [_loginBtn setTitle:@"登录" forState: UIControlStateNormal];
+    [_loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _loginBtn.backgroundColor = RGB(0.95, 0.39, 0.21);
+    _loginBtn.titleLabel.font = [UIFont systemFontOfSize:20];
+    _loginBtn.layer.cornerRadius = 20;
+    [_loginBtn addTarget:self action:@selector(LoginClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_loginBtn];
     //注册
     
-    self.registerBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.registerBtn.frame = CGRectMake((kScreenWidth - 120)/2, self.loginBtn.bottom + 15, 120, 30);
-    [self.registerBtn setTitle:@"没有账号？去注册" forState: UIControlStateNormal];
-    [self.registerBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
-    self.registerBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [self.registerBtn addTarget:self action:@selector(RegisterClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.registerBtn];
+    _registerBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _registerBtn.frame = CGRectMake((kScreenWidth - 120)/2, _loginBtn.bottom + 15, 120, 30);
+    [_registerBtn setTitle:@"没有账号？去注册" forState: UIControlStateNormal];
+    [_registerBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
+    _registerBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_registerBtn addTarget:self action:@selector(RegisterClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_registerBtn];
 
     
 }
 
 -(void)ForgetPassWordClick{
+    [self resign];
     GetBackPassWordViewController * gbpwVC = [[GetBackPassWordViewController alloc]init];
     [self.navigationController pushViewController:gbpwVC animated:YES];
 }
 -(void)VerificationLoginClick{
-    NSLog(@"dsfsd");
+    [self resign];
     VerLoginViewController *vlVC = [[VerLoginViewController alloc]init];
     [self.navigationController pushViewController:vlVC animated:YES];
 }
 -(void)LoginClick{
-    TabBarViewController * tbVC = [[TabBarViewController alloc]init];
-    [self.navigationController pushViewController:tbVC animated:YES];
+    [self resign];
+    if ([_phoneText.text isEqualToString:@""]) {
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }else if ([_passWordText.text isEqualToString:@""]){
+        
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else{
+        TabBarViewController * tbVC = [[TabBarViewController alloc]init];
+        [self.navigationController pushViewController:tbVC animated:YES];
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        _pramerDic = [NSDictionary dictionary];
+//        //        _pramerDic = @{@"Mobile":self.phoneText.text,@"Password":_secreatText.text,@"LoginSourceID":@"2",@"PushToken":[[NotificationConfigure sharedNotificationConfigure] getDeviceToken]?[[NotificationConfigure sharedNotificationConfigure] getDeviceToken ]:@""};
+//        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+//            hud.hidden = YES;
+//            NSLog(@"loginResult==%@",result);
+//            NSString *status = [result objectForKey:@"status"];
+//            if ([status isEqualToString:@"success"]) {
+//                
+//                NSString *passPortId = [[result objectForKey:@"data"]objectForKey:@"Mobile"];
+//                NSString *memberStatusID = [[result objectForKey:@"data"]objectForKey:@"MemberStatusID"];
+//                NSString *memberID = [[result objectForKey:@"data"]objectForKey:@"MemberID"];
+//                //给名字加密
+//                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"passPortId":passPortId,@"memberStatusID":memberStatusID,@"memberID":memberID}];
+//                EncryptionData *encryptionData = [[EncryptionData alloc] init];
+//                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
+//                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
+//                //                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
+//                
+//                NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
+//                //                [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
+//                
+//                [defult synchronize];
+//                TabBarViewController * tbVC = [[TabBarViewController alloc]init];
+//                [self.navigationController pushViewController:tbVC animated:YES];
+//                
+//                //                if ([self.delegate respondsToSelector:@selector(loginSuccessActionInfo)]) {
+//                //                    [self.delegate loginSuccessActionInfo];
+//                //                }
+//                
+//            }else{
+//                NSString *mess = [result objectForKey:@"message"];
+//                //                    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
+//                //                    [alert showInView:self.view completion:nil];
+//                [self errorMessages:mess];
+//            }
+//        }];
+    }
+    
+    
 }
 -(void)RegisterClick{
+    [self resign];
     RegisterViewController * rVC  = [[RegisterViewController alloc]init];
     [self.navigationController pushViewController:rVC animated:YES];
+}
+-(void)resign{
+    [_phoneText resignFirstResponder];
+    [_passWordText resignFirstResponder];
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [_phoneText resignFirstResponder];
+    [_passWordText resignFirstResponder];
+    return YES;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
