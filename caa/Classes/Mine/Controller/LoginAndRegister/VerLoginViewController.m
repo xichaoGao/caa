@@ -102,11 +102,12 @@
             
             int  Status = (int)[result objectForKey:@"status"];
             
+            
             if ( Status == 1 ) {
-                [self againCrateBtn];
                 [self controlTheTime];
                 
-            }else{
+            }
+            else{
                 NSString *mess = [result objectForKey:@"message"];
                 [self errorMessages:mess];
                 

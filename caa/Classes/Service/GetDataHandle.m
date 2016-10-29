@@ -28,6 +28,7 @@ singleton_implementation(GetDataHandle);
     NSString * md5Str = [md5Items[0] stringByAppendingString:[self md5:@"bjyfkj4006010136"]];
     NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
     NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"sign":sign}];
+    NSLog(@"dsfl%@",sign);
       if (requestDic != nil) {
         [paramer addEntriesFromDictionary:requestDic];
     }
@@ -38,7 +39,7 @@ singleton_implementation(GetDataHandle);
     
     NSLog(@"参数 --  %@   url -- %@ ",paramer,str);
     if (![subUrlString isEqualToString:@"User/checkCode"]){
-    [managers POST:str parameters:requestDic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [managers POST:str parameters:paramer progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *dic = [resultString mj_JSONObject];
         block(dic,nil);
@@ -50,7 +51,7 @@ singleton_implementation(GetDataHandle);
     }];
     }
         else {
-            [managers GET:str parameters:requestDic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [managers GET:str parameters:paramer progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
                 EncryptionData *encryptionData = [[EncryptionData alloc] init];
                 NSString *decodeString = [encryptionData decryption:resultString key:messageStr];
