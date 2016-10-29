@@ -8,6 +8,10 @@
 
 #ifndef ParamsDef_h
 #define ParamsDef_h
-#define BASEURL @"http://admin.bjyfkj.net/Doc/"
-
+#define BASEURL @"http://admin.bjyfkj.net/api.php/"
+#define kRegister @"User/addUserByPhone"//注册
+#define kLogin @"User/userLogin"//登录
+#define kSendVefification @"User/sendCode"//发送验证码
+#define kCheckVerification @"User/checkCode"//检测短信验证码
+#define kSetNewPassWord @"User/resetPWD"//设置新的密码
 #endif /* ParamsDef_h */

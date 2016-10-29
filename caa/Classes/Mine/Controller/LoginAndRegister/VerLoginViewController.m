@@ -33,11 +33,11 @@
 }
 -(void)CreateUI{
     //手机号
-    _phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, 120, kScreenWidth - 2*40, 40)];
+    _phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, 120*WidthRate, kScreenWidth - 2*40, 40)];
     [self.view addSubview:_phoneView];
     
     _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
-    _phoneText.placeholder = @"请输入您的手机号码";
+    _phoneText.placeholder = @"手机号码";
     _phoneText.delegate = self;
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
     _phoneText.textColor = UIColorFromHex(0x333333);
@@ -51,7 +51,7 @@
     [self.view addSubview:_verificationView];
     
     _verificationText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_verificationView.width , self.verificationView.height-1)];
-    _verificationText.placeholder = @"请输入您的短信验证码";
+    _verificationText.placeholder = @"短信验证码";
     _verificationText.delegate = self;
     _verificationText.textColor = UIColorFromHex(0x333333);
     [_verificationView addSubview:_verificationText];
@@ -70,7 +70,7 @@
     
     //登录
     _loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _loginBtn.frame = CGRectMake(40,_verificationView.bottom + 110, kScreenWidth - 80, 60);
+    _loginBtn.frame = CGRectMake(40,_verificationView.bottom + 110*WidthRate, kScreenWidth - 80, 60);
     [_loginBtn setTitle:@"登录" forState: UIControlStateNormal];
     [_loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _loginBtn.backgroundColor = RGB(0.95, 0.39, 0.21);

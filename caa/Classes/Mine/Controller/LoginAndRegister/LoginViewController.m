@@ -20,6 +20,11 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 20)];
+    //设置
+    statusBarView.backgroundColor = RGB(0.95, 0.39, 0.21);
+    // 添加到 view 上
+    [self.view addSubview:statusBarView];
     self.view.backgroundColor = [UIColor whiteColor];
     
 }
@@ -30,28 +35,23 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 20)];
-    //设置
-    statusBarView.backgroundColor = RGB(0.95, 0.39, 0.21);
-    // 添加到 navigationBar 上
-    [self.view addSubview:statusBarView];
-    [self createUI];
+        [self createUI];
     // Do any additional setup after loading the view.
 }
 -(void)createUI{
     //头像
-    _headImage = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth - 100)/2, 100, 100, 100)];
+    _headImage = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth - 100)/2, 100 * WidthRate, 100, 100)];
     _headImage.layer.masksToBounds = YES;
     _headImage.layer.cornerRadius = 10;
     _headImage.backgroundColor = RGB(0.95, 0.39, 0.21);
     [self.view addSubview:_headImage];
     
     //手机号
-    _phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, _headImage.bottom + 90, kScreenWidth - 2*40, 40)];
+    _phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, _headImage.bottom + 90* WidthRate, kScreenWidth - 2*40, 40)];
     [self.view addSubview:_phoneView];
     
     _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
-    _phoneText.placeholder = @"请输入您的手机号码";
+    _phoneText.placeholder = @"手机号码";
     _phoneText.delegate = self;
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
     _phoneText.textColor = UIColorFromHex(0x333333);
@@ -65,7 +65,7 @@
     [self.view addSubview:_passWordView];
     
     _passWordText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_passWordView.width , _passWordView.height-1)];
-    _passWordText.placeholder = @"请输入您的密码";
+    _passWordText.placeholder = @"密码";
     _passWordText.secureTextEntry = YES;
     _passWordText.delegate = self;
     _passWordText.textColor = UIColorFromHex(0x333333);
@@ -76,7 +76,7 @@
     [_passWordView addSubview:_passWordLine];
     //忘记密码
     _forgetPassWordBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    _forgetPassWordBtn.frame = CGRectMake(35, _passWordView.bottom + 10, 70, 30);
+    _forgetPassWordBtn.frame = CGRectMake(35, _passWordView.bottom + 15*WidthRate, 70, 30);
     [_forgetPassWordBtn setTitle:@"忘记密码" forState: UIControlStateNormal];
     [_forgetPassWordBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
     _forgetPassWordBtn.titleLabel.font = [UIFont systemFontOfSize:13];
@@ -86,7 +86,7 @@
     //验证码登录
     _verificationLoginBtn = [UIButton buttonWithType:UIButtonTypeSystem];
                                  
-    _verificationLoginBtn.frame = CGRectMake(kScreenWidth - 110, _passWordView.bottom + 10, 80, 30);
+    _verificationLoginBtn.frame = CGRectMake(kScreenWidth - 110, _passWordView.bottom + 15*WidthRate, 80, 30);
     [_verificationLoginBtn setTitle:@"验证码登录" forState: UIControlStateNormal];
     [_verificationLoginBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
     _verificationLoginBtn.titleLabel.font = [UIFont systemFontOfSize:13];
@@ -94,7 +94,7 @@
     [self.view addSubview:_verificationLoginBtn];
     //登录
     _loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _loginBtn.frame = CGRectMake(40, _passWordView.bottom + 90, kScreenWidth - 80, 40);
+    _loginBtn.frame = CGRectMake(40, _passWordView.bottom + 90*WidthRate, kScreenWidth - 80, 40);
     [_loginBtn setTitle:@"登录" forState: UIControlStateNormal];
     [_loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _loginBtn.backgroundColor = RGB(0.95, 0.39, 0.21);
@@ -105,7 +105,7 @@
     //注册
     
     _registerBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    _registerBtn.frame = CGRectMake((kScreenWidth - 120)/2, _loginBtn.bottom + 15, 120, 30);
+    _registerBtn.frame = CGRectMake((kScreenWidth - 120)/2, _loginBtn.bottom + 15*WidthRate, 120, 30);
     [_registerBtn setTitle:@"没有账号？去注册" forState: UIControlStateNormal];
     [_registerBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
     _registerBtn.titleLabel.font = [UIFont systemFontOfSize:13];

@@ -24,7 +24,7 @@
 #ifndef CommonDef_h
 #define CommonDef_h
 
-
+#define WidthRate kScreenWidth /375 //以iPhone6屏幕尺寸开发 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kBackgroundColor UIColorFromHex(0Xf4f4f4) //整体背景颜色、底色

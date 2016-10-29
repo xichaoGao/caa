@@ -449,6 +449,7 @@
 				TargetAttributes = {
 					0E3871DB1DC3033F00698B90 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = A8C5B4MG9D;
 						ProvisioningStyle = Automatic;
 					};
 					0E3871F41DC3033F00698B90 = {
@@ -734,11 +735,12 @@
 			baseConfigurationReference = CC1B7E292FDBECF78930FC90 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A8C5B4MG9D;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/caa/caa-Prefix.pch";
 				INFOPLIST_FILE = caa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.bjyfkj.caa;
+				PRODUCT_BUNDLE_IDENTIFIER = net.bjyfkj.www.caa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -748,11 +750,12 @@
 			baseConfigurationReference = 9A8C8286377303B5211B415D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A8C5B4MG9D;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/caa/caa-Prefix.pch";
 				INFOPLIST_FILE = caa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.bjyfkj.caa;
+				PRODUCT_BUNDLE_IDENTIFIER = net.bjyfkj.www.caa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

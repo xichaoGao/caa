@@ -34,11 +34,11 @@
 }
 -(void)CreateUI{
     //手机号
-    _phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, 120, kScreenWidth - 2*40, 40)];
+    _phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, 90*WidthRate, kScreenWidth - 2*40, 40)];
     [self.view addSubview:_phoneView];
     
     _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
-    _phoneText.placeholder = @"请输入您的手机号码";
+    _phoneText.placeholder = @"手机号码";
     _phoneText.delegate = self;
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
     _phoneText.textColor = UIColorFromHex(0x333333);
@@ -52,7 +52,7 @@
     [self.view addSubview:_verificationView];
     
     _verificationText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_verificationView.width , self.verificationView.height-1)];
-    _verificationText.placeholder = @"请输入您的短信验证码";
+    _verificationText.placeholder = @"短信验证码";
     _verificationText.delegate = self;
     _verificationText.textColor = UIColorFromHex(0x333333);
     [_verificationView addSubview:_verificationText];
@@ -74,7 +74,7 @@
     [self.view addSubview:_passWordView];
     
     _passWordText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_passWordView.width , _passWordView.height-1)];
-    _passWordText.placeholder = @"请输入您的登录密码";
+    _passWordText.placeholder = @"登录密码";
     _passWordText.secureTextEntry = YES;
     _passWordText.delegate = self;
     _passWordText.textColor = UIColorFromHex(0x333333);
@@ -90,7 +90,7 @@
     [self.view addSubview:_againPassWordView];
     
     _againPassWordText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_againPassWordView.width , _againPassWordView.height-1)];
-    _againPassWordText.placeholder = @"请再次输入您的登录密码";
+    _againPassWordText.placeholder = @"再次输入登录密码";
     _againPassWordText.secureTextEntry = YES;
     _againPassWordText.delegate = self;
     _againPassWordText.textColor = UIColorFromHex(0x333333);
@@ -102,14 +102,14 @@
     
     
     
-    //注册
+    //确认
     _sureBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _sureBtn.frame = CGRectMake(40, _againPassWordView.bottom + 110, kScreenWidth - 80, 60);
+    _sureBtn.frame = CGRectMake(40, _againPassWordView.bottom + 90*WidthRate, kScreenWidth - 80, 60*WidthRate);
     [_sureBtn setTitle:@"确认" forState: UIControlStateNormal];
     [_sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _sureBtn.backgroundColor = RGB(0.95, 0.39, 0.21);
     _sureBtn.titleLabel.font = [UIFont systemFontOfSize:20];
-    _sureBtn.layer.cornerRadius = 30;
+    _sureBtn.layer.cornerRadius = 30*WidthRate;
     [_sureBtn addTarget:self action:@selector(SureClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_sureBtn];
 }

@@ -34,11 +34,11 @@
 }
 -(void)CreateUI{
     //手机号
-    _phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, 120, kScreenWidth - 2*40, 40)];
+    _phoneView = [[UIView alloc]initWithFrame:CGRectMake(40, 90*WidthRate, kScreenWidth - 2*40, 40)];
     [self.view addSubview:_phoneView];
     
     _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
-    _phoneText.placeholder = @"请输入您的手机号码";
+    _phoneText.placeholder = @"手机号码";
     _phoneText.delegate = self;
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
     _phoneText.textColor = UIColorFromHex(0x333333);
@@ -52,7 +52,7 @@
     [self.view addSubview:_verificationView];
     
     _verificationText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_verificationView.width , self.verificationView.height-1)];
-    _verificationText.placeholder = @"请输入您的短信验证码";
+    _verificationText.placeholder = @"短信验证码";
     _verificationText.delegate = self;
     _verificationText.textColor = UIColorFromHex(0x333333);
     [_verificationView addSubview:_verificationText];
@@ -74,7 +74,7 @@
     [self.view addSubview:_passWordView];
     
     _passWordText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_passWordView.width , _passWordView.height-1)];
-    _passWordText.placeholder = @"请输入您的登录密码";
+    _passWordText.placeholder = @"登录密码";
     _passWordText.secureTextEntry = YES;
     _passWordText.delegate = self;
     _passWordText.textColor = UIColorFromHex(0x333333);
@@ -90,7 +90,7 @@
     [self.view addSubview:_againPassWordView];
     
     _againPassWordText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_againPassWordView.width , _againPassWordView.height-1)];
-    _againPassWordText.placeholder = @"请再次输入您的登录密码";
+    _againPassWordText.placeholder = @"再次输入登录密码";
     _againPassWordText.secureTextEntry = YES;
     _againPassWordText.delegate = self;
     _againPassWordText.textColor = UIColorFromHex(0x333333);
@@ -104,12 +104,12 @@
     
     //注册
     _registerBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _registerBtn.frame = CGRectMake(40, _againPassWordView.bottom + 110, kScreenWidth - 80, 60);
+    _registerBtn.frame = CGRectMake(40, _againPassWordView.bottom + 90*WidthRate, kScreenWidth - 80, 60*WidthRate);
     [_registerBtn setTitle:@"注册" forState: UIControlStateNormal];
     [_registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _registerBtn.backgroundColor = RGB(0.95, 0.39, 0.21);
     _registerBtn.titleLabel.font = [UIFont systemFontOfSize:20];
-    _registerBtn.layer.cornerRadius = 30;
+    _registerBtn.layer.cornerRadius = 30*WidthRate;
     [_registerBtn addTarget:self action:@selector(RegisterClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_registerBtn];
 }
@@ -125,26 +125,22 @@
         [alert showInView:self.view completion:nil];
     }else{
         [self againCrateBtn];
-        //        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        //        self.pramerDic = [NSDictionary dictionary];
-        //        _pramerDic = @{@"Mobile":self.phoneText.text,@"TypeID":@"2",@"MemberID":@""};
-        //        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-        //            hud.hidden = YES;
-        //            NSString *status = [result objectForKey:@"status"];
-        //            if ([status isEqualToString:@"success"]) {
-        //                [self againCrateBtn];
-        //                [self controlTheTime];
-        //
-        //            }else{
-        //                NSString *mess = [result objectForKey:@"message"];
-        //                //                    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
-        //                //                    [alert showInView:self.view completion:nil];
-        //
-        //
-        //                [self errorMessages:mess];
-        //
-        //            }
-        //        }];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                self.pramerDic = [NSDictionary dictionary];
+                _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"0"};
+                [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+                    hud.hidden = YES;
+                    NSString *status = [result objectForKey:@"status"];
+                    if ([status isEqualToString:@"1"]) {
+                        [self againCrateBtn];
+                        [self controlTheTime];
+        
+                    }else{
+                        NSString *mess = [result objectForKey:@"message"];
+                        [self errorMessages:mess];
+        
+                    }
+                }];
     }
 }
 -(void)RegisterClick{

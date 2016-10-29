@@ -15,7 +15,6 @@
 @implementation BaseViewController
 
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -31,12 +30,13 @@
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.navigationController.navigationBar.backgroundColor = RGB(0.95, 0.39, 0.21);
     
-//    self.navigationController.navigationBar.barTintColor = RGB(0.95, 0.39, 0.21);
-    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, kScreenWidth, 64)];
+  
+
+    UIView *statusBarView1 = [[UIView alloc] initWithFrame:CGRectMake(0, -20, kScreenWidth, 64)];
         //设置
-        statusBarView.backgroundColor = RGB(0.95, 0.39, 0.21);
+        statusBarView1.backgroundColor = RGB(0.95, 0.39, 0.21);
     // 添加到 navigationBar 上
-    [self.navigationController.navigationBar addSubview:statusBarView];
+    [self.navigationController.navigationBar addSubview:statusBarView1];
     self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.leftBtn.frame = CGRectMake(0, 0, 44, 44);
     self.leftBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 10);
