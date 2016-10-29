@@ -27,18 +27,20 @@ singleton_implementation(GetDataHandle);
     NSArray * md5Items = [subUrlString componentsSeparatedByString:@"/"];
     NSString * md5Str = [md5Items[0] stringByAppendingString:[self md5:@"bjyfkj4006010136"]];
     NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
+    NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"sign":sign}];
+      if (requestDic != nil) {
+        [paramer addEntriesFromDictionary:requestDic];
+    }
     AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
     managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     managers.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSString *str = [BASEURL stringByAppendingString:sign];
+    NSString *str = [BASEURL stringByAppendingString:subUrlString];
     
-    NSLog(@"参数 --  %@   url -- %@ ",requestDic,str);
+    NSLog(@"参数 --  %@   url -- %@ ",paramer,str);
     if (![subUrlString isEqualToString:@"User/checkCode"]){
     [managers POST:str parameters:requestDic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        EncryptionData *encryptionData = [[EncryptionData alloc] init];
-        NSString *decodeString = [encryptionData decryption:resultString key:messageStr];
-        NSMutableDictionary *dic = [decodeString mj_JSONObject];
+        NSMutableDictionary *dic = [resultString mj_JSONObject];
         block(dic,nil);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         block(nil,error);

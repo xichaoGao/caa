@@ -89,7 +89,7 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
-    else if (_phoneText.text.length !=11){
+    else if (_phoneText.text.length != 11){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"您输入的不是手机号" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }else{
@@ -99,8 +99,10 @@
         _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"0"};
         [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
-            NSString *status = [result objectForKey:@"status"];
-            if ([status isEqualToString:@"1"]) {
+            
+            int  Status = (int)[result objectForKey:@"status"];
+            
+            if ( Status == 1 ) {
                 [self againCrateBtn];
                 [self controlTheTime];
                 
@@ -137,8 +139,8 @@
         [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             [self resign];
-            NSString *status = [result objectForKey:@"status"];
-            if ([status isEqualToString:@"1"]) {
+            int status = (int)[result objectForKey:@"status"];
+            if (status == 1) {
                 
                 NSString *passPortId = [[result objectForKey:@"data"]objectForKey:@"Mobile"];
                 NSString *memberStatusID = [[result objectForKey:@"data"]objectForKey:@"MemberStatusID"];
@@ -170,8 +172,8 @@
     _pramerDic = [NSDictionary dictionary];
     _pramerDic = @{@"phone":_phoneText.text,@"code":_verificationText.text};
     [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kCheckVerification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-        NSString *status = [result objectForKey:@"status"];
-        if ([status isEqualToString:@"1"]) {
+         int  status = (int)[result objectForKey:@"status"];
+        if (status == 1) {
             _isTure = YES;
             
         }else{

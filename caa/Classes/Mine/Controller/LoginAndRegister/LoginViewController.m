@@ -59,7 +59,6 @@
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
     _phoneText.textColor = UIColorFromHex(0x333333);
     [self.phoneView addSubview:_phoneText];
-    
     _phoneLine = [[UIView alloc]initWithFrame:CGRectMake(0, _phoneText.bottom, _phoneView.width,1 )];
     _phoneLine.backgroundColor = RGB(0.95, 0.39, 0.21);
     [self.phoneView addSubview:_phoneLine];
@@ -153,8 +152,8 @@
         [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             NSLog(@"loginResult==%@",result);
-            NSString *status = [result objectForKey:@"status"];
-            if ([status isEqualToString:@"success"]) {
+            int status = (int) [result objectForKey:@"status"];
+            if (status == 1) {
                 
                 NSString *userID = [[result objectForKey:@"data"]objectForKey:@"user_id"];
                 NSString *nickName = [[result objectForKey:@"data"]objectForKey:@"nickname"];

@@ -139,8 +139,8 @@
                 _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"0"};
                 [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                     hud.hidden = YES;
-                    NSString *status = [result objectForKey:@"status"];
-                    if ([status isEqualToString:@"1"]) {
+                    int  status = (int)[result objectForKey:@"status"];
+                    if (status == 1) {
                         [self againCrateBtn];
                         [self controlTheTime];
         
@@ -194,8 +194,8 @@
                     hud.hidden = YES;
                     [self resign];
                     NSLog(@"loginResult==%@",result);
-                    NSString *status = [result objectForKey:@"status"];
-                    if ([status isEqualToString:@"success"]) {
+                    int status = (int)[result objectForKey:@"status"];
+                    if ( status == 1) {
                         LoginViewController * logVC = [[LoginViewController alloc]init];
                         [self.navigationController pushViewController:logVC animated:YES];
 
