@@ -10,7 +10,7 @@
 #import "TabBarViewController.h"
 @interface VerLoginViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)NSDictionary *pramerDic;
-
+@property(nonatomic,assign)BOOL isTure;
 @end
 
 @implementation VerLoginViewController
@@ -39,6 +39,7 @@
     _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
     _phoneText.placeholder = @"手机号码";
     _phoneText.delegate = self;
+    _phoneText.clearButtonMode = UITextFieldViewModeWhileEditing;
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
     _phoneText.textColor = UIColorFromHex(0x333333);
     [_phoneView addSubview:_phoneText];
@@ -50,9 +51,11 @@
     _verificationView = [[UIView alloc]initWithFrame:CGRectMake(40, _phoneView.bottom + 40 , kScreenWidth - 2*40, 40)];
     [self.view addSubview:_verificationView];
     
-    _verificationText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_verificationView.width , self.verificationView.height-1)];
+    _verificationText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_verificationView.width -140, self.verificationView.height-1)];
     _verificationText.placeholder = @"短信验证码";
     _verificationText.delegate = self;
+    _verificationText.clearButtonMode = UITextFieldViewModeWhileEditing;
+
     _verificationText.textColor = UIColorFromHex(0x333333);
     [_verificationView addSubview:_verificationText];
     
@@ -86,35 +89,32 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
-    else if (_phoneText.text.length <11){
+    else if (_phoneText.text.length !=11){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"您输入的不是手机号" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }else{
         [self againCrateBtn];
-//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        self.pramerDic = [NSDictionary dictionary];
-//        _pramerDic = @{@"Mobile":self.phoneText.text,@"TypeID":@"2",@"MemberID":@""};
-//        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-//            hud.hidden = YES;
-//            NSString *status = [result objectForKey:@"status"];
-//            if ([status isEqualToString:@"success"]) {
-//                [self againCrateBtn];
-//                [self controlTheTime];
-//                
-//            }else{
-//                NSString *mess = [result objectForKey:@"message"];
-//                //                    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
-//                //                    [alert showInView:self.view completion:nil];
-//                
-//                
-//                [self errorMessages:mess];
-//                
-//            }
-//        }];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        _pramerDic = [NSDictionary dictionary];
+        _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"0"};
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+            hud.hidden = YES;
+            NSString *status = [result objectForKey:@"status"];
+            if ([status isEqualToString:@"1"]) {
+                [self againCrateBtn];
+                [self controlTheTime];
+                
+            }else{
+                NSString *mess = [result objectForKey:@"message"];
+                [self errorMessages:mess];
+                
+            }
+        }];
     }
 }
 -(void)LoginClick{
     [self resign];
+    [self Verification];
     if ([_phoneText.text isEqualToString:@""]) {
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
@@ -123,52 +123,62 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
+    else if (_isTure == NO){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不正确" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
     else{
         
-        TabBarViewController * tbVC = [[TabBarViewController alloc]init];
-        [self.navigationController pushViewController:tbVC animated:YES];
-//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        self.pramerDic = [NSDictionary dictionary];
-////        _pramerDic = @{@"Mobile":self.phoneText.text,@"Password":_secreatText.text,@"LoginSourceID":@"2",@"PushToken":[[NotificationConfigure sharedNotificationConfigure] getDeviceToken]?[[NotificationConfigure sharedNotificationConfigure] getDeviceToken ]:@""};
-//        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-//            hud.hidden = YES;
-//            [self resign];
-//            NSLog(@"loginResult==%@",result);
-//            NSString *status = [result objectForKey:@"status"];
-//            if ([status isEqualToString:@"success"]) {
-//                
-//                NSString *passPortId = [[result objectForKey:@"data"]objectForKey:@"Mobile"];
-//                NSString *memberStatusID = [[result objectForKey:@"data"]objectForKey:@"MemberStatusID"];
-//                NSString *memberID = [[result objectForKey:@"data"]objectForKey:@"MemberID"];
-//                //给名字加密
-//                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"passPortId":passPortId,@"memberStatusID":memberStatusID,@"memberID":memberID}];
-//                EncryptionData *encryptionData = [[EncryptionData alloc] init];
-//                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
-//                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
-////                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
-//               
-//                NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
-////                [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
-//               
-//                [defult synchronize];
-//                TabBarViewController * tbVC = [[TabBarViewController alloc]init];
-//                [self.navigationController pushViewController:tbVC animated:YES];
-//                
-////                if ([self.delegate respondsToSelector:@selector(loginSuccessActionInfo)]) {
-////                    [self.delegate loginSuccessActionInfo];
-////                }
-//                
-//            }else{
-//                NSString *mess = [result objectForKey:@"message"];
-//                //                    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
-//                //                    [alert showInView:self.view completion:nil];
-//                [self errorMessages:mess];
-//            }
-//        }];
+//        TabBarViewController * tbVC = [[TabBarViewController alloc]init];
+//        [self.navigationController pushViewController:tbVC animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.pramerDic = [NSDictionary dictionary];
+        _pramerDic = @{@"phone":_phoneText.text,@"password":@"",@"code":_verificationText.text};
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+            hud.hidden = YES;
+            [self resign];
+            NSString *status = [result objectForKey:@"status"];
+            if ([status isEqualToString:@"1"]) {
+                
+                NSString *passPortId = [[result objectForKey:@"data"]objectForKey:@"Mobile"];
+                NSString *memberStatusID = [[result objectForKey:@"data"]objectForKey:@"MemberStatusID"];
+                NSString *memberID = [[result objectForKey:@"data"]objectForKey:@"MemberID"];
+                //给名字加密
+                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"passPortId":passPortId,@"memberStatusID":memberStatusID,@"memberID":memberID}];
+                EncryptionData *encryptionData = [[EncryptionData alloc] init];
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
+                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
+                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
+               
+                NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
+                [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
+               
+                [defult synchronize];
+                TabBarViewController * tbVC = [[TabBarViewController alloc]init];
+                [self.navigationController pushViewController:tbVC animated:YES];
+                
+            }else{
+                NSString *mess = [result objectForKey:@"message"];
+                [self errorMessages:mess];
+            }
+        }];
     }
 
     
 }
+-(void)Verification{
+    _pramerDic = [NSDictionary dictionary];
+    _pramerDic = @{@"phone":_phoneText.text,@"code":_verificationText.text};
+    [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kCheckVerification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        NSString *status = [result objectForKey:@"status"];
+        if ([status isEqualToString:@"1"]) {
+            _isTure = YES;
+            
+        }else{
+            _isTure = NO;
+        }
+    }];
+   }
 - (void)againCrateBtn
 {
     _verificationBtn.userInteractionEnabled = NO;

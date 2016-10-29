@@ -14,9 +14,6 @@
     
     int selectTab;
 }
-
-
-
 @end
 
 @implementation TabBarViewController
@@ -25,10 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.tabBarController.tabBar.backgroundColor = [UIColor blackColor];
-    self.tabBar.tintColor = UIColorFromHex(0Xff5971);
-    //    self.tabBar.backgroundImage = [UIImage imageNamed:@""];
-    
-    
+    self.tabBar.tintColor = UIColorFromHex(0Xff5971);  
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth,0.5)];
     lineView.backgroundColor = RGB(170, 170, 170);
     [self.tabBar addSubview:lineView];

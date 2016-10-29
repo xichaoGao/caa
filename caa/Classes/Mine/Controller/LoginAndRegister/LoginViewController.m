@@ -31,11 +31,11 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-   
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-        [self createUI];
+    [self createUI];
     // Do any additional setup after loading the view.
 }
 -(void)createUI{
@@ -44,6 +44,8 @@
     _headImage.layer.masksToBounds = YES;
     _headImage.layer.cornerRadius = 10;
     _headImage.backgroundColor = RGB(0.95, 0.39, 0.21);
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+     [_headImage sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"headImg"]] placeholderImage:[UIImage imageNamed:@"13@2x"]];
     [self.view addSubview:_headImage];
     
     //手机号
@@ -53,6 +55,7 @@
     _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
     _phoneText.placeholder = @"手机号码";
     _phoneText.delegate = self;
+    _phoneText.clearButtonMode = UITextFieldViewModeWhileEditing;
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
     _phoneText.textColor = UIColorFromHex(0x333333);
     [self.phoneView addSubview:_phoneText];
@@ -68,6 +71,8 @@
     _passWordText.placeholder = @"密码";
     _passWordText.secureTextEntry = YES;
     _passWordText.delegate = self;
+    _passWordText.clearButtonMode = UITextFieldViewModeWhileEditing;
+
     _passWordText.textColor = UIColorFromHex(0x333333);
     [self.passWordView addSubview:_passWordText];
     
@@ -85,7 +90,7 @@
     
     //验证码登录
     _verificationLoginBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-                                 
+    
     _verificationLoginBtn.frame = CGRectMake(kScreenWidth - 110, _passWordView.bottom + 15*WidthRate, 80, 30);
     [_verificationLoginBtn setTitle:@"验证码登录" forState: UIControlStateNormal];
     [_verificationLoginBtn setTitleColor:RGB(0.96, 0.60, 0.51) forState:UIControlStateNormal];
@@ -111,7 +116,7 @@
     _registerBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [_registerBtn addTarget:self action:@selector(RegisterClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_registerBtn];
-
+    
     
 }
 
@@ -130,51 +135,50 @@
     if ([_phoneText.text isEqualToString:@""]) {
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
+    }
+    else if (_phoneText.text.length !=11){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"您输入的不是手机号" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
     }else if ([_passWordText.text isEqualToString:@""]){
         
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
     else{
-        TabBarViewController * tbVC = [[TabBarViewController alloc]init];
-        [self.navigationController pushViewController:tbVC animated:YES];
-//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        _pramerDic = [NSDictionary dictionary];
-//        //        _pramerDic = @{@"Mobile":self.phoneText.text,@"Password":_secreatText.text,@"LoginSourceID":@"2",@"PushToken":[[NotificationConfigure sharedNotificationConfigure] getDeviceToken]?[[NotificationConfigure sharedNotificationConfigure] getDeviceToken ]:@""};
-//        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-//            hud.hidden = YES;
-//            NSLog(@"loginResult==%@",result);
-//            NSString *status = [result objectForKey:@"status"];
-//            if ([status isEqualToString:@"success"]) {
-//                
-//                NSString *passPortId = [[result objectForKey:@"data"]objectForKey:@"Mobile"];
-//                NSString *memberStatusID = [[result objectForKey:@"data"]objectForKey:@"MemberStatusID"];
-//                NSString *memberID = [[result objectForKey:@"data"]objectForKey:@"MemberID"];
-//                //给名字加密
-//                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"passPortId":passPortId,@"memberStatusID":memberStatusID,@"memberID":memberID}];
-//                EncryptionData *encryptionData = [[EncryptionData alloc] init];
-//                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
-//                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
-//                //                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
-//                
-//                NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
-//                //                [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
-//                
-//                [defult synchronize];
-//                TabBarViewController * tbVC = [[TabBarViewController alloc]init];
-//                [self.navigationController pushViewController:tbVC animated:YES];
-//                
-//                //                if ([self.delegate respondsToSelector:@selector(loginSuccessActionInfo)]) {
-//                //                    [self.delegate loginSuccessActionInfo];
-//                //                }
-//                
-//            }else{
-//                NSString *mess = [result objectForKey:@"message"];
-//                //                    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
-//                //                    [alert showInView:self.view completion:nil];
-//                [self errorMessages:mess];
-//            }
-//        }];
+        //        TabBarViewController * tbVC = [[TabBarViewController alloc]init];
+        //        [self.navigationController pushViewController:tbVC animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        _pramerDic = [NSDictionary dictionary];
+        _pramerDic = @{@"phone":_phoneText.text,@"password":_passWordText.text,@"code":@""};
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+            hud.hidden = YES;
+            NSLog(@"loginResult==%@",result);
+            NSString *status = [result objectForKey:@"status"];
+            if ([status isEqualToString:@"success"]) {
+                
+                NSString *userID = [[result objectForKey:@"data"]objectForKey:@"user_id"];
+                NSString *nickName = [[result objectForKey:@"data"]objectForKey:@"nickname"];
+                NSString *token = [[result objectForKey:@"data"]objectForKey:@"token"];
+                NSString *headImg = [[result objectForKey:@"data"]objectForKey:@"headimg"];
+                NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                [user setObject:headImg forKey:@"headImg"];
+                //给名字加密
+                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"userID":userID,@"token":token,@"nickName":nickName}];
+                EncryptionData *encryptionData = [[EncryptionData alloc] init];
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
+                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
+                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
+                
+                NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
+                [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
+                
+                [defult synchronize];
+            }
+            else{
+                NSString *mess = [result objectForKey:@"message"];
+                [self errorMessages:mess];
+            }
+        }];
     }
     
     
@@ -199,13 +203,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

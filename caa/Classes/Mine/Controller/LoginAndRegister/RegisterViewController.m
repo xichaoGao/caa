@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)NSDictionary *pramerDic;
+@property(nonatomic,assign)BOOL isTure;
 
 
 @end
@@ -40,6 +41,8 @@
     _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
     _phoneText.placeholder = @"手机号码";
     _phoneText.delegate = self;
+    _phoneText.clearButtonMode = UITextFieldViewModeWhileEditing;
+
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
     _phoneText.textColor = UIColorFromHex(0x333333);
     [_phoneView addSubview:_phoneText];
@@ -51,9 +54,11 @@
     _verificationView = [[UIView alloc]initWithFrame:CGRectMake(40, _phoneView.bottom + 40 , kScreenWidth - 2*40, 40)];
     [self.view addSubview:_verificationView];
     
-    _verificationText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_verificationView.width , self.verificationView.height-1)];
+    _verificationText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_verificationView.width-140 , self.verificationView.height-1)];
     _verificationText.placeholder = @"短信验证码";
     _verificationText.delegate = self;
+    _verificationText.clearButtonMode = UITextFieldViewModeWhileEditing;
+
     _verificationText.textColor = UIColorFromHex(0x333333);
     [_verificationView addSubview:_verificationText];
     
@@ -77,6 +82,8 @@
     _passWordText.placeholder = @"登录密码";
     _passWordText.secureTextEntry = YES;
     _passWordText.delegate = self;
+    _passWordText.clearButtonMode = UITextFieldViewModeWhileEditing;
+
     _passWordText.textColor = UIColorFromHex(0x333333);
     [self.passWordView addSubview:_passWordText];
     
@@ -93,6 +100,8 @@
     _againPassWordText.placeholder = @"再次输入登录密码";
     _againPassWordText.secureTextEntry = YES;
     _againPassWordText.delegate = self;
+    _againPassWordText.clearButtonMode = UITextFieldViewModeWhileEditing;
+
     _againPassWordText.textColor = UIColorFromHex(0x333333);
     [_againPassWordView addSubview:_againPassWordText];
     
@@ -148,11 +157,16 @@
     if ([_phoneText.text isEqualToString:@""]) {
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
+    }
+    else if (_phoneText.text.length !=11){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"您输入的不是手机号" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
     }else if ([_verificationText.text isEqualToString:@""]){
         
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
+    
     else if ([_passWordText.text isEqualToString:@""]){
         
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
@@ -163,48 +177,34 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
+    else if (![_againPassWordText.text isEqualToString:_passWordText.text]){
+        
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不一致" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+
     else{
         
-        LoginViewController * logVC = [[LoginViewController alloc]init];
-        [self.navigationController pushViewController:logVC animated:YES];
-        //        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        //        self.pramerDic = [NSDictionary dictionary];
-        ////        _pramerDic = @{@"Mobile":self.phoneText.text,@"Password":_secreatText.text,@"LoginSourceID":@"2",@"PushToken":[[NotificationConfigure sharedNotificationConfigure] getDeviceToken]?[[NotificationConfigure sharedNotificationConfigure] getDeviceToken ]:@""};
-        //        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-        //            hud.hidden = YES;
-        //            [self resign];
-        //            NSLog(@"loginResult==%@",result);
-        //            NSString *status = [result objectForKey:@"status"];
-        //            if ([status isEqualToString:@"success"]) {
-        //
-        //                NSString *passPortId = [[result objectForKey:@"data"]objectForKey:@"Mobile"];
-        //                NSString *memberStatusID = [[result objectForKey:@"data"]objectForKey:@"MemberStatusID"];
-        //                NSString *memberID = [[result objectForKey:@"data"]objectForKey:@"MemberID"];
-        //                //给名字加密
-        //                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"passPortId":passPortId,@"memberStatusID":memberStatusID,@"memberID":memberID}];
-        //                EncryptionData *encryptionData = [[EncryptionData alloc] init];
-        //                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
-        //                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
-        ////                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
-        //
-        //                NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
-        ////                [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
-        //
-        //                [defult synchronize];
-        //                TabBarViewController * tbVC = [[TabBarViewController alloc]init];
-        //                [self.navigationController pushViewController:tbVC animated:YES];
-        //
-        ////                if ([self.delegate respondsToSelector:@selector(loginSuccessActionInfo)]) {
-        ////                    [self.delegate loginSuccessActionInfo];
-        ////                }
-        //
-        //            }else{
-        //                NSString *mess = [result objectForKey:@"message"];
-        //                //                    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
-        //                //                    [alert showInView:self.view completion:nil];
-        //                [self errorMessages:mess];
-        //            }
-        //        }];
+//        LoginViewController * logVC = [[LoginViewController alloc]init];
+//        [self.navigationController pushViewController:logVC animated:YES];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                _pramerDic = [NSDictionary dictionary];
+                _pramerDic = @{@"phone":_phoneText.text,@"password":_passWordText.text,@"code":_verificationText.text};
+                [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kRegister RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+                    hud.hidden = YES;
+                    [self resign];
+                    NSLog(@"loginResult==%@",result);
+                    NSString *status = [result objectForKey:@"status"];
+                    if ([status isEqualToString:@"success"]) {
+                        LoginViewController * logVC = [[LoginViewController alloc]init];
+                        [self.navigationController pushViewController:logVC animated:YES];
+
+                    }
+                    else{
+                        NSString *mess = [result objectForKey:@"message"];
+                        [self errorMessages:mess];
+                    }
+                }];
     }
     
     
