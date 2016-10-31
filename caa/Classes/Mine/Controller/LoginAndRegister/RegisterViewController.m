@@ -58,6 +58,7 @@
     _verificationText.placeholder = @"短信验证码";
     _verificationText.delegate = self;
     _verificationText.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _verificationText.keyboardType = UIKeyboardTypeNumberPad;
 
     _verificationText.textColor = UIColorFromHex(0x333333);
     [_verificationView addSubview:_verificationText];
@@ -193,7 +194,7 @@
         
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 _pramerDic = [NSDictionary dictionary];
-        _pramerDic = @{@"phone":_phoneText.text,@"password":_passWordText.text,@"code":  [self md5:_verificationText.text]};
+        _pramerDic = @{@"phone":_phoneText.text,@"password":[self md5:_passWordText.text],@"code": _verificationText.text};
                        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kRegister RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                     hud.hidden = YES;
                     [self resign];

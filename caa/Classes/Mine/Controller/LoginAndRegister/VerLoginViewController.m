@@ -55,6 +55,7 @@
     _verificationText.placeholder = @"短信验证码";
     _verificationText.delegate = self;
     _verificationText.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _verificationText.keyboardType = UIKeyboardTypeNumberPad;
 
     _verificationText.textColor = UIColorFromHex(0x333333);
     [_verificationView addSubview:_verificationText];

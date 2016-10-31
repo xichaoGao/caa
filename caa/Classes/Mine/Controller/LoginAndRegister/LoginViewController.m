@@ -148,7 +148,7 @@
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         _pramerDic = [NSDictionary dictionary];
-        _pramerDic = @{@"phone":_phoneText.text,@"password":_passWordText.text,@"code":@""};
+        _pramerDic = @{@"phone":_phoneText.text,@"password":[self md5:_passWordText.text],@"code":@""};
         [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kLogin RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             NSLog(@"loginResult==%@",result);
