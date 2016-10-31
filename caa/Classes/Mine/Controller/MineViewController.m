@@ -21,6 +21,7 @@
     statusBarView.backgroundColor = RGB(0.95, 0.39, 0.21);
     // 添加到 view 上
     [self.view addSubview:statusBarView];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
 }

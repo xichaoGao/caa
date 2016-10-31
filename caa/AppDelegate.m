@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "NotificationConfigure.h"
+#import "IQKeyboardManager.h"
 
 @interface AppDelegate ()
 {
@@ -26,7 +27,16 @@
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
-    
+    /*
+     *  键盘弹出事件
+     */
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = NO;
+
+     [[NotificationConfigure sharedNotificationConfigure] registerNotification];
     //点击推送消息 获取推送消息
     NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotification != nil) {

@@ -136,7 +136,7 @@
         [self againCrateBtn];
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 self.pramerDic = [NSDictionary dictionary];
-                _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"0"};
+                _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"1"};
                 [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                     hud.hidden = YES;
                     int  status = [[result objectForKey:@"status"] intValue];;
@@ -146,8 +146,14 @@
         
                     }else{
                         NSString *mess = [result objectForKey:@"message"];
-                        [self errorMessages:mess];
-        
+                       
+                        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
+                        [alert showInView:self.view completion:nil];
+                        [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                            LoginViewController * logVC = [[LoginViewController alloc]init];
+                            [self.navigationController pushViewController:logVC animated:YES];
+                        }];
+                       
                     }
                 }];
     }
@@ -185,12 +191,10 @@
 
     else{
         
-//        LoginViewController * logVC = [[LoginViewController alloc]init];
-//        [self.navigationController pushViewController:logVC animated:YES];
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 _pramerDic = [NSDictionary dictionary];
-                _pramerDic = @{@"phone":_phoneText.text,@"password":_passWordText.text,@"code":_verificationText.text};
-                [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kRegister RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        _pramerDic = @{@"phone":_phoneText.text,@"password":_passWordText.text,@"code":  [self md5:_verificationText.text]};
+                       [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kRegister RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                     hud.hidden = YES;
                     [self resign];
                     NSLog(@"loginResult==%@",result);

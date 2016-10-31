@@ -32,7 +32,7 @@
  * 加密
  */
 -(id)encryptWithParamer:(id)paramer;
-
+-(NSString *)md5:(NSString *)string;
 /*
  * 解密
  */

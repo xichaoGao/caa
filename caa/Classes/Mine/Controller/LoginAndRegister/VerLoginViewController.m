@@ -23,7 +23,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    
+    self.navigationController.navigationBarHidden = YES;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -117,7 +117,7 @@
 }
 -(void)LoginClick{
     [self resign];
-    [self Verification];
+    
     if ([_phoneText.text isEqualToString:@""]) {
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
@@ -126,36 +126,38 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
-    else if (_isTure == NO){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不正确" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    else{
-        
-//        TabBarViewController * tbVC = [[TabBarViewController alloc]init];
-//        [self.navigationController pushViewController:tbVC animated:YES];
+
+    [self login];
+}
+
+-(void)login{
+
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         self.pramerDic = [NSDictionary dictionary];
         _pramerDic = @{@"phone":_phoneText.text,@"password":@"",@"code":_verificationText.text};
-        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kLogin RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             [self resign];
-            int status = (int)[result objectForKey:@"status"];
+            int status = [[result objectForKey:@"status"] intValue];
             if (status == 1) {
                 
-                NSString *passPortId = [[result objectForKey:@"data"]objectForKey:@"Mobile"];
-                NSString *memberStatusID = [[result objectForKey:@"data"]objectForKey:@"MemberStatusID"];
-                NSString *memberID = [[result objectForKey:@"data"]objectForKey:@"MemberID"];
+                NSString *userID = [[result objectForKey:@"data"]objectForKey:@"user_id"];
+                NSString *nickName = [[result objectForKey:@"data"]objectForKey:@"nickname"];
+                NSString *token = [[result objectForKey:@"data"]objectForKey:@"token"];
+                NSString *headImg = [[result objectForKey:@"data"]objectForKey:@"headimg"];
+                NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                [user setObject:headImg forKey:@"headImg"];
+
                 //给名字加密
-                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"passPortId":passPortId,@"memberStatusID":memberStatusID,@"memberID":memberID}];
+               NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"userID":userID,@"token":token,@"nickName":nickName}];
                 EncryptionData *encryptionData = [[EncryptionData alloc] init];
                 NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
                 NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
                 NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
-               
+                
                 NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
                 [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
-               
+                
                 [defult synchronize];
                 TabBarViewController * tbVC = [[TabBarViewController alloc]init];
                 [self.navigationController pushViewController:tbVC animated:YES];
@@ -165,23 +167,8 @@
                 [self errorMessages:mess];
             }
         }];
-    }
 
-    
 }
--(void)Verification{
-    _pramerDic = [NSDictionary dictionary];
-    _pramerDic = @{@"phone":_phoneText.text,@"code":_verificationText.text};
-    [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kCheckVerification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-         int  status = (int)[result objectForKey:@"status"];
-        if (status == 1) {
-            _isTure = YES;
-            
-        }else{
-            _isTure = NO;
-        }
-    }];
-   }
 - (void)againCrateBtn
 {
     _verificationBtn.userInteractionEnabled = NO;

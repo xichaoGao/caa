@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import <CommonCrypto/CommonDigest.h>
 
 @interface BaseViewController ()
 
@@ -21,18 +22,12 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
-    
-    
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSFontAttributeName:[UIFont systemFontOfSize:18],
        NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.navigationController.navigationBar.backgroundColor = RGB(0.95, 0.39, 0.21);
-    
-  
-
-    UIView *statusBarView1 = [[UIView alloc] initWithFrame:CGRectMake(0, -20, kScreenWidth, 64)];
+        UIView *statusBarView1 = [[UIView alloc] initWithFrame:CGRectMake(0, -20, kScreenWidth, 64)];
         //设置
         statusBarView1.backgroundColor = RGB(0.95, 0.39, 0.21);
     // 添加到 navigationBar 上
@@ -41,7 +36,7 @@
     self.leftBtn.frame = CGRectMake(0, 0, 44, 44);
     self.leftBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 10);
     
-    [self.leftBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [self.leftBtn setImage:[UIImage imageNamed:@"register_back"] forState:UIControlStateNormal];
     [self.leftBtn addTarget:self action:@selector(doBackWithBaseVC:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftBtn];
@@ -86,7 +81,12 @@
 {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
 }
-
+-(NSString *)md5:(NSString *)string{
+    const char *str = [string UTF8String];
+    unsigned char result[16];
+    CC_MD5( str, (CC_LONG)strlen(str), result );
+    return [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",result[0],result[1],result[2],result[3],result[4],result[5],result[6],result[7],result[8],result[9],result[10],result[11],result[12],result[13],result[14],result[15]];
+}
 
 //-(NSString *)getMemberIDWithEncrypt{
 //    if (kpassPortMemberStatusMemberIDStr != nil) {

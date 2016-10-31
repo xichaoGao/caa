@@ -16,11 +16,6 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
-    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 20)];
-    //设置
-    statusBarView.backgroundColor = RGB(0.95, 0.39, 0.21);
-    // 添加到 view 上
-    [self.view addSubview:statusBarView];
     self.view.backgroundColor = [UIColor whiteColor];
     
 }

@@ -45,6 +45,7 @@
     _headImage.layer.cornerRadius = 10;
     _headImage.backgroundColor = RGB(0.95, 0.39, 0.21);
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    NSLog(@"%@",[user objectForKey:@"headImg"]);
      [_headImage sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"headImg"]] placeholderImage:[UIImage imageNamed:@"13@2x"]];
     [self.view addSubview:_headImage];
     

@@ -133,13 +133,13 @@
     }
     else{
         [self againCrateBtn];
-        [self againCrateBtn];
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         _pramerDic = [NSDictionary dictionary];
-        _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"1"};
+        _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"0"};
         [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
-            int status = [[result objectForKey:@"status"] intValue];;
+            int status = [[result objectForKey:@"status"] intValue];
+            NSLog(@"KLSDFJKLSDFKLS___%d",status);
             if (status == 1) {
                 [self againCrateBtn];
                 [self controlTheTime];
@@ -155,6 +155,7 @@
 }
 -(void)SureClick{
     [self resign];
+    
     if ([_phoneText.text isEqualToString:@""]) {
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
@@ -167,42 +168,9 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
-    else if (_isTure == NO){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不正确" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    else if ([_passWordText.text isEqualToString:@""]){
-        
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    else if ([_againPassWordText.text isEqualToString:@""]){
-        
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    else{
-        
-        LoginViewController * logVC = [[LoginViewController alloc]init];
-        [self.navigationController pushViewController:logVC animated:YES];
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                self.pramerDic = [NSDictionary dictionary];
-        _pramerDic = @{@"phone":_phoneText.text,@"password":_passWordText.text};
-                [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSetNewPassWord RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-                    hud.hidden = YES;
-                    [self resign];
-                    NSLog(@"loginResult==%@",result);
-                    int status = [[result objectForKey:@"status"] intValue];;
-                    if (status == 1) {
-        
-                       
-        
-                    }else{
-                        NSString *mess = [result objectForKey:@"message"];
-                        [self errorMessages:mess];
-                    }
-                }];
-    }
+     [self Verification];
+
+   
     
     
 }
@@ -223,11 +191,52 @@
         int status = [[result objectForKey:@"status"] intValue];;
         if (status == 1) {
             _isTure = YES;
-            
+            [self sure];
         }else{
             _isTure = NO;
+            [self sure];
         }
     }];
+
+}
+-(void)sure{
+    if (_isTure == NO){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不正确" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+
+    else if ([_passWordText.text isEqualToString:@""]){
+        
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([_againPassWordText.text isEqualToString:@""]){
+        
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else{
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            self.pramerDic = [NSDictionary dictionary];
+            _pramerDic = @{@"phone":_phoneText.text,@"password":[self md5:_passWordText.text]};
+            [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSetNewPassWord RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+                hud.hidden = YES;
+                [self resign];
+                NSLog(@"loginResult==%@",result);
+                int status = [[result objectForKey:@"status"] intValue];;
+                if (status == 1) {
+                    
+                    LoginViewController * logVC = [[LoginViewController alloc]init];
+                    [self.navigationController pushViewController:logVC animated:YES];
+                    
+                }else{
+                    NSString *mess = [result objectForKey:@"message"];
+                    [self errorMessages:mess];
+                }
+            }];
+        }
+    
 }
 #pragma mark-- 倒计时关联方法
 
