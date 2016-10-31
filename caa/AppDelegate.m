@@ -8,8 +8,12 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
-@interface AppDelegate ()
+#import "NotificationConfigure.h"
 
+@interface AppDelegate ()
+{
+    BOOL _goBackground;
+}
 @end
 
 @implementation AppDelegate
@@ -22,12 +26,69 @@
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
+    
+    //点击推送消息 获取推送消息
+    NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (remoteNotification != nil) {
+        _notificationDic = remoteNotification;
+    } else{
+        
+    }
+
     // Override point for customization after application launch.
     return YES;
 }
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{ // 处理推送消息
+    NSLog(@"userinfo:%@",userInfo);
+    NSLog(@"收到推送消息:%@",[[userInfo objectForKey:@"aps"] objectForKey:@"alert"]);
+    if (_goBackground) {
+        _goBackground = NO;
+        
+        UIViewController *vc =  [self topViewController];
+        vc.tabBarController.selectedIndex = 0;
+        [vc.navigationController popViewControllerAnimated:NO];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Notificationa" object:nil userInfo:userInfo];
+    }
+}
+- (UIViewController*)topViewController {
+    return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+- (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController {
+    if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
+        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
+    } else if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* nav = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:nav.visibleViewController];
+    } else if (rootViewController.presentedViewController) {
+        UIViewController* presentedViewController = rootViewController.presentedViewController;
+        return [self topViewControllerWithRootViewController:presentedViewController];
+    } else {
+        return rootViewController;
+    }
+}
 
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings
+{
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSLog(@"deviceToken:%@",deviceToken);
+    
+    [[NotificationConfigure sharedNotificationConfigure] saveDeviceTokenWithDeviceTokenDescription:[deviceToken description]];
+}
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    //通知发送失败要返回的信息;
+    NSLog(@"error = %@",error);
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
+    //进入后台
+    
+    _goBackground = YES;
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 }

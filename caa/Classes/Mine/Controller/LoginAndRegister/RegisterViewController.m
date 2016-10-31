@@ -139,7 +139,7 @@
                 _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"0"};
                 [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                     hud.hidden = YES;
-                    int  status = (int)[result objectForKey:@"status"];
+                    int  status = [[result objectForKey:@"status"] intValue];;
                     if (status == 1) {
                         [self againCrateBtn];
                         [self controlTheTime];
@@ -194,7 +194,7 @@
                     hud.hidden = YES;
                     [self resign];
                     NSLog(@"loginResult==%@",result);
-                    int status = (int)[result objectForKey:@"status"];
+                    int status = [[result objectForKey:@"status"] intValue];;
                     if ( status == 1) {
                         LoginViewController * logVC = [[LoginViewController alloc]init];
                         [self.navigationController pushViewController:logVC animated:YES];
@@ -248,10 +248,15 @@
 -(void)resign{
     [_phoneText resignFirstResponder];
     [_verificationText resignFirstResponder];
+    [_passWordText resignFirstResponder];
+    [_againPassWordText resignFirstResponder];
+
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [_phoneText resignFirstResponder];
     [_verificationText resignFirstResponder];
+    [_passWordText resignFirstResponder];
+    [_againPassWordText resignFirstResponder];
     return YES;
 }
 - (void)didReceiveMemoryWarning {

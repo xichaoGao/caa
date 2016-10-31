@@ -139,7 +139,7 @@
         _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"1"};
         [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
-            int status = (int)[result objectForKey:@"status"];
+            int status = [[result objectForKey:@"status"] intValue];;
             if (status == 1) {
                 [self againCrateBtn];
                 [self controlTheTime];
@@ -192,7 +192,7 @@
                     hud.hidden = YES;
                     [self resign];
                     NSLog(@"loginResult==%@",result);
-                    int status = (int)[result objectForKey:@"status"];
+                    int status = [[result objectForKey:@"status"] intValue];;
                     if (status == 1) {
         
                        
@@ -220,7 +220,7 @@
     _pramerDic = [NSDictionary dictionary];
     _pramerDic = @{@"phone":_phoneText.text,@"code":_verificationText.text};
     [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kCheckVerification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-        int status = (int)[result objectForKey:@"status"];
+        int status = [[result objectForKey:@"status"] intValue];;
         if (status == 1) {
             _isTure = YES;
             
@@ -258,10 +258,16 @@
 -(void)resign{
     [_phoneText resignFirstResponder];
     [_verificationText resignFirstResponder];
+    [_passWordText resignFirstResponder];
+    [_againPassWordText resignFirstResponder];
+
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [_phoneText resignFirstResponder];
     [_verificationText resignFirstResponder];
+    [_passWordText resignFirstResponder];
+    [_againPassWordText resignFirstResponder];
+
     return YES;
 }
 - (void)didReceiveMemoryWarning {

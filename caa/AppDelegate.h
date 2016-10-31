@@ -11,7 +11,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) NSDictionary *notificationDic; // 获得推送消息内容，判断用户是否是通过推送消息进入
 
 @end
 

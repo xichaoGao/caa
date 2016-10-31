@@ -28,4 +28,9 @@
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kBackgroundColor UIColorFromHex(0Xf4f4f4) //整体背景颜色、底色
+/**
+ *  Notification;
+ */
+#define kDeviveTokenStr @"DeviveTokenStr"
+
 #endif /* CommonDef_h */

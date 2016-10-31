@@ -144,15 +144,14 @@
         [alert showInView:self.view completion:nil];
     }
     else{
-        //        TabBarViewController * tbVC = [[TabBarViewController alloc]init];
-        //        [self.navigationController pushViewController:tbVC animated:YES];
+        
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         _pramerDic = [NSDictionary dictionary];
         _pramerDic = @{@"phone":_phoneText.text,@"password":_passWordText.text,@"code":@""};
-        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:nil RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kLogin RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             NSLog(@"loginResult==%@",result);
-            int status = (int) [result objectForKey:@"status"];
+            int status = [[result objectForKey:@"status"] intValue];;
             if (status == 1) {
                 
                 NSString *userID = [[result objectForKey:@"data"]objectForKey:@"user_id"];
@@ -161,6 +160,7 @@
                 NSString *headImg = [[result objectForKey:@"data"]objectForKey:@"headimg"];
                 NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
                 [user setObject:headImg forKey:@"headImg"];
+                
                 //给名字加密
                 NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"userID":userID,@"token":token,@"nickName":nickName}];
                 EncryptionData *encryptionData = [[EncryptionData alloc] init];
@@ -172,6 +172,9 @@
                 [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
                 
                 [defult synchronize];
+                
+                TabBarViewController * tbVC = [[TabBarViewController alloc]init];
+                [self.navigationController pushViewController:tbVC animated:YES];
             }
             else{
                 NSString *mess = [result objectForKey:@"message"];

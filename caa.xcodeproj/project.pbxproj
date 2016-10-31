@@ -34,6 +34,7 @@
 		0E3872A41DC33E6E00698B90 /* UIViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3872A01DC33E6E00698B90 /* UIViewAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0E621C851DC4B98F00D1136A /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E621C841DC4B98F00D1136A /* libc++abi.tbd */; };
 		0E621C871DC4B9BF00D1136A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E621C861DC4B9BF00D1136A /* libsqlite3.0.tbd */; };
+		0E70126E1DC6E25E00E22A68 /* NotificationConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E70126D1DC6E25E00E22A68 /* NotificationConfigure.m */; };
 		5C16BA70F86F124C17075DFC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD18A227BB14C06C5A522C46 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +113,8 @@
 		0E3872A01DC33E6E00698B90 /* UIViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIViewAdditions.m; path = Classes/Category/UIViewAdditions.m; sourceTree = "<group>"; };
 		0E621C841DC4B98F00D1136A /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		0E621C861DC4B9BF00D1136A /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		0E70126C1DC6E25E00E22A68 /* NotificationConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationConfigure.h; sourceTree = "<group>"; };
+		0E70126D1DC6E25E00E22A68 /* NotificationConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationConfigure.m; sourceTree = "<group>"; };
 		9A8C8286377303B5211B415D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AD18A227BB14C06C5A522C46 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC1B7E292FDBECF78930FC90 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -270,6 +273,8 @@
 		0E3872221DC310BD00698B90 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				0E70126C1DC6E25E00E22A68 /* NotificationConfigure.h */,
+				0E70126D1DC6E25E00E22A68 /* NotificationConfigure.m */,
 				0E3872701DC3290500698B90 /* GetDataHandle.h */,
 				0E3872711DC3290500698B90 /* GetDataHandle.m */,
 			);
@@ -589,6 +594,7 @@
 				0E3871E11DC3033F00698B90 /* main.m in Sources */,
 				0E3872671DC328BC00698B90 /* BaseModel.m in Sources */,
 				0E3872A41DC33E6E00698B90 /* UIViewAdditions.m in Sources */,
+				0E70126E1DC6E25E00E22A68 /* NotificationConfigure.m in Sources */,
 				0E3872791DC32D5100698B90 /* RegisterViewController.m in Sources */,
 				0E38725F1DC328A900698B90 /* JSONKit.m in Sources */,
 				0E38726F1DC328E700698B90 /* HomeViewController.m in Sources */,

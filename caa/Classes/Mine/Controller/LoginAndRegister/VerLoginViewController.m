@@ -100,8 +100,8 @@
         [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             
-            int  Status = (int)[result objectForKey:@"status"];
-            
+            int  Status = [[result objectForKey:@"status"] intValue];
+            NSLog(@"status ----%d",(int)[result objectForKey:@"status"]);
             
             if ( Status == 1 ) {
                 [self controlTheTime];
