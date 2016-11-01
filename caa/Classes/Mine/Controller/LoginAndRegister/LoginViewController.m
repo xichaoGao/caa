@@ -11,6 +11,7 @@
 #import "RegisterViewController.h"
 #import "GetBackPassWordViewController.h"
 #import "TabBarViewController.h"
+#import "JPUSHService.h"
 @interface LoginViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)NSDictionary *pramerDic;
 
@@ -173,6 +174,8 @@
                 [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
                 
                 [defult synchronize];
+                
+                [JPUSHService setTags:nil aliasInbackground:userID];
                 
                 TabBarViewController * tbVC = [[TabBarViewController alloc]init];
                 [self.navigationController pushViewController:tbVC animated:YES];

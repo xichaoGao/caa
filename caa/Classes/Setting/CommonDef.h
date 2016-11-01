@@ -19,7 +19,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "JSONKit.h"
 #import "LGReachability.h"
-
+#import "JPUSHService.h"
 
 #ifndef CommonDef_h
 #define CommonDef_h

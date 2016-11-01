@@ -8,6 +8,7 @@
 
 #import "VerLoginViewController.h"
 #import "TabBarViewController.h"
+#import "JPUSHService.h"
 @interface VerLoginViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)NSDictionary *pramerDic;
 @property(nonatomic,assign)BOOL isTure;
@@ -160,6 +161,8 @@
                 [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
                 
                 [defult synchronize];
+                
+                [JPUSHService setTags:nil aliasInbackground:userID];
                 TabBarViewController * tbVC = [[TabBarViewController alloc]init];
                 [self.navigationController pushViewController:tbVC animated:YES];
                 
