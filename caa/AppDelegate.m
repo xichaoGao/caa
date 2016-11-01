@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "TabBarViewController.h"
 #import "LoginViewController.h"
 #import "NotificationConfigure.h"
 #import "IQKeyboardManager.h"
@@ -22,10 +23,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window.backgroundColor = [UIColor whiteColor];
-    
-    LoginViewController * logVC  = [[LoginViewController alloc]init];
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
-    self.window.rootViewController = nav;
+    TabBarViewController * tabVC = [[TabBarViewController alloc]init];
+    self.window.rootViewController = tabVC;
+//    LoginViewController * logVC  = [[LoginViewController alloc]init];
+//    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
+//    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     /*
      *  键盘弹出事件

@@ -36,6 +36,8 @@
 		0E621C871DC4B9BF00D1136A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E621C861DC4B9BF00D1136A /* libsqlite3.0.tbd */; };
 		0E70126E1DC6E25E00E22A68 /* NotificationConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E70126D1DC6E25E00E22A68 /* NotificationConfigure.m */; };
 		0E7012711DC766B800E22A68 /* PerAdMesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7012701DC766B800E22A68 /* PerAdMesViewController.m */; };
+		0E76E26C1DC8337E008A06C1 /* GraphicLeadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76E26B1DC8337E008A06C1 /* GraphicLeadViewController.m */; };
+		0E76E26F1DC833A6008A06C1 /* AdDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76E26E1DC833A6008A06C1 /* AdDetailViewController.m */; };
 		5C16BA70F86F124C17075DFC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD18A227BB14C06C5A522C46 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -118,6 +120,10 @@
 		0E70126D1DC6E25E00E22A68 /* NotificationConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationConfigure.m; sourceTree = "<group>"; };
 		0E70126F1DC766B800E22A68 /* PerAdMesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerAdMesViewController.h; path = Classes/Home/Controller/PerAdMesViewController.h; sourceTree = "<group>"; };
 		0E7012701DC766B800E22A68 /* PerAdMesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PerAdMesViewController.m; path = Classes/Home/Controller/PerAdMesViewController.m; sourceTree = "<group>"; };
+		0E76E26A1DC8337E008A06C1 /* GraphicLeadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphicLeadViewController.h; path = Classes/Home/Controller/GraphicLeadViewController.h; sourceTree = "<group>"; };
+		0E76E26B1DC8337E008A06C1 /* GraphicLeadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GraphicLeadViewController.m; path = Classes/Home/Controller/GraphicLeadViewController.m; sourceTree = "<group>"; };
+		0E76E26D1DC833A6008A06C1 /* AdDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdDetailViewController.h; path = Classes/Home/Controller/AdDetailViewController.h; sourceTree = "<group>"; };
+		0E76E26E1DC833A6008A06C1 /* AdDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdDetailViewController.m; path = Classes/Home/Controller/AdDetailViewController.m; sourceTree = "<group>"; };
 		9A8C8286377303B5211B415D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AD18A227BB14C06C5A522C46 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC1B7E292FDBECF78930FC90 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -329,6 +335,10 @@
 				0E38726E1DC328E700698B90 /* HomeViewController.m */,
 				0E70126F1DC766B800E22A68 /* PerAdMesViewController.h */,
 				0E7012701DC766B800E22A68 /* PerAdMesViewController.m */,
+				0E76E26A1DC8337E008A06C1 /* GraphicLeadViewController.h */,
+				0E76E26B1DC8337E008A06C1 /* GraphicLeadViewController.m */,
+				0E76E26D1DC833A6008A06C1 /* AdDetailViewController.h */,
+				0E76E26E1DC833A6008A06C1 /* AdDetailViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -584,6 +594,7 @@
 			files = (
 				0E3872721DC3290500698B90 /* GetDataHandle.m in Sources */,
 				0E7012711DC766B800E22A68 /* PerAdMesViewController.m in Sources */,
+				0E76E26F1DC833A6008A06C1 /* AdDetailViewController.m in Sources */,
 				0E3872A11DC33E6E00698B90 /* MBProgressHUD+Package.m in Sources */,
 				0E38727C1DC32EF500698B90 /* GetBackPassWordViewController.m in Sources */,
 				0E38725D1DC328A900698B90 /* EncryptionData.m in Sources */,
@@ -593,6 +604,7 @@
 				0E38726C1DC328D300698B90 /* MineViewController.m in Sources */,
 				0E38725E1DC328A900698B90 /* HYAlertView.m in Sources */,
 				0E3872691DC328BC00698B90 /* TabBarViewController.m in Sources */,
+				0E76E26C1DC8337E008A06C1 /* GraphicLeadViewController.m in Sources */,
 				0E38727F1DC330D300698B90 /* VerLoginViewController.m in Sources */,
 				0E3872601DC328A900698B90 /* LGReachability.m in Sources */,
 				0E3872A21DC33E6E00698B90 /* NSString+Additions.m in Sources */,

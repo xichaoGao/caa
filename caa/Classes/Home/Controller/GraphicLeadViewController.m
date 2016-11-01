@@ -1,18 +1,18 @@
 //
-//  PerAdMesViewController.m
+//  GraphicLeadViewController.m
 //  caa
 //
-//  Created by xichao on 16/10/31.
+//  Created by xichao on 16/11/1.
 //  Copyright © 2016年 xichao. All rights reserved.
 //
 
-#import "PerAdMesViewController.h"
+#import "GraphicLeadViewController.h"
 
-@interface PerAdMesViewController ()
+@interface GraphicLeadViewController ()
 
 @end
 
-@implementation PerAdMesViewController
+@implementation GraphicLeadViewController
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = NO;
@@ -27,7 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"完善广告信息";
+    self.navigationItem.title = @"图文操作指引";
     // Do any additional setup after loading the view.
 }
 
