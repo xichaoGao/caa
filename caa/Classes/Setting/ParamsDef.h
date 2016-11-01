@@ -10,6 +10,7 @@
 #define ParamsDef_h
 #define messageStr  @"7e6e50cbc1838fc9f6030a60ce1e4c2b"
 
+#define KTest @"Test/testPush";
 #define BASEURL @"http://admin.bjyfkj.net/api.php/"
 #define kRegister @"User/addUserByPhone"//注册
 #define kLogin @"User/userLogin"//登录

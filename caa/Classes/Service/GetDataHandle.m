@@ -38,7 +38,7 @@ singleton_implementation(GetDataHandle);
     NSString *str = [BASEURL stringByAppendingString:subUrlString];
     
     NSLog(@"参数 --  %@   url -- %@ ",paramer,str);
-    if (![subUrlString isEqualToString:@"User/checkCode"]){
+    if (![subUrlString isEqualToString:@"User/checkCode"]&&![subUrlString isEqualToString:@"Test/testPush"]){
     [managers POST:str parameters:paramer progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *dic = [resultString mj_JSONObject];

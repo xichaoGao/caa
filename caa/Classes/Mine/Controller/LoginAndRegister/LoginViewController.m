@@ -163,20 +163,24 @@
                 NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
                 [user setObject:headImg forKey:@"headImg"];
                 
-                //给名字加密
-                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"userID":userID,@"token":token,@"nickName":nickName}];
-                EncryptionData *encryptionData = [[EncryptionData alloc] init];
-                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
-                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
-                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
+//                //给名字加密
+//                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"userID":userID,@"token":token,@"nickName":nickName}];
+//                EncryptionData *encryptionData = [[EncryptionData alloc] init];
+//                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
+//                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
+//                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
                 
                 NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
-                [defult setObject:passPortMemberStatusMemberIDStr forKey:@"passPortMemberStatusMemberIDStr"];
-                
+                [defult setObject:userID forKey:@"userID"];
+                [defult setObject:nickName forKey:@"nickName"];
+                [defult setObject:token forKey:@"token"];
+
                 [defult synchronize];
                 
-                [JPUSHService setTags:nil aliasInbackground:userID];
-                
+//                [JPUSHService setTags:nil aliasInbackground:userID];
+                [JPUSHService setTags:nil alias:userID fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+                    NSLog(@"%d   %@",iResCode,iAlias);
+                }];
                 TabBarViewController * tbVC = [[TabBarViewController alloc]init];
                 [self.navigationController pushViewController:tbVC animated:YES];
             }
