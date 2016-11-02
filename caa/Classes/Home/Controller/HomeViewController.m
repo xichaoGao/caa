@@ -32,7 +32,7 @@
     // Do any additional setup after loading the view.
 }
 -(void)createUI{
-    _leadView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, kScreenWidth, 220*WidthRate)];
+    _leadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 220*WidthRate)];
     _leadView.userInteractionEnabled = YES;
     [self.view addSubview:_leadView];
     _leadImg = [[UIImageView alloc]initWithFrame:_leadView.frame];

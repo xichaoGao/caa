@@ -63,12 +63,12 @@
 
 -(void)errorMessages:(NSString *)errorStr{
     
-//    if (errorStr.length == 0) {
-//        errorStr = @"获取数据失败";
-//    }
-//    
-//    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:errorStr buttonTitles:@"确定", nil];
-//    [alert showInView:self.view completion:nil];
+    if (errorStr.length == 0) {
+        errorStr = @"获取数据失败";
+    }
+    
+    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:errorStr buttonTitles:@"确定", nil];
+    [alert showInView:self.view completion:nil];
     
 }
 

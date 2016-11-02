@@ -186,7 +186,7 @@
     }
     else if (![_againPassWordText.text isEqualToString:_passWordText.text]){
         
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不一致" buttonTitles:@"确定", nil];
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"俩次密码不一致" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
 

@@ -20,6 +20,10 @@
 @implementation LoginViewController
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    _phoneText.text = @"";
+    _phoneText.placeholder = @"手机号码";
+    _passWordText.text = @"";
+    _passWordText.placeholder = @"密码";
     self.navigationController.navigationBarHidden = YES;
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 20)];
     //设置
@@ -156,6 +160,7 @@
             int status = [[result objectForKey:@"status"] intValue];;
             if (status == 1) {
                 
+//                NSString *userID = @"d1";
                 NSString *userID = [[result objectForKey:@"data"]objectForKey:@"user_id"];
                 NSString *nickName = [[result objectForKey:@"data"]objectForKey:@"nickname"];
                 NSString *token = [[result objectForKey:@"data"]objectForKey:@"token"];

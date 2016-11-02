@@ -20,11 +20,11 @@ static NSString * const JPUSHAPPKEY = @"b415106cea8b70ed3aabce2a"; // 极光appK
 static NSString * const channel = @"Publish channel"; // 固定的
 #ifdef DEBUG // 开发
 
-static BOOL const isProduction = FALSE; // 极光FALSE为开发环境
+static BOOL const isProduction = TRUE; // 极光FALSE为开发环境
 
 #else // 生产
 
-static BOOL const isProduction = TRUE; // 极光TRUE为生产环境
+static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 
 #endif
 @interface AppDelegate ()<JPUSHRegisterDelegate>
@@ -39,11 +39,11 @@ static BOOL const isProduction = TRUE; // 极光TRUE为生产环境
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window.backgroundColor = [UIColor whiteColor];
-//    TabBarViewController * tabVC = [[TabBarViewController alloc]init];
-//    self.window.rootViewController = tabVC;
-    LoginViewController * logVC  = [[LoginViewController alloc]init];
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
-    self.window.rootViewController = nav;
+    TabBarViewController * tabVC = [[TabBarViewController alloc]init];
+    self.window.rootViewController = tabVC;
+//    LoginViewController * logVC  = [[LoginViewController alloc]init];
+//    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
+//    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     /*
      *  键盘弹出事件

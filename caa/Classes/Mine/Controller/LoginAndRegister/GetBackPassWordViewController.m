@@ -168,10 +168,9 @@
         
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
-    }
+    }else{
      [self Verification];
-
-   
+    }
     
     
 }
@@ -214,6 +213,10 @@
     else if ([_againPassWordText.text isEqualToString:@""]){
         
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if (![_againPassWordText.text isEqualToString:_passWordText.text]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"俩次密码不一致" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
     else{
