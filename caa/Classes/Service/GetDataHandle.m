@@ -28,7 +28,7 @@ singleton_implementation(GetDataHandle);
     NSString * md5Str = [md5Items[0] stringByAppendingString:[self md5:@"bjyfkj4006010136"]];
     NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
     NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"sign":sign}];
-    NSLog(@"sign+++++%@",sign);
+//    NSLog(@"sign+++++%@",sign);
       if (requestDic != nil) {
         [paramer addEntriesFromDictionary:requestDic];
     }

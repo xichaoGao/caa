@@ -10,6 +10,7 @@
 
 @interface PerAdMesViewController : BaseViewController
 @property(nonatomic,strong)UIView * bgView;
+@property(nonatomic,strong)UIImageView * photoImg;
 @property(nonatomic,strong)UILabel * defaultLab;
 @property(nonatomic,strong)UIButton * addBtn;
 @property(nonatomic,strong)UILabel * titleLab;
@@ -19,7 +20,9 @@
 @property(nonatomic,strong)UIImageView * effectImg;
 @property(nonatomic,strong)UILabel * effectNumLab;
 @property(nonatomic,strong)UILabel * textLab;
+@property(nonatomic,strong)UIView * textBgView;
 @property(nonatomic,strong)UILabel * textDeLab;
+@property(nonatomic,strong)UILabel * defTextDeLab;
 
 
 @property(nonatomic,strong)UIButton * previewBtn;

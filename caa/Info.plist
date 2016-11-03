@@ -3,7 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>zh_CN</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>亲啊，打开相册可以吗</string>
+	<key>NSCameraUsageDescription</key>
+	<string>亲，打开相机好吗？</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

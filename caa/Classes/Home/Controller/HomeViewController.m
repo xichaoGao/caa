@@ -119,14 +119,14 @@
     
 }
 -(void)leadDetailTap{
-    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-    
-    _pramerDic = [NSDictionary dictionary];
-    _pramerDic = @{@"cmd":@"skdlflk",@"msg":@"dslfjslkdjflksd",@"alias":[user valueForKey:@"userID"]};
-    [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:@"Test/testPush" RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-        NSLog(@"loginResult==%@",result);
-        
-    }];
+//    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+//    
+//    _pramerDic = [NSDictionary dictionary];
+//    _pramerDic = @{@"cmd":@"skdlflk",@"msg":@"dslfjslkdjflksd",@"alias":[user valueForKey:@"userID"]};
+//    [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:@"Test/testPush" RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+//        NSLog(@"loginResult==%@",result);
+//        
+//    }];
     GraphicLeadViewController * logVC = [[GraphicLeadViewController alloc]init];
     logVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:logVC animated:YES];

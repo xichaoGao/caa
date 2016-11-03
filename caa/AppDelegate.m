@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "JSONKit.h"
 #import "TabBarViewController.h"
 #import "LoginViewController.h"
 #import "NotificationConfigure.h"
@@ -39,11 +40,11 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window.backgroundColor = [UIColor whiteColor];
-    TabBarViewController * tabVC = [[TabBarViewController alloc]init];
-    self.window.rootViewController = tabVC;
-//    LoginViewController * logVC  = [[LoginViewController alloc]init];
-//    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
-//    self.window.rootViewController = nav;
+//    TabBarViewController * tabVC = [[TabBarViewController alloc]init];
+//    self.window.rootViewController = tabVC;
+    LoginViewController * logVC  = [[LoginViewController alloc]init];
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
+    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     /*
      *  键盘弹出事件
@@ -75,7 +76,8 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
         [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert) categories:nil];
     }
     [JPUSHService setupWithOption:launchOptions appKey:JPUSHAPPKEY channel:channel apsForProduction:isProduction advertisingIdentifier:nil];
-
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
 
     // Override point for customization after application launch.
     return YES;
@@ -110,7 +112,16 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     }
     completionHandler(UIBackgroundFetchResultNewData);
 }
-
+- (void)networkDidReceiveMessage:(NSNotification *)notification {
+    NSDictionary * userInfo = [notification userInfo];
+    NSString *content = [userInfo valueForKey:@"content"];
+    NSMutableDictionary *dic = [content mj_JSONObject];
+    NSLog(@"%@",dic);
+    NSLog(@"%@ %@",[dic objectForKey:@"cmd"],[dic objectForKey:@"msg"]);
+       NSDictionary *extras = [userInfo valueForKey:@"extras"];
+    NSString *customizeField1 = [extras valueForKey:@"customizeField1"]; //服务端传递的Extras附加字段，key是自己定义的
+   
+}
 // ---------------------------------------------------------------------------------
 
 #pragma mark - iOS10: 收到推送消息调用(iOS10是通过Delegate实现的回调)

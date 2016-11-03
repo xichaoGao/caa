@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden = YES;
     // Do any additional setup after loading the view.
     self.tabBarController.tabBar.backgroundColor = [UIColor whiteColor];
     self.tabBar.tintColor = UIColorFromHex(0Xff5971);

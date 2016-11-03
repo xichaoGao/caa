@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "FAC59A7D29E900E7F0E7FE2132C781C006E7655F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "BC2455ACFB1665C48194DDBEA0D873F8F0B4DE24" : 9223372036854775807,
+    "FAC59A7D29E900E7F0E7FE2132C781C006E7655F" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "086EB989-9F6A-4125-83D6-DDC3B9219892",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "BC2455ACFB1665C48194DDBEA0D873F8F0B4DE24" : "Downloads\/imagePickerNew\/imagePickerNew\/",
+    "FAC59A7D29E900E7F0E7FE2132C781C006E7655F" : "caa\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "caa",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "caa.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/610187595\/imagePickerNew.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BC2455ACFB1665C48194DDBEA0D873F8F0B4DE24"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/xichaoGao\/caa.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FAC59A7D29E900E7F0E7FE2132C781C006E7655F"
+    }
+  ]
+}

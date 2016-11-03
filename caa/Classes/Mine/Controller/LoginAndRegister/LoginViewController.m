@@ -161,7 +161,7 @@
             if (status == 1) {
                 
 //                NSString *userID = @"d1";
-                NSString *userID = [[result objectForKey:@"data"]objectForKey:@"user_id"];
+                NSString *userID = [@"d" stringByAppendingFormat:@"%@",[[result objectForKey:@"data"]objectForKey:@"user_id"]];
                 NSString *nickName = [[result objectForKey:@"data"]objectForKey:@"nickname"];
                 NSString *token = [[result objectForKey:@"data"]objectForKey:@"token"];
                 NSString *headImg = [[result objectForKey:@"data"]objectForKey:@"headimg"];
