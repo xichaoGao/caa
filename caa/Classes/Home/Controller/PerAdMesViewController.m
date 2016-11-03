@@ -9,9 +9,11 @@
 #import "PerAdMesViewController.h"
 #import "BusinessChooseViewController.h"
 #import "JKImagePickerController.h"
-
+#import "XWScanImage.h"
+#import "TextView.h"
 @interface PerAdMesViewController ()<UITextFieldDelegate,JKImagePickerControllerDelegate>
 @property (strong,nonatomic)NSMutableArray *assetsArray;
+@property(nonatomic,strong)NSMutableArray * imgArray;
 
 @end
 
@@ -21,9 +23,7 @@
     self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     [_previewBtn setBackgroundColor:[UIColor whiteColor]];
-   
     [_nextBtn setBackgroundColor:[UIColor whiteColor]];
-    
 
 }
 -(void)viewWillDisappear:(BOOL)animated{
@@ -36,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _assetsArray = [NSMutableArray array];
+    _imgArray = [NSMutableArray array];
     self.navigationItem.title = @"完善广告信息";
     [self createUI];
     // Do any additional setup after loading the view.
@@ -48,16 +49,12 @@
     _bgView.backgroundColor = [UIColor whiteColor];
     _bgView.layer.cornerRadius = 5;
     [self.view addSubview:_bgView];
-    if (_assetsArray.count == 0){
     _defaultLab = [[UILabel alloc]initWithFrame:CGRectMake((_bgView.width - 145*WidthRate)/2, (_bgView.height - 60*WidthRate)/2, 150*WidthRate, 60*WidthRate)];
-    _defaultLab.text = @"添加商品照片";
+    _defaultLab.text = @"  添加商品照片";
     _defaultLab.textColor  = RGB(0.84, 0.84, 0.84);
-    _defaultLab.font = [UIFont systemFontOfSize:20];
+    _defaultLab.font = [UIFont systemFontOfSize:18];
     [_bgView addSubview:_defaultLab];
-    }
-    else{
-        
-    }
+   
     _addBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     _addBtn.frame = CGRectMake(_bgView.right-45, _bgView.bottom - 45, 25, 25);
     [_addBtn setBackgroundImage:[UIImage imageNamed:@"home_addphotos"] forState:UIControlStateNormal];
@@ -100,7 +97,7 @@
         _effectNumLab.font  = [UIFont systemFontOfSize:10];
         [self.view addSubview:_effectImg];
         [self.view addSubview: _effectNumLab];
-        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(effectSelectTap:)];
+        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bigTap:)];
         [_effectImg addGestureRecognizer:tapGes];
         
     }
@@ -109,8 +106,9 @@
     _textLab.textColor = RGB(0.41, 0.41, 0.41);
     _textLab.text = @"动画文字:";
     [self.view addSubview:_textLab];
-    
-    _textBgView = [[UIView alloc]initWithFrame:CGRectMake(_textLab.right + 10, _textLab.origin.y, kScreenWidth - _textLab.right-27, 60*WidthRate)];
+    NSUserDefaults * use = [NSUserDefaults standardUserDefaults];
+
+    _textBgView = [[UIView alloc]initWithFrame:CGRectMake(_textLab.right, _textLab.origin.y, kScreenWidth - _textLab.right-17, 60*WidthRate)];
     _textBgView.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
     _textBgView.layer.borderWidth = 1;
     _textBgView.userInteractionEnabled = YES;
@@ -118,15 +116,17 @@
     UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addTextTap)];
     [_textBgView addGestureRecognizer:tapGes];
     _textDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _textBgView.width-10, _textBgView.height-10)];
-    _textDeLab.font = [UIFont systemFontOfSize:10];
+    _textDeLab.font = [UIFont systemFontOfSize:12];
     _textDeLab.numberOfLines = 4;
+    _textDeLab.text = [use objectForKey:@"text"]?[use objectForKey:@"text"]:@"";
     _textDeLab.textColor = RGB(0.41, 0.41, 0.41);
     [_textBgView addSubview:_textDeLab];
     
-    _defTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _textBgView.width-10, _textBgView.height-10)];
+   
+    _defTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _textBgView.width-10, _textBgView.height-30)];
     _defTextDeLab.numberOfLines = 0;
-    _defTextDeLab.font = [UIFont systemFontOfSize:20];
-    _defTextDeLab.text = @"文字个数五十";
+    _defTextDeLab.text = @"请输入文字描述";
+    _defTextDeLab.font = [UIFont systemFontOfSize:14];
     _defTextDeLab.textColor = RGB(0.84, 0.84, 0.84);
     [_textBgView addSubview:_defTextDeLab];
 
@@ -157,6 +157,11 @@
     [_nextBtn setTitleColor:RGB(0.98, 0.88, 0.85) forState:UIControlStateSelected];
     [self.view addSubview:_nextBtn];
     [_nextBtn addTarget:self action:@selector(nextClick:) forControlEvents:UIControlEventTouchUpInside];
+    if([[use objectForKey:@"text"] length] > 0){
+        _defTextDeLab.hidden = YES;
+    }else
+        _defTextDeLab.hidden = NO;
+
     
 }
 -(void)addPhotoClick{
@@ -174,16 +179,33 @@
 - (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
 {
     self.assetsArray=[assets mutableCopy];
-    NSLog(@"%ld",self.assetsArray.count);
+    [_imgArray removeAllObjects];
+    NSLog(@"%ld",(unsigned long)self.assetsArray.count);
     [imagePicker dismissViewControllerAnimated:YES completion:^{
-        
+        if (_assetsArray.count == 0){
+            _defaultLab.hidden = NO;
+        }else{
+            _defaultLab.hidden = YES;
+            [_bgView removeAllSubviews];
+            [_bgView addSubview:_addBtn];
+
+        for (int i = 0; i<_assetsArray.count;i++){
+            _photoImg = [[UIImageView alloc]initWithFrame:CGRectMake((i%5)*((_bgView.width - 60*WidthRate)/5 +11)+11, (i/5)*((_bgView.width - 60*WidthRate)/5+11)+11, (_bgView.width - 66*WidthRate)/5, (_bgView.width - 66*WidthRate)/5)];
+            _photoImg.userInteractionEnabled = YES;
+            [_photoImg sd_setImageWithURL:nil placeholderImage:_imgArray[i]];
+            [_bgView addSubview:_photoImg];
+            UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bigTap:)];
+            [_photoImg addGestureRecognizer:tapGes];
+            }
+        }
     }];
     for (JKAssets *asset in assets) {
         ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
         [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
             if (asset) {
                 UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
-                NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+                [_imgArray addObject:image];
+//                NSData *imageData = UIImageJPEGRepresentation(image,0.5);
                 
             }
             
@@ -197,22 +219,42 @@
     [imagePicker dismissViewControllerAnimated:YES completion:^{
     }];
 }
+-(void)bigTap:(UITapGestureRecognizer *)tap{
+    UIImageView *clickedImageView = (UIImageView *)tap.view;
+    [XWScanImage scanBigImageWithImageView:clickedImageView];
+}
 
 -(void)effectSelectTap:(UITapGestureRecognizer *)tap{
     UIImageView * img = (UIImageView *)tap.view;
-    NSLog(@"%ld",img.tag);
+    NSLog(@"%ld",(long)img.tag);
 }
 -(void)addTextTap{
-    _defTextDeLab.hidden = YES;
-    NSLog(@"%@",@"文字编写");
+    TextView * view = [[TextView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    [self.view addSubview:view];
+    view.block=^(NSString * str){
+        if (str.length == 0 ){
+            _defTextDeLab.hidden = NO;
+        _defTextDeLab.text = @"请输入文字描述";
+        }else
+        {
+            _defTextDeLab.hidden = YES;
+            _textDeLab.text = str;
+
+        }
+        
+    };
+    
+  
+    
 }
 -(void)previewClick:(UIButton *)btn{
     btn.selected =!btn.selected;
     if (btn.selected == YES){
         btn.selected = !btn.selected;
-
-    [_previewBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
-    
+        [_previewBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
+        BusinessChooseViewController * bcVC = [[BusinessChooseViewController alloc]init];
+        bcVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:bcVC animated:YES];
     }
     else{
         [_previewBtn setBackgroundColor:[UIColor whiteColor]];
@@ -238,6 +280,7 @@
     [_titleText resignFirstResponder];
     return YES;
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

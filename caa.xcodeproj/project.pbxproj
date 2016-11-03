@@ -55,7 +55,6 @@
 		0E70126E1DC6E25E00E22A68 /* NotificationConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E70126D1DC6E25E00E22A68 /* NotificationConfigure.m */; };
 		0E7012711DC766B800E22A68 /* PerAdMesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7012701DC766B800E22A68 /* PerAdMesViewController.m */; };
 		0E76E26C1DC8337E008A06C1 /* GraphicLeadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76E26B1DC8337E008A06C1 /* GraphicLeadViewController.m */; };
-		0E76E26F1DC833A6008A06C1 /* AdDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76E26E1DC833A6008A06C1 /* AdDetailViewController.m */; };
 		0E76E2731DC8693B008A06C1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E76E2721DC8693B008A06C1 /* CFNetwork.framework */; };
 		0E76E2751DC86945008A06C1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E76E2741DC86945008A06C1 /* CoreFoundation.framework */; };
 		0E76E2771DC86950008A06C1 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E76E2761DC86950008A06C1 /* CoreTelephony.framework */; };
@@ -68,6 +67,11 @@
 		0E76E28B1DC87A80008A06C1 /* libz.1.2.8.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E76E28A1DC87A80008A06C1 /* libz.1.2.8.tbd */; };
 		0E76E28D1DC88504008A06C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E76E28C1DC88504008A06C1 /* Foundation.framework */; };
 		0E76E28F1DC88518008A06C1 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E76E28E1DC88518008A06C1 /* libresolv.tbd */; };
+		0E812A681DCAD99500076EC1 /* XWScanImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A671DCAD99500076EC1 /* XWScanImage.m */; };
+		0E812A6B1DCADCB100076EC1 /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A6A1DCADCB100076EC1 /* TextView.m */; };
+		0E812A6E1DCB2C8500076EC1 /* ReleaseDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A6D1DCB2C8500076EC1 /* ReleaseDetailViewController.m */; };
+		0E812A711DCB2DB900076EC1 /* ScreenDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A701DCB2DB900076EC1 /* ScreenDetailViewController.m */; };
+		0E812A741DCB515700076EC1 /* ReleaseDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A731DCB515700076EC1 /* ReleaseDetailTableViewCell.m */; };
 		5C16BA70F86F124C17075DFC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD18A227BB14C06C5A522C46 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -184,8 +188,6 @@
 		0E7012701DC766B800E22A68 /* PerAdMesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PerAdMesViewController.m; path = Classes/Home/Controller/PerAdMesViewController.m; sourceTree = "<group>"; };
 		0E76E26A1DC8337E008A06C1 /* GraphicLeadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphicLeadViewController.h; path = Classes/Home/Controller/GraphicLeadViewController.h; sourceTree = "<group>"; };
 		0E76E26B1DC8337E008A06C1 /* GraphicLeadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GraphicLeadViewController.m; path = Classes/Home/Controller/GraphicLeadViewController.m; sourceTree = "<group>"; };
-		0E76E26D1DC833A6008A06C1 /* AdDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdDetailViewController.h; path = Classes/Home/Controller/AdDetailViewController.h; sourceTree = "<group>"; };
-		0E76E26E1DC833A6008A06C1 /* AdDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdDetailViewController.m; path = Classes/Home/Controller/AdDetailViewController.m; sourceTree = "<group>"; };
 		0E76E2721DC8693B008A06C1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0E76E2741DC86945008A06C1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		0E76E2761DC86950008A06C1 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -200,6 +202,16 @@
 		0E76E28A1DC87A80008A06C1 /* libz.1.2.8.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.8.tbd; path = usr/lib/libz.1.2.8.tbd; sourceTree = SDKROOT; };
 		0E76E28C1DC88504008A06C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E76E28E1DC88518008A06C1 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		0E812A661DCAD99500076EC1 /* XWScanImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XWScanImage.h; path = Classes/Thirds/XWScanImage/XWScanImage.h; sourceTree = "<group>"; };
+		0E812A671DCAD99500076EC1 /* XWScanImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XWScanImage.m; path = Classes/Thirds/XWScanImage/XWScanImage.m; sourceTree = "<group>"; };
+		0E812A691DCADCB100076EC1 /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextView.h; path = Classes/Home/View/TextView.h; sourceTree = "<group>"; };
+		0E812A6A1DCADCB100076EC1 /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextView.m; path = Classes/Home/View/TextView.m; sourceTree = "<group>"; };
+		0E812A6C1DCB2C8500076EC1 /* ReleaseDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReleaseDetailViewController.h; path = Classes/Home/Controller/ReleaseDetailViewController.h; sourceTree = "<group>"; };
+		0E812A6D1DCB2C8500076EC1 /* ReleaseDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReleaseDetailViewController.m; path = Classes/Home/Controller/ReleaseDetailViewController.m; sourceTree = "<group>"; };
+		0E812A6F1DCB2DB900076EC1 /* ScreenDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScreenDetailViewController.h; path = Classes/Home/Controller/ScreenDetailViewController.h; sourceTree = "<group>"; };
+		0E812A701DCB2DB900076EC1 /* ScreenDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenDetailViewController.m; path = Classes/Home/Controller/ScreenDetailViewController.m; sourceTree = "<group>"; };
+		0E812A721DCB515700076EC1 /* ReleaseDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReleaseDetailTableViewCell.h; path = Classes/Home/View/ReleaseDetailTableViewCell.h; sourceTree = "<group>"; };
+		0E812A731DCB515700076EC1 /* ReleaseDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReleaseDetailTableViewCell.m; path = Classes/Home/View/ReleaseDetailTableViewCell.m; sourceTree = "<group>"; };
 		9A8C8286377303B5211B415D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AD18A227BB14C06C5A522C46 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC1B7E292FDBECF78930FC90 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -347,6 +359,7 @@
 		0E3872201DC310A700698B90 /* Thirds */ = {
 			isa = PBXGroup;
 			children = (
+				0E812A651DCAD97D00076EC1 /* XWScanImage */,
 				0E6BBAE11DCA0DB600A01F44 /* JKAssets */,
 				0E76E2831DC86C41008A06C1 /* Push */,
 				0E3872551DC328A900698B90 /* EncryptionData.h */,
@@ -417,6 +430,10 @@
 		0E3872261DC3111D00698B90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0E812A691DCADCB100076EC1 /* TextView.h */,
+				0E812A6A1DCADCB100076EC1 /* TextView.m */,
+				0E812A721DCB515700076EC1 /* ReleaseDetailTableViewCell.h */,
+				0E812A731DCB515700076EC1 /* ReleaseDetailTableViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -430,10 +447,12 @@
 				0E7012701DC766B800E22A68 /* PerAdMesViewController.m */,
 				0E76E26A1DC8337E008A06C1 /* GraphicLeadViewController.h */,
 				0E76E26B1DC8337E008A06C1 /* GraphicLeadViewController.m */,
-				0E76E26D1DC833A6008A06C1 /* AdDetailViewController.h */,
-				0E76E26E1DC833A6008A06C1 /* AdDetailViewController.m */,
 				0E6BBADE1DC9D70300A01F44 /* BusinessChooseViewController.h */,
 				0E6BBADF1DC9D70300A01F44 /* BusinessChooseViewController.m */,
+				0E812A6C1DCB2C8500076EC1 /* ReleaseDetailViewController.h */,
+				0E812A6D1DCB2C8500076EC1 /* ReleaseDetailViewController.m */,
+				0E812A6F1DCB2DB900076EC1 /* ScreenDetailViewController.h */,
+				0E812A701DCB2DB900076EC1 /* ScreenDetailViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -534,6 +553,15 @@
 				0E76E2881DC86CB6008A06C1 /* JPUSHService.h */,
 			);
 			name = Push;
+			sourceTree = "<group>";
+		};
+		0E812A651DCAD97D00076EC1 /* XWScanImage */ = {
+			isa = PBXGroup;
+			children = (
+				0E812A661DCAD99500076EC1 /* XWScanImage.h */,
+				0E812A671DCAD99500076EC1 /* XWScanImage.m */,
+			);
+			name = XWScanImage;
 			sourceTree = "<group>";
 		};
 		32D775FAE73A06FF6B6A76B9 /* Frameworks */ = {
@@ -757,8 +785,8 @@
 				0E3872721DC3290500698B90 /* GetDataHandle.m in Sources */,
 				0E7012711DC766B800E22A68 /* PerAdMesViewController.m in Sources */,
 				0E6BBB0B1DCA0DE000A01F44 /* JKUtil.m in Sources */,
-				0E76E26F1DC833A6008A06C1 /* AdDetailViewController.m in Sources */,
 				0E3872A11DC33E6E00698B90 /* MBProgressHUD+Package.m in Sources */,
+				0E812A741DCB515700076EC1 /* ReleaseDetailTableViewCell.m in Sources */,
 				0E38727C1DC32EF500698B90 /* GetBackPassWordViewController.m in Sources */,
 				0E38725D1DC328A900698B90 /* EncryptionData.m in Sources */,
 				0E3872761DC32D3700698B90 /* LoginViewController.m in Sources */,
@@ -768,6 +796,7 @@
 				0E6BBB0D1DCA0DE000A01F44 /* UIView+JKPicker.m in Sources */,
 				0E3872A31DC33E6E00698B90 /* UIView+LayerAttributes.m in Sources */,
 				0E6BBB091DCA0DE000A01F44 /* JKPhotoBrowserCell.m in Sources */,
+				0E812A6E1DCB2C8500076EC1 /* ReleaseDetailViewController.m in Sources */,
 				0E6BBAE01DC9D70300A01F44 /* BusinessChooseViewController.m in Sources */,
 				0E38726C1DC328D300698B90 /* MineViewController.m in Sources */,
 				0E38725E1DC328A900698B90 /* HYAlertView.m in Sources */,
@@ -775,6 +804,8 @@
 				0E6BBB061DCA0DDF00A01F44 /* JKImagePickerController.m in Sources */,
 				0E76E26C1DC8337E008A06C1 /* GraphicLeadViewController.m in Sources */,
 				0E38727F1DC330D300698B90 /* VerLoginViewController.m in Sources */,
+				0E812A6B1DCADCB100076EC1 /* TextView.m in Sources */,
+				0E812A681DCAD99500076EC1 /* XWScanImage.m in Sources */,
 				0E3872601DC328A900698B90 /* LGReachability.m in Sources */,
 				0E6BBB0C1DCA0DE000A01F44 /* PhotoAlbumManager.m in Sources */,
 				0E3872A21DC33E6E00698B90 /* NSString+Additions.m in Sources */,
@@ -782,6 +813,7 @@
 				0E3871E41DC3033F00698B90 /* AppDelegate.m in Sources */,
 				0E6BBB051DCA0DDF00A01F44 /* JKAssetsViewCell.m in Sources */,
 				0E3871E11DC3033F00698B90 /* main.m in Sources */,
+				0E812A711DCB2DB900076EC1 /* ScreenDetailViewController.m in Sources */,
 				0E3872671DC328BC00698B90 /* BaseModel.m in Sources */,
 				0E3872A41DC33E6E00698B90 /* UIViewAdditions.m in Sources */,
 				0E6BBB001DCA0DDF00A01F44 /* JKAssets.m in Sources */,

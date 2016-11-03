@@ -9,7 +9,7 @@
 #import "HomeViewController.h"
 #import "GraphicLeadViewController.h"
 #import "PerAdMesViewController.h"
-#import "AdDetailViewController.h"
+#import "ReleaseDetailViewController.h"
 @interface HomeViewController ()
 @property(nonatomic,strong)NSDictionary *pramerDic;
 @end
@@ -137,9 +137,9 @@
     [self.navigationController pushViewController:paVC animated:YES];
 }
 -(void)detailClick{
-    AdDetailViewController * adVC = [[AdDetailViewController alloc]init];
-    adVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:adVC animated:YES];
+    ReleaseDetailViewController * rdVC = [[ReleaseDetailViewController alloc]init];
+    rdVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:rdVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

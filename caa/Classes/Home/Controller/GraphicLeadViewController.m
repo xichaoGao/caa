@@ -8,7 +8,7 @@
 
 #import "GraphicLeadViewController.h"
 
-@interface GraphicLeadViewController ()
+@interface GraphicLeadViewController ()<UIWebViewDelegate>
 
 @end
 
@@ -29,6 +29,34 @@
     [super viewDidLoad];
     self.navigationItem.title = @"图文操作指引";
     // Do any additional setup after loading the view.
+}
+#pragma mark - initWebView
+-(void)createWebView{
+    UIWebView* webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    webView.backgroundColor = kBackgroundColor;
+    [self.view addSubview:webView];
+    webView.delegate = self;
+    NSURL* url;
+    url = [NSURL URLWithString:@""];//创建URL
+    
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url];
+    [webView loadRequest:request];//加载
+    
+    [self showMBProgressView];
+}
+#pragma mark - UIwebView delegare
+-(void)webViewDidStartLoad:(UIWebView*)webView{
+    
+}
+-(void)webViewDidFinishLoad:(UIWebView*)webView{
+//    _shareTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];//获取
+    [self hiddenMBProgressView];
+}
+-(void)webView:(UIWebView*)webView  DidFailLoadWithError:(NSError*)error{
+    [self hiddenMBProgressView];
+    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"加载失败" buttonTitles:@"确定", nil];
+    [alert showInView:self.view completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

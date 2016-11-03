@@ -1,33 +1,21 @@
 //
-//  AdDetailViewController.m
+//  ScreenDetailViewController.m
 //  caa
 //
-//  Created by xichao on 16/11/1.
+//  Created by xichao on 16/11/3.
 //  Copyright © 2016年 xichao. All rights reserved.
 //
 
-#import "AdDetailViewController.h"
+#import "ScreenDetailViewController.h"
 
-@interface AdDetailViewController ()
+@interface ScreenDetailViewController ()
 
 @end
 
-@implementation AdDetailViewController
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
-    self.navigationController.navigationBarHidden = NO;
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-}
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    
-    
-}
+@implementation ScreenDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"展屏详情";
     // Do any additional setup after loading the view.
 }
 

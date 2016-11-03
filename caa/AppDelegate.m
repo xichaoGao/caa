@@ -40,11 +40,11 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window.backgroundColor = [UIColor whiteColor];
-//    TabBarViewController * tabVC = [[TabBarViewController alloc]init];
-//    self.window.rootViewController = tabVC;
-    LoginViewController * logVC  = [[LoginViewController alloc]init];
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
-    self.window.rootViewController = nav;
+    TabBarViewController * tabVC = [[TabBarViewController alloc]init];
+    self.window.rootViewController = tabVC;
+//    LoginViewController * logVC  = [[LoginViewController alloc]init];
+//    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
+//    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     /*
      *  键盘弹出事件
@@ -118,8 +118,8 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     NSMutableDictionary *dic = [content mj_JSONObject];
     NSLog(@"%@",dic);
     NSLog(@"%@ %@",[dic objectForKey:@"cmd"],[dic objectForKey:@"msg"]);
-       NSDictionary *extras = [userInfo valueForKey:@"extras"];
-    NSString *customizeField1 = [extras valueForKey:@"customizeField1"]; //服务端传递的Extras附加字段，key是自己定义的
+//       NSDictionary *extras = [userInfo valueForKey:@"extras"];
+//    NSString *customizeField1 = [extras valueForKey:@"customizeField1"]; //服务端传递的Extras附加字段，key是自己定义的
    
 }
 // ---------------------------------------------------------------------------------

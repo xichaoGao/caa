@@ -22,25 +22,25 @@
 - (void)showMBProgressView;
 - (void)hiddenMBProgressView;
 
-/*
- *  获取解密后的memberID
- */
-
--(NSString *)getMemberIDWithEncrypt;
-
-/*
- * 加密
- */
--(id)encryptWithParamer:(id)paramer;
+///*
+// *  获取解密后的memberID
+// */
+//
+//-(NSString *)getMemberIDWithEncrypt;
+//
+///*
+// * 加密
+// */
+//-(id)encryptWithParamer:(id)paramer;
 -(NSString *)md5:(NSString *)string;
-/*
- * 解密
- */
--(id)decryptionWithResult:(id)result;
-
-/*
- * 长连接参数
- */
+///*
+// * 解密
+// */
+//-(id)decryptionWithResult:(id)result;
+//
+///*
+// * 长连接参数
+// */
 
 
 @end
