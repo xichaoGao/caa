@@ -50,7 +50,7 @@
     _faceLab = [[UILabel alloc]initWithFrame:CGRectMake((_leadImg.width - 150*WidthRate)/2, _faceImg.bottom + 5, 150*WidthRate, 30*WidthRate)];
     _faceLab.text = @"加载中...";
     _faceLab.textColor = RGB(0.84, 0.84, 0.84);
-    _faceLab.textAlignment = UITextAlignmentCenter;
+    _faceLab.textAlignment = NSTextAlignmentCenter;
     _faceLab.font = [UIFont systemFontOfSize:20];
     [_leadImg addSubview:_faceLab];
 

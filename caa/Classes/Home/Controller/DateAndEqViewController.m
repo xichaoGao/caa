@@ -103,14 +103,14 @@
     titleLab.textColor = RGB(0.30, 0.30, 0.30);
     titleLab.font = [UIFont systemFontOfSize:18];
     [view addSubview:titleLab];
-    UILabel * allSelectLab = [[UILabel alloc]initWithFrame:CGRectMake(view.width - 12-40, titleLab.top+2, 40, 25)];
+    UILabel * allSelectLab = [[UILabel alloc]initWithFrame:CGRectMake(view.width - 12-40, titleLab.top, 40, 25)];
     allSelectLab.text = @"全选";
     allSelectLab.textAlignment  = NSTextAlignmentRight;
     allSelectLab.textColor = RGB(0.30, 0.30, 0.30);
-    allSelectLab.font = [UIFont systemFontOfSize:16];
+    allSelectLab.font = [UIFont systemFontOfSize:17];
     [view addSubview:allSelectLab];
     UIButton * allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    allBtn.frame = CGRectMake(allSelectLab.left-20, allSelectLab.top+5, 15, 15);
+    allBtn.frame = CGRectMake(allSelectLab.left-20, allSelectLab.top+4, 17*WidthRate, 17*WidthRate);
     allBtn.layer.masksToBounds = YES;
     allBtn.layer.borderColor = RGB(0.30, 0.30, 0.30).CGColor;
     allBtn.layer.borderWidth = 0.5;
@@ -159,7 +159,7 @@
         }else
             _selectedImg.hidden = YES;
         UILabel * screenTitleLab = [[UILabel alloc]initWithFrame:CGRectMake(screenBtn.left, screenBtn.bottom+5, screenBtn.width, 20)];
-        screenTitleLab.textAlignment = UITextAlignmentCenter;
+        screenTitleLab.textAlignment = NSTextAlignmentCenter;
         screenTitleLab.textColor = RGB(0.30, 0.30, 0.30);
         screenTitleLab.font = [UIFont systemFontOfSize:12];
         [view addSubview:screenTitleLab];
@@ -246,6 +246,13 @@
     UIButton * btn =  (UIButton *)[self.view viewWithTag:tap.view.tag%3000+10000];
     if (btn.selected == YES){
         btn.selected = !btn.selected;
+        _grayView = (UIView *)[self.view viewWithTag:tap.view.tag-1000];
+        _grayView.hidden = YES;
+        _selectedImg = (UIImageView *)[self.view viewWithTag:tap.view.tag];
+        _selectedImg.hidden = YES;
+    }
+    else
+    {
         _grayView = (UIView *)[self.view viewWithTag:tap.view.tag-1000];
         _grayView.hidden = YES;
         _selectedImg = (UIImageView *)[self.view viewWithTag:tap.view.tag];

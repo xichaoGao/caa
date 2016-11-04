@@ -9,5 +9,7 @@
 #import "BaseViewController.h"
 
 @interface ReleaseSuccessViewController : BaseViewController
-
+@property(nonatomic,strong)UILabel * successLab;
+@property(nonatomic,strong)UIButton * mineReleaseBtn;
+@property(nonatomic,strong)UILabel *tipLab;
 @end

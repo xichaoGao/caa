@@ -45,7 +45,7 @@
     _faceLab = [[UILabel alloc]initWithFrame:CGRectMake((_screenImg.width - 150*WidthRate)/2, _faceImg.bottom + 5, 150*WidthRate, 30*WidthRate)];
     _faceLab.text = @"正在努力加载中...";
     _faceLab.textColor = RGB(0.84, 0.84, 0.84);
-    _faceLab.textAlignment = UITextAlignmentCenter;
+    _faceLab.textAlignment = NSTextAlignmentCenter;
     _faceLab.font = [UIFont systemFontOfSize:16];
     [_screenImg addSubview:_faceLab];
     

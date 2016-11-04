@@ -9,5 +9,9 @@
 #import "BaseViewController.h"
 
 @interface MineViewController : BaseViewController
-
+@property(nonatomic,strong)UIView *headBgView;
+@property(nonatomic,strong)UIImageView * headImg;
+@property(nonatomic,strong)UILabel * useNameLab;
+@property(nonatomic,strong)UIButton * mineReleaseBtn;
+@property(nonatomic,strong)UIView * bgView;
 @end
