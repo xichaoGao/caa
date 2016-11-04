@@ -123,7 +123,7 @@
     [_textBgView addSubview:_textDeLab];
     
    
-    _defTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _textBgView.width-10, _textBgView.height-30)];
+    _defTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _textBgView.width-10, _textBgView.height-10)];
     _defTextDeLab.numberOfLines = 0;
     _defTextDeLab.text = @"请输入文字描述";
     _defTextDeLab.font = [UIFont systemFontOfSize:14];
@@ -157,10 +157,10 @@
     [_nextBtn setTitleColor:RGB(0.98, 0.88, 0.85) forState:UIControlStateSelected];
     [self.view addSubview:_nextBtn];
     [_nextBtn addTarget:self action:@selector(nextClick:) forControlEvents:UIControlEventTouchUpInside];
-    if([[use objectForKey:@"text"] length] > 0){
-        _defTextDeLab.hidden = YES;
-    }else
+    if ([_textDeLab.text isEqualToString:@""]){
         _defTextDeLab.hidden = NO;
+    }else
+        _defTextDeLab.hidden = YES;
 
     
 }
@@ -232,11 +232,13 @@
     TextView * view = [[TextView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     [self.view addSubview:view];
     view.block=^(NSString * str){
-        if (str.length == 0 ){
+        if ([str isEqualToString:@""]){
             _defTextDeLab.hidden = NO;
+            _textDeLab.hidden = YES;
         _defTextDeLab.text = @"请输入文字描述";
         }else
         {
+            _textDeLab.hidden = NO;
             _defTextDeLab.hidden = YES;
             _textDeLab.text = str;
 

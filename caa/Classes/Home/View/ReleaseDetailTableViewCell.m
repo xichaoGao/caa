@@ -28,7 +28,7 @@
         _screenImg.layer.cornerRadius = 10;
         [self addSubview:_screenImg];
         _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(_screenImg.right + 20, _screenImg.top, 100, 15)];
-        _titleLab.textColor = RGB(0.96, 0.60, 0.51);
+        _titleLab.textColor = RGB(0.96, 0.55, 0.40);
         _titleLab.font = [UIFont systemFontOfSize:14];
         [self addSubview:_titleLab];
         _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_titleLab.left, _titleLab.bottom + 5, 80, 15)];

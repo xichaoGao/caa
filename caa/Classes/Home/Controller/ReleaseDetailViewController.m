@@ -8,6 +8,7 @@
 
 #import "ReleaseDetailViewController.h"
 #import "ReleaseDetailTableViewCell.h"
+#import "ScreenDetailViewController.h"
 static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewCell";
 @interface ReleaseDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -30,7 +31,8 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+
     
 }
 - (void)viewDidLoad {
@@ -66,6 +68,8 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
     _tableView.rowHeight = 95;
     _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableView];
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewHeaderRefresh)];
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewFooterRefresh)];
     
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -74,7 +78,7 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReleaseDetailTableViewCell * releaseDetailTableViewCell = [tableView dequeueReusableCellWithIdentifier:ReleaseDetailTableViewCellIdenfire];
-    [releaseDetailTableViewCell.screenImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"home_addmotion"]];
+    [releaseDetailTableViewCell.screenImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
     releaseDetailTableViewCell.titleLab.text = @"老师的空间福";
     releaseDetailTableViewCell.playNumLab.text = [NSString stringWithFormat:@"%d次",25];
     releaseDetailTableViewCell.receNumLab.text = [NSString stringWithFormat:@"%d次",25];
@@ -82,7 +86,15 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
     return releaseDetailTableViewCell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"slfklajdsfja");
+    ScreenDetailViewController * sdVC = [[ScreenDetailViewController alloc]init];
+    sdVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:sdVC animated:YES];
+}
+-(void)releaseDetailTableViewHeaderRefresh{
+    
+}
+-(void)releaseDetailTableViewFooterRefresh{
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

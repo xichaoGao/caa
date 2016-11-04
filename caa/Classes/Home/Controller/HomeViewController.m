@@ -35,12 +35,25 @@
     _leadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 220*WidthRate)];
     _leadView.userInteractionEnabled = YES;
     [self.view addSubview:_leadView];
+    UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _leadView.bottom-0.5, _leadView.width, 0.5)];
+    lineView.backgroundColor = RGB(0.84, 0.84, 0.84);
+    [_leadView addSubview:lineView];
     _leadImg = [[UIImageView alloc]initWithFrame:_leadView.frame];
-    [_leadImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"13@2x"]];
     _leadImg.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leadDetailTap)];
     [_leadImg addGestureRecognizer:tapGes];
     [_leadView addSubview:_leadImg];
+    _faceImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"loading_pic"]];
+    _faceImg.frame = CGRectMake((_leadImg.width - 80*WidthRate)/2, (_leadImg.height - 80*WidthRate)/2-20*WidthRate, 80*WidthRate, 80*WidthRate);
+    [_leadImg addSubview:_faceImg];
+    
+    _faceLab = [[UILabel alloc]initWithFrame:CGRectMake((_leadImg.width - 150*WidthRate)/2, _faceImg.bottom + 5, 150*WidthRate, 30*WidthRate)];
+    _faceLab.text = @"加载中...";
+    _faceLab.textColor = RGB(0.84, 0.84, 0.84);
+    _faceLab.textAlignment = UITextAlignmentCenter;
+    _faceLab.font = [UIFont systemFontOfSize:20];
+    [_leadImg addSubview:_faceLab];
+
     _adView = [[UIView alloc]initWithFrame:CGRectMake(12,_leadView.bottom+10 * WidthRate, kScreenWidth - 24, 160 * WidthRate)];
     _adView.layer.masksToBounds = YES;
     _adView.layer.cornerRadius = 10;

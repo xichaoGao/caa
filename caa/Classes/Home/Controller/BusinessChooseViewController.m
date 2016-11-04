@@ -7,6 +7,7 @@
 //
 
 #import "BusinessChooseViewController.h"
+#import "DateAndEqViewController.h"
 @interface BusinessChooseViewController ()
 
 {
@@ -94,6 +95,7 @@
                     if (sender.selected == YES){
                         NSLog(@"&&&&&&%ld",(long)sender.tag);
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
+                       
                     }
                     else{
                         NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
@@ -166,7 +168,9 @@
             for (int i = 0 ; i <_businessCircle.count;i++){
                 if (sender.tag == 4000+i){
                     if (sender.selected == YES){
-                        
+                        DateAndEqViewController * daeVC = [[DateAndEqViewController alloc]init];
+                        daeVC.hidesBottomBarWhenPushed  = YES;
+                        [self.navigationController pushViewController:daeVC animated:YES];
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                     }
                     else{

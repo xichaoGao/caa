@@ -11,6 +11,8 @@
 @interface HomeViewController : BaseViewController
 @property(nonatomic,strong)UIView * leadView;
 @property(nonatomic,strong)UIImageView * leadImg;
+@property(nonatomic,strong)UIImageView * faceImg;
+@property(nonatomic,strong)UILabel * faceLab;
 @property(nonatomic,strong)UIView * adView;
 @property(nonatomic,strong)UIImageView * relImg;
 @property(nonatomic,strong)UILabel * relAdLab;

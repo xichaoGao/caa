@@ -51,7 +51,7 @@
     _headImage.backgroundColor = RGB(0.95, 0.39, 0.21);
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
     NSLog(@"%@",[user objectForKey:@"headImg"]);
-     [_headImage sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"headImg"]] placeholderImage:[UIImage imageNamed:@"13@2x"]];
+     [_headImage sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"headImg"]] placeholderImage:[UIImage imageNamed:@"loading_pic"]];
     [self.view addSubview:_headImage];
     
     //手机号
