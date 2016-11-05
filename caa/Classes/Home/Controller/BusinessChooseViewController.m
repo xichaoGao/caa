@@ -19,6 +19,8 @@
     UIView * _hotCityView;
     UIView * _hotUrbanView;
     UIView * _businessCircleView;
+    NSString * _city;
+    NSString * _urban;
     NSMutableArray * _titleArr;
     NSMutableArray * _chooseCity;
     NSMutableArray * _hotCity;
@@ -106,6 +108,8 @@
         if (status == 1) {
             if([[result objectForKey:@"data"] count] > 0){
                 NSArray * dataArr = [result objectForKey:@"data"];
+                [_hotCity removeAllObjects];
+                
                 for (int i = 0 ; i<dataArr.count ; i++){
                     CityModel * cityModel  = [CityModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
                     NSLog(@"%@",cityModel.city);
@@ -170,13 +174,14 @@
                         _pramerDic = [NSDictionary dictionary];
                         
                         NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-                        _pramerDic = @{@"token":[use objectForKey:@"token"],@"city":_hotCity[i] };
+                        _pramerDic = @{@"token":[use objectForKey:@"token"],@"city":[_hotCity[i] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]};
                         NSLog(@"%@",[_hotCity[i] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
                         [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetUrban RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                             hud.hidden = YES;
                             NSLog(@"loginResult==%@ ",result);
                             int status = [[result objectForKey:@"status"] intValue];;
                             if (status == 1) {
+                                _city = _hotCity[i];
                                 if([[result objectForKey:@"data"] count] > 0){
                                     NSArray * dataArr = [result objectForKey:@"data"];
                                     [_hotUrban removeAllObjects];
@@ -232,8 +237,8 @@
                         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                         _pramerDic = [NSDictionary dictionary];
                         NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-                        _pramerDic = @{@"token":[use objectForKey:@"token"],@"city":_hotCity[i] ,@"district":_hotUrban[i] };
-                        NSLog(@"%@",[_hotUrban[i] stringByRemovingPercentEncoding]);
+                        _pramerDic = @{@"token":[use objectForKey:@"token"],@"city": [_city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ,@"district":[_hotUrban[i] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]};
+                        NSLog(@"%@",_hotCity[i]);
                         [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetArea RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                             hud.hidden = YES;
                             NSLog(@"loginResult==%@",result);

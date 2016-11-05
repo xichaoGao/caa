@@ -20,9 +20,10 @@
     NSMutableDictionary * _releaseDic;
     UIView * _grayView;
     UIImageView * _selectedImg;
+    NSMutableArray *_defaultArr;
 }
 @property(nonatomic,strong)NSDictionary *pramerDic;
-
+@property(nonatomic,assign)BOOL isSelected;
 @end
 
 @implementation DateAndEqViewController
@@ -43,7 +44,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"日期和设备选择";
-    
+    _isSelected = NO;
+    _defaultArr = [NSMutableArray arrayWithCapacity:1];
     _eqArr = [NSMutableArray arrayWithCapacity:1];
     _dateArr= [NSMutableArray arrayWithCapacity:1];
     [self getDateDatas];
@@ -133,7 +135,7 @@
             title = [NSString stringWithFormat:@"%@ 中午",da.date];
         }else
             title = [NSString stringWithFormat:@"%@ 晚上",da.date];
-            
+        
         [btn setTitle:title forState:UIControlStateNormal];
         [btn setTitleColor:RGB(0.96, 0.55, 0.40) forState:UIControlStateSelected];
         [btn setTitleColor:RGB(0.44, 0.44, 0.44) forState:UIControlStateNormal];
@@ -163,7 +165,7 @@
     allBtn.layer.masksToBounds = YES;
     allBtn.layer.borderColor = RGB(0.30, 0.30, 0.30).CGColor;
     allBtn.layer.borderWidth = 0.5;
-    
+    allBtn.tag = 100;
     [allBtn setImage:[UIImage imageNamed:@"home_all_tick"] forState:UIControlStateSelected];
     
     [allBtn addTarget:self action:@selector(allSelectClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -172,6 +174,7 @@
         allBtn.selected = !allBtn.selected;
     }
     for (int i = 0 ; i< array.count ; i++ ){
+        EqModel * mol = (EqModel *)array[i];
         UIButton * screenBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         screenBtn.frame = CGRectMake((i%4)*((view.width-65)/4+12) + 12, titleLab.bottom + 15*WidthRate + (i/4)*((view.width-65)/4 +30), (view.width-65)/4, (view.width-65)/4);
         screenBtn.layer.cornerRadius = 8;
@@ -189,13 +192,10 @@
         _grayView.layer.borderWidth = 0.2;
         _grayView.backgroundColor = RGB(1, 1, 1);
         _grayView.userInteractionEnabled = YES;
-        _grayView.alpha = 0.6;
+        _grayView.alpha = 0.8;
         _grayView.tag = 1000*tag+ i;
         [screenBtn addSubview:_grayView];
-        if (isSelect == YES){
-            _grayView.hidden = NO;
-        }else
-            _grayView.hidden = YES;
+        
         _selectedImg= [[UIImageView alloc]initWithFrame:CGRectMake((screenBtn.width-20)/2, (screenBtn.width-20)/2, 20, 20)];
         _selectedImg.tag = 1000*(tag+1)+ i;
         _selectedImg.userInteractionEnabled  = YES;
@@ -203,24 +203,33 @@
         [screenBtn addSubview:_selectedImg];
         UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(uncheckTap:)];
         [_selectedImg addGestureRecognizer:tapGes];
-        if (isSelect == YES){
-            _selectedImg.hidden = NO;
-        }else
-            _selectedImg.hidden = YES;
+        
         UILabel * screenTitleLab = [[UILabel alloc]initWithFrame:CGRectMake(screenBtn.left, screenBtn.bottom+5, screenBtn.width, 20)];
         screenTitleLab.textAlignment = NSTextAlignmentCenter;
         screenTitleLab.textColor = RGB(0.30, 0.30, 0.30);
         screenTitleLab.font = [UIFont systemFontOfSize:12];
         [view addSubview:screenTitleLab];
-        if ([array[i][1] isEqualToString:@"1"]){
+        if ([mol.max_ads isEqualToString:mol.current_ads]){
+            EqModel * mol = (EqModel *)array[i];
             screenBtn.enabled = NO;
             _grayView.hidden = NO;
-            screenTitleLab.text = [NSString stringWithFormat:@"%@(满)",array[i][0]];
+            screenTitleLab.text = [NSString stringWithFormat:@"%@(满)",mol.name];
         }else{
+            EqModel * mol = (EqModel *)array[i];
             screenBtn.enabled = YES;
             _grayView.hidden = YES;
-            screenTitleLab.text = array[i][0];
+            screenTitleLab.text = mol.name;
         }
+        
+        if (isSelect == YES){
+            _grayView.hidden = NO;
+            
+            _selectedImg.hidden = NO;
+        }else{
+            _selectedImg.hidden = YES;
+            _grayView.hidden = YES;
+        }
+        
     }
     return view;
 }
@@ -244,6 +253,7 @@
                     if (status == 1) {
                         if([[result objectForKey:@"data"] count] > 0){
                             NSArray * dataArr = [result objectForKey:@"data"];
+                            [_eqArr removeAllObjects];
                             for (int i = 0 ; i<dataArr.count ; i++){
                                 EqModel * eqModel  = [EqModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
                                 NSLog(@"%@",eqModel.name);
@@ -289,30 +299,29 @@
 -(void)allSelectClick:(UIButton *)sender{
     sender.selected = !sender.selected;
     for (int i = 0 ; i <_eqArr.count;i++){
-        if ([_eqArr[i][1] isEqualToString:@"1"] ){
-            continue;
-        }{
-            if (sender.selected == YES) {
-                _grayView = (UIView *)[self.view viewWithTag:2000+i];
-                _grayView.hidden = NO;
-                _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
-                _selectedImg.hidden = NO;
-            }
-            else{
-                _grayView = (UIView *)[self.view viewWithTag:2000+i];
-                _grayView.hidden = YES;
-                _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
-                _selectedImg.hidden = YES;
-                
-            }
+        if (sender.selected == YES) {
+            _isSelected = YES;
+            _grayView = (UIView *)[self.view viewWithTag:2000+i];
+            _grayView.hidden = NO;
+            _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
+            _selectedImg.hidden = NO;
+        }
+        else{
+            _isSelected = NO;
+            _grayView = (UIView *)[self.view viewWithTag:2000+i];
+            _grayView.hidden = YES;
+            _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
+            _selectedImg.hidden = YES;
+            
         }
     }
+    
 }
 -(void)screenBtnClick:(UIButton *)sender{
     NSLog(@"%ld",(long)sender.tag);
     sender.selected  = !sender.selected;
     if (sender.selected == YES) {
-        
+//        [_defaultArr addObject:sender.tag];
         _grayView = (UIView *)[self.view viewWithTag:2000+sender.tag%10000];
         _grayView.hidden = NO;
         _selectedImg = (UIImageView *)[self.view viewWithTag:3000+sender.tag%10000];
@@ -330,7 +339,10 @@
     NSLog(@"%ld",tap.view.tag);
     UIButton * btn =  (UIButton *)[self.view viewWithTag:tap.view.tag%3000+10000];
     if (btn.selected == YES){
-        btn.selected = !btn.selected;
+         btn.selected = !btn.selected;
+//        UIButton * all = (UIButton *)[self.view viewWithTag:100];
+//        all.selected = !all.selected;
+       
         _grayView = (UIView *)[self.view viewWithTag:tap.view.tag-1000];
         _grayView.hidden = YES;
         _selectedImg = (UIImageView *)[self.view viewWithTag:tap.view.tag];
@@ -339,9 +351,9 @@
     else
     {
         _grayView = (UIView *)[self.view viewWithTag:tap.view.tag-1000];
-        _grayView.hidden = YES;
+        _grayView.hidden = NO;
         _selectedImg = (UIImageView *)[self.view viewWithTag:tap.view.tag];
-        _selectedImg.hidden = YES;
+        _selectedImg.hidden = NO;
     }
     
     
@@ -352,9 +364,9 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     _pramerDic = [NSDictionary dictionary];
     NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-   
     
-    _pramerDic = @{@"token":[use objectForKey:@"token"],@"poster":@"",@"title":[use objectForKey:@"title"],@"animation":@""};
+    
+    _pramerDic = @{@"token":[use objectForKey:@"token"],@"poster":@"",@"title":[use objectForKey:@"title"],@"animation":@{},@"playlist":@{}};
     [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:KSubmitAd RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
         hud.hidden = YES;
         NSLog(@"loginResult==%@",result);
@@ -376,7 +388,10 @@
             [self errorMessages:mess];
         }
     }];
-   
+    
+    ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
+                rsVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:rsVC animated:YES];
 }
 -(void)setHighlighted:(BOOL)highlighted{
     

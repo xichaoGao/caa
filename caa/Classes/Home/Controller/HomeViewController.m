@@ -30,8 +30,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    [user setObject:@"361770b96f9793d550ee6e62c1210e9f" forKey:@"token"];
+//    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//    [user setObject:@"361770b96f9793d550ee6e62c1210e9f" forKey:@"token"];
     [self createUI];
     [self getHomeDatas];
     
