@@ -7,17 +7,27 @@
 //
 
 #import "BusinessChooseViewController.h"
+#import "LoginViewController.h"
+#import "CityModel.h"
+#import "UrbanModel.h"
+#import "BusinessCircleModel.h"
 #import "DateAndEqViewController.h"
 @interface BusinessChooseViewController ()
 
 {
+    UIView * _chooseCityView;
+    UIView * _hotCityView;
+    UIView * _hotUrbanView;
+    UIView * _businessCircleView;
     NSMutableArray * _titleArr;
     NSMutableArray * _chooseCity;
     NSMutableArray * _hotCity;
     NSMutableArray * _hotUrban;
     NSMutableArray * _businessCircle;
+    NSMutableArray * _businessCireleID;
 }
 @property (strong,nonatomic)UIButton * tmpBtn;
+@property(nonatomic,strong)NSDictionary *pramerDic;
 
 @end
 
@@ -41,22 +51,21 @@
     self.navigationItem.title = @"商圈选择";
     _titleArr = [NSMutableArray arrayWithArray: @[@"最近选择城市",@"热门城市",@"热门城区",@"商圈"]];
     _chooseCity =[NSMutableArray arrayWithArray:@[@"北京"]];
-    _hotCity = [NSMutableArray arrayWithArray:@[@"北京",@"上海",@"广州"]];
-    _hotUrban = [NSMutableArray arrayWithArray:@[@"朝阳区",@"海淀区",@"西城区"]];
-    _businessCircle = [NSMutableArray arrayWithArray:@[@"望京SOHO",@"爱琴海",@"朝阳公园",@"银座"]];
-    [self createUI];
+    _hotCity = [NSMutableArray arrayWithCapacity:1];
+    _hotUrban = [NSMutableArray arrayWithCapacity:1];
+    _businessCircle = [NSMutableArray arrayWithCapacity:1];
+    _businessCireleID = [NSMutableArray arrayWithCapacity:1];
+    [self getCityDatas];
+    
     // Do any additional setup after loading the view.
 }
 -(void)createUI{
-    UIView * chooseCityView = [self createViewWithY:30*WidthRate Title:_titleArr contentArray:_chooseCity part:0];
-    [self.view addSubview:chooseCityView];
-    UIView * hotCityView = [self createViewWithY:chooseCityView.bottom+10 Title:_titleArr contentArray:_hotCity part:1];
-    [self.view addSubview:hotCityView];
-    UIView * hotUrbanView = [self createViewWithY:hotCityView.bottom+10 Title:_titleArr contentArray:_hotUrban part:2];
+    _chooseCityView = [self createViewWithY:30*WidthRate Title:_titleArr contentArray:_chooseCity part:0];
+    [self.view addSubview:_chooseCityView];
+    _hotCityView = [self createViewWithY:_chooseCityView.bottom+10 Title:_titleArr contentArray:_hotCity part:1];
+    [self.view addSubview:_hotCityView];
     
-    [self.view addSubview:hotUrbanView];
-    UIView * businessCircleView  = [self createViewWithY:hotUrbanView.bottom+10 Title:_titleArr contentArray:_businessCircle part:3];
-    [self.view addSubview:businessCircleView];
+    
 }
 -(UIView *)createViewWithY:(CGFloat) y Title:(NSMutableArray *)title contentArray:(NSMutableArray *)array part :(NSInteger)tag{
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, y, kScreenWidth, (((array.count-1)/3 +1) *50*WidthRate)+40*WidthRate)];
@@ -85,6 +94,41 @@
     }
     return view;
 }
+-(void)getCityDatas{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _pramerDic = [NSDictionary dictionary];
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+    _pramerDic = @{@"token":[use objectForKey:@"token"]};
+    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetCity RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        hud.hidden = YES;
+        NSLog(@"loginResult==%@",result);
+        int status = [[result objectForKey:@"status"] intValue];;
+        if (status == 1) {
+            if([[result objectForKey:@"data"] count] > 0){
+                NSArray * dataArr = [result objectForKey:@"data"];
+                for (int i = 0 ; i<dataArr.count ; i++){
+                    CityModel * cityModel  = [CityModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
+                    NSLog(@"%@",cityModel.city);
+                    [_hotCity addObject:cityModel.city];
+                    
+            }
+                [self createUI];
+
+            }
+            
+        }
+        else if (status == -1){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
+        else{
+            NSString *mess = [result objectForKey:@"message"];
+            [self errorMessages:mess];
+        }
+    }];
+}
 -(void)touchClick:(UIButton *)sender{
     NSLog(@"%ld",(long)sender.tag);
     sender.selected = !sender.selected;
@@ -95,6 +139,7 @@
                     if (sender.selected == YES){
                         NSLog(@"&&&&&&%ld",(long)sender.tag);
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
+                       
                        
                     }
                     else{
@@ -119,7 +164,45 @@
             for (int i = 0 ; i <_hotCity.count;i++){
                 if (sender.tag == 2000+i){
                     if (sender.selected == YES){
+                        [_businessCircleView removeFromSuperview];
                         NSLog(@"&&&&&&%ld",(long)sender.tag);
+                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                        _pramerDic = [NSDictionary dictionary];
+                        
+                        NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+                        _pramerDic = @{@"token":[use objectForKey:@"token"],@"city":_hotCity[i] };
+                        NSLog(@"%@",[_hotCity[i] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+                        [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetUrban RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+                            hud.hidden = YES;
+                            NSLog(@"loginResult==%@ ",result);
+                            int status = [[result objectForKey:@"status"] intValue];;
+                            if (status == 1) {
+                                if([[result objectForKey:@"data"] count] > 0){
+                                    NSArray * dataArr = [result objectForKey:@"data"];
+                                    [_hotUrban removeAllObjects];
+                                    for (int i = 0 ; i<dataArr.count ; i++){
+                                        UrbanModel * urbanModel  = [UrbanModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
+                                        NSLog(@"%@",urbanModel.district);
+                                        [_hotUrban addObject:urbanModel.district];
+                                        
+                                    }
+                                    _hotUrbanView = [self createViewWithY:_hotCityView.bottom+10 Title:_titleArr contentArray:_hotUrban part:2];
+                                    [self.view addSubview:_hotUrbanView];
+                                    
+                                }
+                                
+                            }
+                            else if (status == -1){
+                                HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+                                [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                                    LoginViewController * logVC = [[LoginViewController alloc]init];
+                                    [self.navigationController pushViewController:logVC animated:YES];            }];
+                            }
+                            else{
+                                NSString *mess = [result objectForKey:@"message"];
+                                [self errorMessages:mess];
+                            }
+                        }];
 
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                     }
@@ -146,6 +229,42 @@
                 if (sender.tag == 3000+i){
                     if (sender.selected == YES){
                         
+                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                        _pramerDic = [NSDictionary dictionary];
+                        NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+                        _pramerDic = @{@"token":[use objectForKey:@"token"],@"city":_hotCity[i] ,@"district":_hotUrban[i] };
+                        NSLog(@"%@",[_hotUrban[i] stringByRemovingPercentEncoding]);
+                        [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetArea RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+                            hud.hidden = YES;
+                            NSLog(@"loginResult==%@",result);
+                            int status = [[result objectForKey:@"status"] intValue];;
+                            if (status == 1) {
+                                if([[result objectForKey:@"data"] count] > 0){
+                                    NSArray * dataArr = [result objectForKey:@"data"];
+                                    [_businessCircle removeAllObjects];
+                                    for (int i = 0 ; i<dataArr.count ; i++){
+                                        BusinessCircleModel * businessCircleModel  = [BusinessCircleModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
+                                        NSLog(@"%@",businessCircleModel.name);
+                                        [_businessCircle addObject:businessCircleModel.name];
+                                        [_businessCireleID addObject:businessCircleModel.area_id];
+                                    }
+                                    _businessCircleView  = [self createViewWithY:_hotUrbanView.bottom+10 Title:_titleArr contentArray:_businessCircle part:3];
+                                    [self.view addSubview:_businessCircleView];
+                                }
+                                
+                            }
+                            else if (status == -1){
+                                HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+                                [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                                    LoginViewController * logVC = [[LoginViewController alloc]init];
+                                    [self.navigationController pushViewController:logVC animated:YES];            }];
+                            }
+                            else{
+                                NSString *mess = [result objectForKey:@"message"];
+                                [self errorMessages:mess];
+                                [_businessCircleView removeFromSuperview];
+                            }
+                        }];
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                     }
                     else{
@@ -170,6 +289,7 @@
                     if (sender.selected == YES){
                         DateAndEqViewController * daeVC = [[DateAndEqViewController alloc]init];
                         daeVC.hidesBottomBarWhenPushed  = YES;
+                        daeVC.area_id = _businessCireleID[i];
                         [self.navigationController pushViewController:daeVC animated:YES];
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                     }

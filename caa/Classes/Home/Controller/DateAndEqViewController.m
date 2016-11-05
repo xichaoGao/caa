@@ -7,15 +7,22 @@
 //
 
 #import "DateAndEqViewController.h"
+#import "DateModel.h"
+#import "EqModel.h"
+#import "LoginViewController.h"
 #import "ReleaseSuccessViewController.h"
 @interface DateAndEqViewController ()
 {
+    UIView *_dateView;
+    UIView *_eqView;
     NSMutableArray *_dateArr;
     NSMutableArray *_eqArr;
     NSMutableDictionary * _releaseDic;
     UIView * _grayView;
     UIImageView * _selectedImg;
 }
+@property(nonatomic,strong)NSDictionary *pramerDic;
+
 @end
 
 @implementation DateAndEqViewController
@@ -37,16 +44,51 @@
     [super viewDidLoad];
     self.navigationItem.title = @"日期和设备选择";
     
-    _eqArr = [NSMutableArray arrayWithArray:@[@[@"2 中午",@"0"],@[@"2016- 中午",@"0"],@[@"2 中午",@"1"],@[@"20午",@"1"],@[@"23 中午",@"1"],@[@"201-03 中午",@"0"],@[@"2午",@"1"]]];
-    _dateArr= [NSMutableArray arrayWithArray:@[@"2016-11-03 中午",@"2016-11-03 晚上",@"2016-11-04 中午",@"2016-11-04 晚上",@"2016-11-04 中午",@"2016-11-04 晚上"]];
-    [self createUI];
+    _eqArr = [NSMutableArray arrayWithCapacity:1];
+    _dateArr= [NSMutableArray arrayWithCapacity:1];
+    [self getDateDatas];
+    
     // Do any additional setup after loading the view.
 }
+-(void)getDateDatas{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _pramerDic = [NSDictionary dictionary];
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+    _pramerDic = @{@"token":[use objectForKey:@"token"]};
+    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetTime RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        hud.hidden = YES;
+        NSLog(@"loginResult==%@",result);
+        int status = [[result objectForKey:@"status"] intValue];;
+        if (status == 1) {
+            if([[result objectForKey:@"data"] count] > 0){
+                NSArray * dataArr = [result objectForKey:@"data"];
+                for (int i = 0 ; i<dataArr.count ; i++){
+                    DateModel * dateModel  = [DateModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
+                    NSLog(@"%@",dateModel.date);
+                    [_dateArr addObject:dateModel];
+                    
+                }
+                [self createUI];
+                
+            }
+            
+        }
+        else if (status == -1){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
+        else{
+            NSString *mess = [result objectForKey:@"message"];
+            [self errorMessages:mess];
+        }
+    }];
+}
 -(void)createUI{
-    UIView *dateView = [self createViewWithY:30*WidthRate Title:@"选择时间" contentArray:_dateArr part:1];
-    [self.view addSubview:dateView];
-    UIView * eqView = [self createViewWithY:dateView.bottom +5 Title:@"可选商家" isSelect:NO  contentArray:_eqArr part:2];
-    [self.view addSubview:eqView];
+    _dateView = [self createViewWithY:30*WidthRate Title:@"选择时间" contentArray:_dateArr part:1];
+    [self.view addSubview:_dateView];
+    
     _totalLab = [[UILabel alloc]initWithFrame:CGRectMake(12, kScreenHeight - 120, 60, 20)];
     _totalLab.textColor = RGB(0.30, 0.30, 0.30);
     _totalLab.text = @"总计:";
@@ -85,7 +127,14 @@
         btn.layer.borderWidth = 0.5;
         btn.tag = 100*tag + i;
         btn.titleLabel.font = [UIFont systemFontOfSize:17];
-        [btn setTitle:array[i] forState:UIControlStateNormal];
+        DateModel * da = array[i];
+        NSString * title;
+        if (da.type == 0){
+            title = [NSString stringWithFormat:@"%@ 中午",da.date];
+        }else
+            title = [NSString stringWithFormat:@"%@ 晚上",da.date];
+            
+        [btn setTitle:title forState:UIControlStateNormal];
         [btn setTitleColor:RGB(0.96, 0.55, 0.40) forState:UIControlStateSelected];
         [btn setTitleColor:RGB(0.44, 0.44, 0.44) forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(touchDateClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -182,7 +231,43 @@
             if (sender.selected == YES){
                 NSLog(@"&&&&&&%ld",(long)sender.tag);
                 sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                _pramerDic = [NSDictionary dictionary];
+                NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+                DateModel * mol = (DateModel *)_dateArr[i];
                 
+                _pramerDic = @{@"token":[use objectForKey:@"token"],@"area_id":_area_id,@"timestamp":[NSString stringWithFormat:@"%d",mol.timestamp],@"type":[NSString stringWithFormat:@"%d",mol.type]};
+                [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetEq RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+                    hud.hidden = YES;
+                    NSLog(@"loginResult==%@",result);
+                    int status = [[result objectForKey:@"status"] intValue];;
+                    if (status == 1) {
+                        if([[result objectForKey:@"data"] count] > 0){
+                            NSArray * dataArr = [result objectForKey:@"data"];
+                            for (int i = 0 ; i<dataArr.count ; i++){
+                                EqModel * eqModel  = [EqModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
+                                NSLog(@"%@",eqModel.name);
+                                [_eqArr addObject:eqModel];
+                                
+                            }
+                            _eqView = [self createViewWithY:_dateView.bottom +5 Title:@"可选商家" isSelect:NO  contentArray:_eqArr part:2];
+                            [self.view addSubview:_eqView];
+                            
+                            
+                        }
+                        
+                    }
+                    else if (status == -1){
+                        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+                        [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                            LoginViewController * logVC = [[LoginViewController alloc]init];
+                            [self.navigationController pushViewController:logVC animated:YES];            }];
+                    }
+                    else{
+                        NSString *mess = [result objectForKey:@"message"];
+                        [self errorMessages:mess];
+                    }
+                }];
             }
             else{
                 NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
@@ -258,15 +343,40 @@
         _selectedImg = (UIImageView *)[self.view viewWithTag:tap.view.tag];
         _selectedImg.hidden = YES;
     }
-
-  
+    
+    
     
     
 }
 -(void)ReleaseClick{
-    ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
-    rsVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:rsVC animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _pramerDic = [NSDictionary dictionary];
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+   
+    
+    _pramerDic = @{@"token":[use objectForKey:@"token"],@"poster":@"",@"title":[use objectForKey:@"title"],@"animation":@""};
+    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:KSubmitAd RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        hud.hidden = YES;
+        NSLog(@"loginResult==%@",result);
+        int status = [[result objectForKey:@"status"] intValue];;
+        if (status == 1) {
+            ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
+            rsVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:rsVC animated:YES];
+            
+        }
+        else if (status == -1){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
+        else{
+            NSString *mess = [result objectForKey:@"message"];
+            [self errorMessages:mess];
+        }
+    }];
+   
 }
 -(void)setHighlighted:(BOOL)highlighted{
     

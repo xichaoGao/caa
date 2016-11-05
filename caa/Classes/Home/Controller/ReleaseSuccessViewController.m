@@ -7,6 +7,7 @@
 //
 
 #import "ReleaseSuccessViewController.h"
+#import "MineReleaseViewController.h"
 
 @interface ReleaseSuccessViewController ()
 
@@ -21,8 +22,6 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    
-    
     self.navigationController.navigationBarHidden = YES;
     
     
@@ -59,7 +58,12 @@
     [self.view addSubview:_tipLab];
 }
 -(void)mineReleaseClick{
-    
+    MineReleaseViewController * mrVC = [[MineReleaseViewController alloc]init];
+    mrVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mrVC animated:YES];
+}
+-(void)doBackWithBaseVC:(id)sender{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

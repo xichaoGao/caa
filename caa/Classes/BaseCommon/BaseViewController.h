@@ -21,7 +21,7 @@
 
 - (void)showMBProgressView;
 - (void)hiddenMBProgressView;
-
+-(void)doBackWithBaseVC:(id)sender;
 ///*
 // *  获取解密后的memberID
 // */

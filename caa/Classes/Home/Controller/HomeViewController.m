@@ -7,9 +7,11 @@
 //
 
 #import "HomeViewController.h"
+#import "LoginViewController.h"
 #import "GraphicLeadViewController.h"
 #import "PerAdMesViewController.h"
 #import "ReleaseDetailViewController.h"
+#import "AdMsgModel.h"
 @interface HomeViewController ()
 @property(nonatomic,strong)NSDictionary *pramerDic;
 @end
@@ -28,7 +30,11 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    [user setObject:@"361770b96f9793d550ee6e62c1210e9f" forKey:@"token"];
     [self createUI];
+    [self getHomeDatas];
+    
     // Do any additional setup after loading the view.
 }
 -(void)createUI{
@@ -74,14 +80,13 @@
     
     _showView = [[UIView alloc]initWithFrame:CGRectMake(20, _adView.bottom + 30 * WidthRate, kScreenWidth-40*WidthRate, 85*WidthRate)];
     [self.view addSubview:_showView];
-    
+    _showView.hidden = YES;
     _relLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 80*WidthRate, 35*WidthRate)];
     _relLab.text = @"正在发布:";
     _relLab.textColor = RGB(0.47, 0.47, 0.47);
     _relLab.font = [UIFont boldSystemFontOfSize:14];
     [_showView addSubview:_relLab];
     _relLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_relLab.right + 3, 0, 60*WidthRate, 35*WidthRate)];
-    _relLabNum.text = @"100屏";
     _relLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_relLabNum];
     
@@ -92,7 +97,6 @@
     [_showView addSubview:_playLab];
     
     _playLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_playLab.right + 3, 0, 60*WidthRate, 35*WidthRate)];
-    _playLabNum.text = @"100次";
     _playLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_playLabNum];
     
@@ -103,7 +107,6 @@
     _receLab.font = [UIFont boldSystemFontOfSize:14];
     [_showView addSubview:_receLab];
     _receLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_receLab.right + 3, _relLab.bottom + 15*WidthRate, 60*WidthRate, 35*WidthRate)];
-    _receLabNum.text = @"100人";
     _receLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_receLabNum];
     
@@ -114,7 +117,6 @@
     [_showView addSubview:_useLab];
     
     _useLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_useLab.right + 3, _relLab.bottom + 15*WidthRate, 60*WidthRate, 35*WidthRate)];
-    _useLabNum.text = @"100人";
     _useLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_useLabNum];
     
@@ -131,15 +133,40 @@
 
     
 }
+-(void)getHomeDatas{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _pramerDic = [NSDictionary dictionary];
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+    _pramerDic = @{@"token":[use objectForKey:@"token"]};
+    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KAdsMsg RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        hud.hidden = YES;
+        NSLog(@"loginResult==%@",result);
+        int status = [[result objectForKey:@"status"] intValue];;
+        if (status == 1) {
+           if([[result objectForKey:@"data"] count] > 0){
+            _showView.hidden = NO;
+            }
+           AdMsgModel *adMsgModel = [AdMsgModel  mj_objectWithKeyValues:[result  objectForKey:@"data"]];
+            _relLabNum.text = [NSString stringWithFormat:@"%@ 屏",adMsgModel.device_count];
+            _playLabNum.text = [NSString stringWithFormat:@"%@ 次",adMsgModel.play_count];
+            _receLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.get_count];
+            _useLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.use_count];
+            
+        }
+        else if (status == -1){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
+        else{
+            NSString *mess = [result objectForKey:@"message"];
+            [self errorMessages:mess];
+        }
+    }];
+}
 -(void)leadDetailTap{
-//    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-//    
-//    _pramerDic = [NSDictionary dictionary];
-//    _pramerDic = @{@"cmd":@"skdlflk",@"msg":@"dslfjslkdjflksd",@"alias":[user valueForKey:@"userID"]};
-//    [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:@"Test/testPush" RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-//        NSLog(@"loginResult==%@",result);
-//        
-//    }];
+
     GraphicLeadViewController * logVC = [[GraphicLeadViewController alloc]init];
     logVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:logVC animated:YES];

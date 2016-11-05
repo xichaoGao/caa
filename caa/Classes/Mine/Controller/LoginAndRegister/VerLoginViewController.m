@@ -99,7 +99,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         _pramerDic = [NSDictionary dictionary];
         _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"0"};
-        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             
             int  Status = [[result objectForKey:@"status"] intValue];
@@ -137,7 +137,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         self.pramerDic = [NSDictionary dictionary];
         _pramerDic = @{@"phone":_phoneText.text,@"password":@"",@"code":_verificationText.text};
-        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kLogin RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kLogin RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             [self resign];
             int status = [[result objectForKey:@"status"] intValue];

@@ -137,7 +137,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         _pramerDic = [NSDictionary dictionary];
         _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"0"};
-        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             int status = [[result objectForKey:@"status"] intValue];
             NSLog(@"KLSDFJKLSDFKLS___%d",status);
@@ -187,7 +187,7 @@
 -(void)Verification{
     _pramerDic = [NSDictionary dictionary];
     _pramerDic = @{@"phone":_phoneText.text,@"code":_verificationText.text};
-    [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kCheckVerification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+    [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"GET" SubUrlString:kCheckVerification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
         int status = [[result objectForKey:@"status"] intValue];;
         if (status == 1) {
             _isTure = YES;
@@ -224,7 +224,7 @@
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             self.pramerDic = [NSDictionary dictionary];
             _pramerDic = @{@"phone":_phoneText.text,@"password":[self md5:_passWordText.text]};
-            [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kSetNewPassWord RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+            [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kSetNewPassWord RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                 hud.hidden = YES;
                 [self resign];
                 NSLog(@"loginResult==%@",result);

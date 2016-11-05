@@ -47,8 +47,7 @@
     //头像
     _headImage = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth - 100)/2, 100 * WidthRate, 100, 100)];
     _headImage.layer.masksToBounds = YES;
-    _headImage.layer.cornerRadius = 10;
-    _headImage.backgroundColor = RGB(0.95, 0.39, 0.21);
+    _headImage.layer.cornerRadius = 50;
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
     NSLog(@"%@",[user objectForKey:@"headImg"]);
      [_headImage sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"headImg"]] placeholderImage:[UIImage imageNamed:@"loading_pic"]];
@@ -154,7 +153,8 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         _pramerDic = [NSDictionary dictionary];
         _pramerDic = @{@"phone":_phoneText.text,@"password":[self md5:_passWordText.text],@"code":@""};
-        [[GetDataHandle sharedGetDataHandle] analysisDataWithSubUrlString:kLogin RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+
+        [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:kLogin RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             NSLog(@"loginResult==%@",result);
             int status = [[result objectForKey:@"status"] intValue];;
@@ -167,14 +167,7 @@
                 NSString *headImg = [[result objectForKey:@"data"]objectForKey:@"headimg"];
                 NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
                 [user setObject:headImg forKey:@"headImg"];
-                
-//                //给名字加密
-//                NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"userID":userID,@"token":token,@"nickName":nickName}];
-//                EncryptionData *encryptionData = [[EncryptionData alloc] init];
-//                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
-//                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
-//                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
-                
+                                
                 NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
                 [defult setObject:userID forKey:@"userID"];
                 [defult setObject:nickName forKey:@"nickName"];

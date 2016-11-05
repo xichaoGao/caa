@@ -12,4 +12,5 @@
 @property(nonatomic,strong)UILabel * totalLab;
 @property(nonatomic,strong)UILabel * totalNumLab;
 @property(nonatomic,strong)UIButton * releaseBtn;
+@property(nonatomic,strong)NSString * area_id;
 @end

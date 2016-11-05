@@ -22,14 +22,14 @@ singleton_implementation(GetDataHandle);
     return [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",result[0],result[1],result[2],result[3],result[4],result[5],result[6],result[7],result[8],result[9],result[10],result[11],result[12],result[13],result[14],result[15]];
 }
 
-- (void)analysisDataWithSubUrlString:(NSString *)subUrlString RequestDic:(NSDictionary *)requestDic ResponseBlock:(void (^)(id, NSError *))block
+- (void)analysisDataWithType:(NSString *)typeStr SubUrlString:(NSString *)subUrlString RequestDic:(NSDictionary *)requestDic ResponseBlock:(void (^)(id, NSError *))block
 {
     NSArray * md5Items = [subUrlString componentsSeparatedByString:@"/"];
     NSString * md5Str = [md5Items[0] stringByAppendingString:[self md5:@"bjyfkj4006010136"]];
     NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
     NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"sign":sign}];
-//    NSLog(@"sign+++++%@",sign);
-      if (requestDic != nil) {
+    //    NSLog(@"sign+++++%@",sign);
+    if (requestDic != nil) {
         [paramer addEntriesFromDictionary:requestDic];
     }
     AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
@@ -38,30 +38,30 @@ singleton_implementation(GetDataHandle);
     NSString *str = [BASEURL stringByAppendingString:subUrlString];
     
     NSLog(@"参数 --  %@   url -- %@ ",paramer,str);
-    if (![subUrlString isEqualToString:@"User/checkCode"]&&![subUrlString isEqualToString:@"Test/testPush"]){
-    [managers POST:str parameters:paramer progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSMutableDictionary *dic = [resultString mj_JSONObject];
-        block(dic,nil);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        block(nil,error);
-        
-        NSLog(@"%@ -- error",error);
-        
-    }];
+    if ([typeStr isEqualToString:@"POST"]){
+        [managers POST:str parameters:paramer progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSMutableDictionary *dic = [resultString mj_JSONObject];
+            block(dic,nil);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            block(nil,error);
+            
+            NSLog(@"%@ -- error",error);
+            
+        }];
     }
-        else {
-            [managers GET:str parameters:paramer progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];                
-                NSMutableDictionary *dic = [resultString mj_JSONObject];
-                block(dic,nil);
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                block(nil,error);
-                
-                NSLog(@"%@ -- error",error);
-                
-            }];
-        }
-   }
+    else {
+        [managers GET:str parameters:paramer progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSMutableDictionary *dic = [resultString mj_JSONObject];
+            block(dic,nil);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            block(nil,error);
+            
+            NSLog(@"%@ -- error",error);
+            
+        }];
+    }
+}
 
 @end

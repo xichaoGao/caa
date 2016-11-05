@@ -12,7 +12,7 @@
 
 singleton_interface(GetDataHandle);
 
-- (void)analysisDataWithSubUrlString:(NSString *)subUrlString
+- (void)analysisDataWithType:(NSString *)typeStr SubUrlString:(NSString *)subUrlString
                           RequestDic:(NSDictionary *)requestDic
                        ResponseBlock:(void (^)(id result, NSError * error))block;
 @end

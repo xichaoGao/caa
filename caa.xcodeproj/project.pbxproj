@@ -54,6 +54,14 @@
 		0E6BBB111DCA107200A01F44 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6BBB101DCA107200A01F44 /* Photos.framework */; };
 		0E70126E1DC6E25E00E22A68 /* NotificationConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E70126D1DC6E25E00E22A68 /* NotificationConfigure.m */; };
 		0E7012711DC766B800E22A68 /* PerAdMesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7012701DC766B800E22A68 /* PerAdMesViewController.m */; };
+		0E76D7931DCD845F0066544C /* AdMsgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76D7921DCD845F0066544C /* AdMsgModel.m */; };
+		0E76D7961DCD8D260066544C /* CityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76D7951DCD8D260066544C /* CityModel.m */; };
+		0E76D7991DCDA49A0066544C /* UrbanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76D7981DCDA49A0066544C /* UrbanModel.m */; };
+		0E76D79C1DCDA4CA0066544C /* BusinessCircleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76D79B1DCDA4CA0066544C /* BusinessCircleModel.m */; };
+		0E76D79F1DCDAEA10066544C /* DateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76D79E1DCDAEA10066544C /* DateModel.m */; };
+		0E76D7A51DCDB4950066544C /* EqModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76D7A41DCDB4950066544C /* EqModel.m */; };
+		0E76D7A81DCDC56D0066544C /* MineReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76D7A71DCDC56D0066544C /* MineReleaseViewController.m */; };
+		0E76D7AB1DCDC58D0066544C /* HistoryReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76D7AA1DCDC58D0066544C /* HistoryReleaseViewController.m */; };
 		0E76E26C1DC8337E008A06C1 /* GraphicLeadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E76E26B1DC8337E008A06C1 /* GraphicLeadViewController.m */; };
 		0E76E2731DC8693B008A06C1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E76E2721DC8693B008A06C1 /* CFNetwork.framework */; };
 		0E76E2751DC86945008A06C1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E76E2741DC86945008A06C1 /* CoreFoundation.framework */; };
@@ -188,6 +196,22 @@
 		0E70126D1DC6E25E00E22A68 /* NotificationConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationConfigure.m; sourceTree = "<group>"; };
 		0E70126F1DC766B800E22A68 /* PerAdMesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerAdMesViewController.h; path = Classes/Home/Controller/PerAdMesViewController.h; sourceTree = "<group>"; };
 		0E7012701DC766B800E22A68 /* PerAdMesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PerAdMesViewController.m; path = Classes/Home/Controller/PerAdMesViewController.m; sourceTree = "<group>"; };
+		0E76D7911DCD845F0066544C /* AdMsgModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdMsgModel.h; path = Classes/Home/Model/AdMsgModel.h; sourceTree = "<group>"; };
+		0E76D7921DCD845F0066544C /* AdMsgModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdMsgModel.m; path = Classes/Home/Model/AdMsgModel.m; sourceTree = "<group>"; };
+		0E76D7941DCD8D260066544C /* CityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityModel.h; path = Classes/Home/Model/CityModel.h; sourceTree = "<group>"; };
+		0E76D7951DCD8D260066544C /* CityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityModel.m; path = Classes/Home/Model/CityModel.m; sourceTree = "<group>"; };
+		0E76D7971DCDA49A0066544C /* UrbanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UrbanModel.h; path = Classes/Home/Model/UrbanModel.h; sourceTree = "<group>"; };
+		0E76D7981DCDA49A0066544C /* UrbanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UrbanModel.m; path = Classes/Home/Model/UrbanModel.m; sourceTree = "<group>"; };
+		0E76D79A1DCDA4CA0066544C /* BusinessCircleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessCircleModel.h; sourceTree = "<group>"; };
+		0E76D79B1DCDA4CA0066544C /* BusinessCircleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessCircleModel.m; sourceTree = "<group>"; };
+		0E76D79D1DCDAEA10066544C /* DateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DateModel.h; path = Classes/Home/Model/DateModel.h; sourceTree = "<group>"; };
+		0E76D79E1DCDAEA10066544C /* DateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateModel.m; path = Classes/Home/Model/DateModel.m; sourceTree = "<group>"; };
+		0E76D7A31DCDB4950066544C /* EqModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EqModel.h; path = Classes/Home/Model/EqModel.h; sourceTree = "<group>"; };
+		0E76D7A41DCDB4950066544C /* EqModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EqModel.m; path = Classes/Home/Model/EqModel.m; sourceTree = "<group>"; };
+		0E76D7A61DCDC56D0066544C /* MineReleaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MineReleaseViewController.h; path = Classes/Mine/Controller/MineReleaseViewController.h; sourceTree = "<group>"; };
+		0E76D7A71DCDC56D0066544C /* MineReleaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MineReleaseViewController.m; path = Classes/Mine/Controller/MineReleaseViewController.m; sourceTree = "<group>"; };
+		0E76D7A91DCDC58D0066544C /* HistoryReleaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryReleaseViewController.h; path = Classes/Mine/Controller/HistoryReleaseViewController.h; sourceTree = "<group>"; };
+		0E76D7AA1DCDC58D0066544C /* HistoryReleaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryReleaseViewController.m; path = Classes/Mine/Controller/HistoryReleaseViewController.m; sourceTree = "<group>"; };
 		0E76E26A1DC8337E008A06C1 /* GraphicLeadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphicLeadViewController.h; path = Classes/Home/Controller/GraphicLeadViewController.h; sourceTree = "<group>"; };
 		0E76E26B1DC8337E008A06C1 /* GraphicLeadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GraphicLeadViewController.m; path = Classes/Home/Controller/GraphicLeadViewController.m; sourceTree = "<group>"; };
 		0E76E2721DC8693B008A06C1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -429,6 +453,18 @@
 		0E3872251DC3110E00698B90 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0E76D7911DCD845F0066544C /* AdMsgModel.h */,
+				0E76D7921DCD845F0066544C /* AdMsgModel.m */,
+				0E76D7941DCD8D260066544C /* CityModel.h */,
+				0E76D7951DCD8D260066544C /* CityModel.m */,
+				0E76D7971DCDA49A0066544C /* UrbanModel.h */,
+				0E76D7981DCDA49A0066544C /* UrbanModel.m */,
+				0E76D79A1DCDA4CA0066544C /* BusinessCircleModel.h */,
+				0E76D79B1DCDA4CA0066544C /* BusinessCircleModel.m */,
+				0E76D79D1DCDAEA10066544C /* DateModel.h */,
+				0E76D79E1DCDAEA10066544C /* DateModel.m */,
+				0E76D7A31DCDB4950066544C /* EqModel.h */,
+				0E76D7A41DCDB4950066544C /* EqModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -487,6 +523,10 @@
 				0E3872731DC32CF700698B90 /* LoginAndRegister */,
 				0E38726A1DC328D300698B90 /* MineViewController.h */,
 				0E38726B1DC328D300698B90 /* MineViewController.m */,
+				0E76D7A61DCDC56D0066544C /* MineReleaseViewController.h */,
+				0E76D7A71DCDC56D0066544C /* MineReleaseViewController.m */,
+				0E76D7A91DCDC58D0066544C /* HistoryReleaseViewController.h */,
+				0E76D7AA1DCDC58D0066544C /* HistoryReleaseViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -799,6 +839,7 @@
 				0E3872A11DC33E6E00698B90 /* MBProgressHUD+Package.m in Sources */,
 				0E812A741DCB515700076EC1 /* ReleaseDetailTableViewCell.m in Sources */,
 				0E38727C1DC32EF500698B90 /* GetBackPassWordViewController.m in Sources */,
+				0E76D7AB1DCDC58D0066544C /* HistoryReleaseViewController.m in Sources */,
 				0E38725D1DC328A900698B90 /* EncryptionData.m in Sources */,
 				0E3872761DC32D3700698B90 /* LoginViewController.m in Sources */,
 				0E6BBB0A1DCA0DE000A01F44 /* JKPromptView.m in Sources */,
@@ -807,6 +848,8 @@
 				0E6BBB0D1DCA0DE000A01F44 /* UIView+JKPicker.m in Sources */,
 				0E8F2AE11DCC3AC0002FDD23 /* DateAndEqViewController.m in Sources */,
 				0E3872A31DC33E6E00698B90 /* UIView+LayerAttributes.m in Sources */,
+				0E76D79C1DCDA4CA0066544C /* BusinessCircleModel.m in Sources */,
+				0E76D79F1DCDAEA10066544C /* DateModel.m in Sources */,
 				0E6BBB091DCA0DE000A01F44 /* JKPhotoBrowserCell.m in Sources */,
 				0E812A6E1DCB2C8500076EC1 /* ReleaseDetailViewController.m in Sources */,
 				0E6BBAE01DC9D70300A01F44 /* BusinessChooseViewController.m in Sources */,
@@ -817,11 +860,13 @@
 				0E76E26C1DC8337E008A06C1 /* GraphicLeadViewController.m in Sources */,
 				0E38727F1DC330D300698B90 /* VerLoginViewController.m in Sources */,
 				0E812A6B1DCADCB100076EC1 /* TextView.m in Sources */,
+				0E76D7A51DCDB4950066544C /* EqModel.m in Sources */,
 				0E812A681DCAD99500076EC1 /* XWScanImage.m in Sources */,
 				0E3872601DC328A900698B90 /* LGReachability.m in Sources */,
 				0E6BBB0C1DCA0DE000A01F44 /* PhotoAlbumManager.m in Sources */,
 				0E3872A21DC33E6E00698B90 /* NSString+Additions.m in Sources */,
 				0E6BBB011DCA0DDF00A01F44 /* JKAssetsCollectionFooterView.m in Sources */,
+				0E76D7991DCDA49A0066544C /* UrbanModel.m in Sources */,
 				0E3871E41DC3033F00698B90 /* AppDelegate.m in Sources */,
 				0E6BBB051DCA0DDF00A01F44 /* JKAssetsViewCell.m in Sources */,
 				0E3871E11DC3033F00698B90 /* main.m in Sources */,
@@ -832,9 +877,12 @@
 				0E70126E1DC6E25E00E22A68 /* NotificationConfigure.m in Sources */,
 				0E6BBB081DCA0DDF00A01F44 /* JKPhotoBrowser.m in Sources */,
 				0E3872791DC32D5100698B90 /* RegisterViewController.m in Sources */,
+				0E76D7A81DCDC56D0066544C /* MineReleaseViewController.m in Sources */,
 				0E38725F1DC328A900698B90 /* JSONKit.m in Sources */,
 				0E38726F1DC328E700698B90 /* HomeViewController.m in Sources */,
+				0E76D7961DCD8D260066544C /* CityModel.m in Sources */,
 				0E6BBB031DCA0DDF00A01F44 /* JKAssetsGroupsView.m in Sources */,
+				0E76D7931DCD845F0066544C /* AdMsgModel.m in Sources */,
 				0E6BBB021DCA0DDF00A01F44 /* JKAssetsGroupCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

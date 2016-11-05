@@ -17,4 +17,16 @@
 #define kSendVefification @"User/sendCode"//发送验证码
 #define kCheckVerification @"User/checkCode"//检测短信验证码
 #define kSetNewPassWord @"User/resetPWD"//设置新的密码
+
+#define KAdsMsg @"Ads/index"//首页
+#define KGetCity @"Ads/getCities"//城市列表
+#define KGetUrban @"Ads/getDistricts"//城市列表
+#define KGetArea @"Ads/getArea"//商圈
+#define KGetTime @"Ads/getSchedule"//时间
+#define KGetEq @"Ads/getDevicesBySchedule"//设备
+#define KSubmitAd @"Ads/submitAds"//发布广告
+
+
+
+
 #endif /* ParamsDef_h */

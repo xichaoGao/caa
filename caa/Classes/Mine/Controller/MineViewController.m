@@ -7,8 +7,9 @@
 //
 
 #import "MineViewController.h"
-
-@interface MineViewController ()
+#import "JKImagePickerController.h"
+#import "MineReleaseViewController.h"
+@interface MineViewController ()<JKImagePickerControllerDelegate>
 {
     NSArray *titleArr;
 }
@@ -17,23 +18,20 @@
 @implementation MineViewController
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    self.navigationController.navigationBarHidden = YES;
-    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, kScreenWidth, 40)];
-    //设置
-    statusBarView.backgroundColor = RGB(0.95, 0.39, 0.21);
-    // 添加到 view 上
-    [self.view addSubview:statusBarView];
-    
+    self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    
+    self.navigationController.navigationBarHidden = YES;
+
     
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"我";
+    self.leftBtn.hidden = YES;
     titleArr = @[@"消息中心",@"意见反馈",@"帮助",@"软件升级"];
     [self createUI];
     
@@ -42,25 +40,29 @@
 -(void)createUI{
     _headBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 210*WidthRate)];
     [self.view addSubview:_headBgView];
-    _headImg = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth - 60*WidthRate)/2, 50 * WidthRate, 60*WidthRate, 60*WidthRate)];
+    _headImg = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth - 60*WidthRate)/2, 40 * WidthRate, 60*WidthRate, 60*WidthRate)];
     _headImg.layer.masksToBounds = YES;
+    _headImg.userInteractionEnabled = YES;
     _headImg.layer.cornerRadius = 30*WidthRate;
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
     [_headImg sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"headImg"]] placeholderImage:[UIImage imageNamed:@"wo_upload_headphoto"]];
+    UITapGestureRecognizer *addPhotoTapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addPhotoClick)];
+    [_headImg addGestureRecognizer:addPhotoTapGes];
+
     [_headBgView addSubview:_headImg];
     _useNameLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 200)/2, _headImg.bottom + 10*WidthRate, 200, 30)];
     _useNameLab.textAlignment = NSTextAlignmentCenter;
     _useNameLab.textColor = RGB(0.41, 0.41, 0.41);
-    _useNameLab.text = [user objectForKey:@"nickname"];
+    _useNameLab.text = [user objectForKey:@"nickName"];
     [_headBgView addSubview:_useNameLab];
     
     _mineReleaseBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _mineReleaseBtn.frame = CGRectMake((kScreenWidth - 150)/2, _useNameLab.bottom + 10*WidthRate, 150, 40);
+    _mineReleaseBtn.frame = CGRectMake((kScreenWidth - 150)/2, _useNameLab.bottom + 10*WidthRate, 150, 40*WidthRate);
     [_mineReleaseBtn setTitle:@"我的发布" forState: UIControlStateNormal];
     [_mineReleaseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _mineReleaseBtn.backgroundColor = RGB(0.95, 0.39, 0.21);
     _mineReleaseBtn.titleLabel.font = [UIFont systemFontOfSize:20];
-    _mineReleaseBtn.layer.cornerRadius = 20;
+    _mineReleaseBtn.layer.cornerRadius = 20*WidthRate;
     [_mineReleaseBtn addTarget:self action:@selector(mineReleaseClick) forControlEvents:UIControlEventTouchUpInside];
     [_headBgView addSubview:_mineReleaseBtn];
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, _headBgView.bottom-0.5, kScreenWidth,0.5)];
@@ -71,7 +73,7 @@
     [self.view addSubview:bgView];
 
     
-    _bgView  = [[UIView alloc]initWithFrame:CGRectMake(0, 40, kScreenWidth, 40*titleArr.count)];
+    _bgView  = [[UIView alloc]initWithFrame:CGRectMake(0, 40*WidthRate, kScreenWidth, 40*titleArr.count)];
     _bgView.backgroundColor = [UIColor whiteColor];
     [bgView addSubview:_bgView];
     
@@ -97,7 +99,7 @@
         [_bgView addSubview:lineView2];
         }
     }
-   UIView * View  = [[UIView alloc]initWithFrame:CGRectMake(0, _bgView.bottom+40, kScreenWidth, 40)];
+   UIView * View  = [[UIView alloc]initWithFrame:CGRectMake(0, _bgView.bottom+40*WidthRate, kScreenWidth, 40)];
     View.userInteractionEnabled = YES;
     View.backgroundColor = [UIColor whiteColor];
     [bgView addSubview:View];
@@ -126,7 +128,47 @@
     NSLog(@"dsflsld");
 }
 -(void)mineReleaseClick{
+    MineReleaseViewController * mrVC = [[MineReleaseViewController alloc]init];
+    mrVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mrVC animated:YES];
+}
+-(void)addPhotoClick{
+    JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.showsCancelButton = YES;
+    imagePickerController.allowsMultipleSelection = YES;
+    imagePickerController.minimumNumberOfSelection = 0;//最小选取照片数
+    imagePickerController.maximumNumberOfSelection = 1;//最大选取照片数
+//    imagePickerController.selectedAssetArray =self.assetsArray;//已经选择了的照片
+    UINavigationController*navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    [self presentViewController:navigationController animated:YES completion:NULL];
     
+}
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
+{
+   
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+       
+    }];
+    for (JKAssets *asset in assets) {
+        ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+        [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+            if (asset) {
+                UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+                _headImg.image  = image;
+                //                NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+                
+            }
+            
+        } failureBlock:^(NSError *error) {
+            
+        }];
+    }
+}
+- (void)imagePickerControllerDidCancel:(JKImagePickerController *)imagePicker
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -92,11 +92,22 @@
         _effectImg.tag = i+1000;
         [_effectImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"home_addmotion"]];
         _effectNumLab = [[UILabel alloc]initWithFrame:CGRectMake(_effectImg.left + 11, _effectImg.bottom + 8, 30, 20)];
+        _effectNumLab.userInteractionEnabled = YES;
         _effectNumLab.textColor = RGB(0.41, 0.41, 0.41);
+        _effectNumLab.tag = 10000+i;
         _effectNumLab.text = [@"" stringByAppendingFormat:@"%@%d",@"效果",i+1];
         _effectNumLab.font  = [UIFont systemFontOfSize:10];
         [self.view addSubview:_effectImg];
         [self.view addSubview: _effectNumLab];
+        UIButton *selectBtn = [UIButton  buttonWithType:UIButtonTypeCustom];
+        selectBtn.frame = CGRectMake(0, 0, _effectNumLab.width, _effectNumLab.height);
+        [selectBtn setImage:nil forState:UIControlStateNormal];
+        [selectBtn setImage:[UIImage imageNamed:@"home_all_tick"] forState:UIControlStateSelected];
+        selectBtn.tag = 20000+i;
+        [selectBtn addTarget:self action:@selector(selectedClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_effectNumLab addSubview:selectBtn];
+        
+        
         UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bigTap:)];
         [_effectImg addGestureRecognizer:tapGes];
         
@@ -224,9 +235,31 @@
     [XWScanImage scanBigImageWithImageView:clickedImageView];
 }
 
+
 -(void)effectSelectTap:(UITapGestureRecognizer *)tap{
     UIImageView * img = (UIImageView *)tap.view;
     NSLog(@"%ld",(long)img.tag);
+}
+-(void)selectedClick:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    for (int i = 0 ; i< 4;i++){
+        if (sender.tag == 20000+i){
+            if (sender.selected == YES){
+                NSLog(@"&&&&&&%ld",(long)sender.tag);
+                
+            }
+            else{
+                NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
+            }
+        }else {
+            
+            UIButton * btn = (UIButton *)[self.view viewWithTag:20000+i];
+            if (btn.selected == YES){
+                btn.selected = !btn.selected;
+            }
+            else{
+            }
+        }    }
 }
 -(void)addTextTap{
     TextView * view = [[TextView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
@@ -267,7 +300,9 @@
     btn.selected =!btn.selected;
     if (btn.selected == YES){
         btn.selected = !btn.selected;
-
+        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+        [user setObject:_titleText.text forKey:@"title"];
+        
         [_nextBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
         BusinessChooseViewController * bcVC = [[BusinessChooseViewController alloc]init];
         bcVC.hidesBottomBarWhenPushed = YES;
