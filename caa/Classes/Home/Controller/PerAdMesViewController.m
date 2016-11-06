@@ -14,7 +14,7 @@
 @interface PerAdMesViewController ()<UITextFieldDelegate,JKImagePickerControllerDelegate>
 @property (strong,nonatomic)NSMutableArray *assetsArray;
 @property(nonatomic,strong)NSMutableArray * imgArray;
-
+@property(nonatomic,strong)NSMutableArray  *photoArray;
 @end
 
 @implementation PerAdMesViewController
@@ -24,17 +24,18 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [_previewBtn setBackgroundColor:[UIColor whiteColor]];
     [_nextBtn setBackgroundColor:[UIColor whiteColor]];
-
+    
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-   
-
+    
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _photoArray = [NSMutableArray arrayWithCapacity:1];
     _assetsArray = [NSMutableArray array];
     _imgArray = [NSMutableArray array];
     self.navigationItem.title = @"完善广告信息";
@@ -54,7 +55,7 @@
     _defaultLab.textColor  = RGB(0.84, 0.84, 0.84);
     _defaultLab.font = [UIFont systemFontOfSize:18];
     [_bgView addSubview:_defaultLab];
-   
+    
     _addBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     _addBtn.frame = CGRectMake(_bgView.right-45, _bgView.bottom - 45, 25, 25);
     [_addBtn setBackgroundImage:[UIImage imageNamed:@"home_addphotos"] forState:UIControlStateNormal];
@@ -71,7 +72,7 @@
     _titleText.placeholder = @"请输入您的标题";
     _titleText.delegate = self;
     _titleText.clearButtonMode = UITextFieldViewModeWhileEditing;
-
+    
     _titleText.textColor = RGB(0.41, 0.41, 0.41);
     _titleText.font = [UIFont systemFontOfSize:13];
     [self.view addSubview:_titleText];
@@ -112,13 +113,13 @@
         [_effectImg addGestureRecognizer:tapGes];
         
     }
-     _textLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _effectNumLab.bottom + 10*WidthRate, 80, 30)];
+    _textLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _effectNumLab.bottom + 10*WidthRate, 80, 30)];
     _textLab.font = [UIFont systemFontOfSize:15];
     _textLab.textColor = RGB(0.41, 0.41, 0.41);
     _textLab.text = @"动画文字:";
     [self.view addSubview:_textLab];
     NSUserDefaults * use = [NSUserDefaults standardUserDefaults];
-
+    
     _textBgView = [[UIView alloc]initWithFrame:CGRectMake(_textLab.right, _textLab.origin.y, kScreenWidth - _textLab.right-17, 60*WidthRate)];
     _textBgView.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
     _textBgView.layer.borderWidth = 1;
@@ -133,14 +134,14 @@
     _textDeLab.textColor = RGB(0.41, 0.41, 0.41);
     [_textBgView addSubview:_textDeLab];
     
-   
+    
     _defTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _textBgView.width-10, _textBgView.height-10)];
     _defTextDeLab.numberOfLines = 0;
     _defTextDeLab.text = @"请输入文字描述";
     _defTextDeLab.font = [UIFont systemFontOfSize:14];
     _defTextDeLab.textColor = RGB(0.84, 0.84, 0.84);
     [_textBgView addSubview:_defTextDeLab];
-
+    
     _previewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _previewBtn.frame = CGRectMake(20,kScreenHeight-120*WidthRate , 120*WidthRate, 30*WidthRate);
     _previewBtn.layer.masksToBounds = YES;
@@ -172,7 +173,7 @@
         _defTextDeLab.hidden = NO;
     }else
         _defTextDeLab.hidden = YES;
-
+    
     
 }
 -(void)addPhotoClick{
@@ -186,11 +187,14 @@
     UINavigationController*navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];
     
-   }
+}
 - (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
 {
     self.assetsArray=[assets mutableCopy];
     [_imgArray removeAllObjects];
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    [user setObject:nil forKey:@"photoArray"];
+    [user synchronize];
     NSLog(@"%ld",(unsigned long)self.assetsArray.count);
     [imagePicker dismissViewControllerAnimated:YES completion:^{
         if (_assetsArray.count == 0){
@@ -199,14 +203,14 @@
             _defaultLab.hidden = YES;
             [_bgView removeAllSubviews];
             [_bgView addSubview:_addBtn];
-
-        for (int i = 0; i<_assetsArray.count;i++){
-            _photoImg = [[UIImageView alloc]initWithFrame:CGRectMake((i%5)*((_bgView.width - 60*WidthRate)/5 +11)+11, (i/5)*((_bgView.width - 60*WidthRate)/5+11)+11, (_bgView.width - 66*WidthRate)/5, (_bgView.width - 66*WidthRate)/5)];
-            _photoImg.userInteractionEnabled = YES;
-            [_photoImg sd_setImageWithURL:nil placeholderImage:_imgArray[i]];
-            [_bgView addSubview:_photoImg];
-            UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bigTap:)];
-            [_photoImg addGestureRecognizer:tapGes];
+            
+            for (int i = 0; i<_assetsArray.count;i++){
+                _photoImg = [[UIImageView alloc]initWithFrame:CGRectMake((i%5)*((_bgView.width - 60*WidthRate)/5 +11)+11, (i/5)*((_bgView.width - 60*WidthRate)/5+11)+11, (_bgView.width - 66*WidthRate)/5, (_bgView.width - 66*WidthRate)/5)];
+                _photoImg.userInteractionEnabled = YES;
+                [_photoImg sd_setImageWithURL:nil placeholderImage:_imgArray[i]];
+                [_bgView addSubview:_photoImg];
+                UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bigTap:)];
+                [_photoImg addGestureRecognizer:tapGes];
             }
         }
     }];
@@ -216,10 +220,14 @@
             if (asset) {
                 UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
                 [_imgArray addObject:image];
-//                NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+                
+                NSData *imageData =  UIImageJPEGRepresentation([self rotateImage:image], 0.05);
+                [_photoArray addObject:imageData];
                 
             }
-            
+            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+            [user setObject:_photoArray forKey:@"photoArray"];
+            [user synchronize];
         } failureBlock:^(NSError *error) {
             
         }];
@@ -230,7 +238,116 @@
     [imagePicker dismissViewControllerAnimated:YES completion:^{
     }];
 }
+//这个方法是使拍照的时候控制照片的自动旋转
+- (UIImage*)rotateImage:(UIImage *)image
+{
+    int kMaxResolution = 960; // Or whatever
+    CGImageRef imgRef = image.CGImage;
+    
+    CGFloat width = CGImageGetWidth(imgRef);
+    CGFloat height = CGImageGetHeight(imgRef);
+    
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    CGRect bounds = CGRectMake(0, 0, width, height);
+    if (width > kMaxResolution || height > kMaxResolution) {
+        CGFloat ratio = width/height;
+        if (ratio > 1) {
+            bounds.size.width = kMaxResolution;
+            bounds.size.height = bounds.size.width / ratio;
+        }
+        else {
+            bounds.size.height = kMaxResolution;
+            bounds.size.width = bounds.size.height * ratio;
+        }
+    }
+    
+    CGFloat scaleRatio = bounds.size.width / width;
+    CGSize imageSize = CGSizeMake(CGImageGetWidth(imgRef), CGImageGetHeight(imgRef));
+    CGFloat boundHeight;
+    UIImageOrientation orient = image.imageOrientation;
+    switch(orient) {
+            
+        case UIImageOrientationUp: //EXIF = 1
+            transform = CGAffineTransformIdentity;
+            break;
+            
+        case UIImageOrientationUpMirrored: //EXIF = 2
+            transform = CGAffineTransformMakeTranslation(imageSize.width, 0.0);
+            transform = CGAffineTransformScale(transform, -1.0, 1.0);
+            break;
+            
+        case UIImageOrientationDown: //EXIF = 3
+            transform = CGAffineTransformMakeTranslation(imageSize.width, imageSize.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationDownMirrored: //EXIF = 4
+            transform = CGAffineTransformMakeTranslation(0.0, imageSize.height);
+            transform = CGAffineTransformScale(transform, 1.0, -1.0);
+            break;
+            
+        case UIImageOrientationLeftMirrored: //EXIF = 5
+            boundHeight = bounds.size.height;
+            bounds.size.height = bounds.size.width;
+            bounds.size.width = boundHeight;
+            transform = CGAffineTransformMakeTranslation(imageSize.height, imageSize.width);
+            transform = CGAffineTransformScale(transform, -1.0, 1.0);
+            transform = CGAffineTransformRotate(transform, 3.0 * M_PI / 2.0);
+            break;
+            
+        case UIImageOrientationLeft: //EXIF = 6
+            boundHeight = bounds.size.height;
+            bounds.size.height = bounds.size.width;
+            bounds.size.width = boundHeight;
+            transform = CGAffineTransformMakeTranslation(0.0, imageSize.width);
+            transform = CGAffineTransformRotate(transform, 3.0 * M_PI / 2.0);
+            break;
+            
+        case UIImageOrientationRightMirrored: //EXIF = 7
+            boundHeight = bounds.size.height;
+            bounds.size.height = bounds.size.width;
+            bounds.size.width = boundHeight;
+            transform = CGAffineTransformMakeScale(-1.0, 1.0);
+            transform = CGAffineTransformRotate(transform, M_PI / 2.0);
+            break;
+            
+        case UIImageOrientationRight: //EXIF = 8
+            boundHeight = bounds.size.height;
+            bounds.size.height = bounds.size.width;
+            bounds.size.width = boundHeight;
+            transform = CGAffineTransformMakeTranslation(imageSize.height, 0.0);
+            transform = CGAffineTransformRotate(transform, M_PI / 2.0);
+            break;
+            
+        default:
+            [NSException raise:NSInternalInconsistencyException format:@"Invalid image orientation"];
+            
+    }
+    
+    UIGraphicsBeginImageContext(bounds.size);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    if (orient == UIImageOrientationRight || orient == UIImageOrientationLeft) {
+        CGContextScaleCTM(context, -scaleRatio, scaleRatio);
+        CGContextTranslateCTM(context, -height, 0);
+    }
+    else {
+        CGContextScaleCTM(context, scaleRatio, -scaleRatio);
+        CGContextTranslateCTM(context, 0, -height);
+    }
+    
+    CGContextConcatCTM(context, transform);
+    
+    CGContextDrawImage(UIGraphicsGetCurrentContext(), CGRectMake(0, 0, width, height), imgRef);
+    UIImage *imageCopy = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return imageCopy;
+}
+
 -(void)bigTap:(UITapGestureRecognizer *)tap{
+    [_titleText resignFirstResponder];
     UIImageView *clickedImageView = (UIImageView *)tap.view;
     [XWScanImage scanBigImageWithImageView:clickedImageView];
 }
@@ -241,6 +358,7 @@
     NSLog(@"%ld",(long)img.tag);
 }
 -(void)selectedClick:(UIButton *)sender{
+    [_titleText resignFirstResponder];
     sender.selected = !sender.selected;
     for (int i = 0 ; i< 4;i++){
         if (sender.tag == 20000+i){
@@ -268,18 +386,18 @@
         if ([str isEqualToString:@""]){
             _defTextDeLab.hidden = NO;
             _textDeLab.hidden = YES;
-        _defTextDeLab.text = @"请输入文字描述";
+            _defTextDeLab.text = @"请输入文字描述";
         }else
         {
             _textDeLab.hidden = NO;
             _defTextDeLab.hidden = YES;
             _textDeLab.text = str;
-
+            
         }
         
     };
     
-  
+    
     
 }
 -(void)previewClick:(UIButton *)btn{
@@ -304,6 +422,11 @@
         [user setObject:_titleText.text forKey:@"title"];
         
         [_nextBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
+        NSDictionary * vDic = @{@"动画文字":_textDeLab.text};
+        NSArray * value = [NSArray arrayWithObject:vDic];
+        NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:@"1",@"type",value,@"value" ,nil];
+        [user setObject:dic forKey:@"animation"];
+        
         BusinessChooseViewController * bcVC = [[BusinessChooseViewController alloc]init];
         bcVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:bcVC animated:YES];
@@ -324,13 +447,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

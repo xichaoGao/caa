@@ -27,10 +27,16 @@
     
 }
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.navigationItem.title = @"发布成功";
     [self createUI];
     // Do any additional setup after loading the view.
+/**
+ <#Description#>
+
+ @return <#return value description#>
+ */
 }
 -(void)createUI{
     _successLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 150)/2, 100*WidthRate, 150, 50)];
@@ -57,6 +63,7 @@
     _tipLab.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:_tipLab];
 }
+
 -(void)mineReleaseClick{
     MineReleaseViewController * mrVC = [[MineReleaseViewController alloc]init];
     mrVC.hidesBottomBarWhenPushed = YES;
