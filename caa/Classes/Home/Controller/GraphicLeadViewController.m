@@ -50,7 +50,6 @@
     
 }
 -(void)webViewDidFinishLoad:(UIWebView*)webView{
-//    _shareTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];//获取
     [self hiddenMBProgressView];
 }
 -(void)webView:(UIWebView*)webView  DidFailLoadWithError:(NSError*)error{
@@ -65,13 +64,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

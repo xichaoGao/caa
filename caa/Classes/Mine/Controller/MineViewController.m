@@ -25,7 +25,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-
+    
     
 }
 - (void)viewDidLoad {
@@ -48,7 +48,7 @@
     [_headImg sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"headImg"]] placeholderImage:[UIImage imageNamed:@"wo_upload_headphoto"]];
     UITapGestureRecognizer *addPhotoTapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addPhotoClick)];
     [_headImg addGestureRecognizer:addPhotoTapGes];
-
+    
     [_headBgView addSubview:_headImg];
     _useNameLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 200)/2, _headImg.bottom + 10*WidthRate, 200, 30)];
     _useNameLab.textAlignment = NSTextAlignmentCenter;
@@ -71,7 +71,7 @@
     UIView * bgView =  [[UIView alloc]initWithFrame:CGRectMake(0, _headBgView.bottom, kScreenWidth, kScreenHeight-_headBgView.bottom-49)];
     bgView.backgroundColor = RGB(0.97, 0.97, 0.97);
     [self.view addSubview:bgView];
-
+    
     
     _bgView  = [[UIView alloc]initWithFrame:CGRectMake(0, 40*WidthRate, kScreenWidth, 40*titleArr.count)];
     _bgView.backgroundColor = [UIColor whiteColor];
@@ -94,12 +94,12 @@
         [_detailBtn setImage:[UIImage imageNamed:@"wo_more"] forState:UIControlStateNormal];
         [_bgView addSubview:_detailBtn];
         if (i == titleArr.count-1){
-        UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, titleLab.bottom-0.5, kScreenWidth,0.5)];
-        lineView2.backgroundColor = RGB(0.84, 0.84, 0.84);
-        [_bgView addSubview:lineView2];
+            UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, titleLab.bottom-0.5, kScreenWidth,0.5)];
+            lineView2.backgroundColor = RGB(0.84, 0.84, 0.84);
+            [_bgView addSubview:lineView2];
         }
     }
-   UIView * View  = [[UIView alloc]initWithFrame:CGRectMake(0, _bgView.bottom+40*WidthRate, kScreenWidth, 40)];
+    UIView * View  = [[UIView alloc]initWithFrame:CGRectMake(0, _bgView.bottom+40*WidthRate, kScreenWidth, 40)];
     View.userInteractionEnabled = YES;
     View.backgroundColor = [UIColor whiteColor];
     [bgView addSubview:View];
@@ -122,16 +122,19 @@
     [View addGestureRecognizer:tapGes];
     
     
-
+    
 }
+//退出事件
 -(void)logoutClick{
     NSLog(@"dsflsld");
 }
+//我的发布事件
 -(void)mineReleaseClick{
     MineReleaseViewController * mrVC = [[MineReleaseViewController alloc]init];
     mrVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mrVC animated:YES];
 }
+//更换图片事件
 -(void)addPhotoClick{
     JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
     imagePickerController.delegate = self;
@@ -139,16 +142,16 @@
     imagePickerController.allowsMultipleSelection = YES;
     imagePickerController.minimumNumberOfSelection = 0;//最小选取照片数
     imagePickerController.maximumNumberOfSelection = 1;//最大选取照片数
-//    imagePickerController.selectedAssetArray =self.assetsArray;//已经选择了的照片
+    //    imagePickerController.selectedAssetArray =self.assetsArray;//已经选择了的照片
     UINavigationController*navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];
     
 }
 - (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
 {
-   
+    
     [imagePicker dismissViewControllerAnimated:YES completion:^{
-       
+        
     }];
     for (JKAssets *asset in assets) {
         ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
@@ -176,13 +179,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

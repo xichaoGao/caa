@@ -44,8 +44,6 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-
-    
 }
 
 - (void)viewDidLoad {
@@ -61,6 +59,7 @@
     
     // Do any additional setup after loading the view.
 }
+//创建界面
 -(void)createUI{
     _chooseCityView = [self createViewWithY:30*WidthRate Title:_titleArr contentArray:_chooseCity part:0];
     [self.view addSubview:_chooseCityView];
@@ -96,6 +95,7 @@
     }
     return view;
 }
+//获取热门城市数据
 -(void)getCityDatas{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     _pramerDic = [NSDictionary dictionary];
@@ -115,9 +115,9 @@
                     NSLog(@"%@",cityModel.city);
                     [_hotCity addObject:cityModel.city];
                     
-            }
+                }
                 [self createUI];
-
+                
             }
             
         }
@@ -133,6 +133,7 @@
         }
     }];
 }
+//所有按钮点击事件的集合
 -(void)touchClick:(UIButton *)sender{
     NSLog(@"%ld",(long)sender.tag);
     sender.selected = !sender.selected;
@@ -143,8 +144,8 @@
                     if (sender.selected == YES){
                         NSLog(@"&&&&&&%ld",(long)sender.tag);
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
-                       
-                       
+                        
+                        
                     }
                     else{
                         NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
@@ -163,7 +164,7 @@
                 }
             }
             break;
-          
+            
         case 2:
             for (int i = 0 ; i <_hotCity.count;i++){
                 if (sender.tag == 2000+i){
@@ -208,12 +209,12 @@
                                 [self errorMessages:mess];
                             }
                         }];
-
+                        
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                     }
                     else{
                         NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
-
+                        
                         sender.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
                     }
                 }else {
@@ -317,9 +318,6 @@
         default:
             break;
     }
-    
-   
-
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -327,13 +325,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

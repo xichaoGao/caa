@@ -41,7 +41,7 @@
     _phoneText.placeholder = @"手机号码";
     _phoneText.delegate = self;
     _phoneText.clearButtonMode = UITextFieldViewModeWhileEditing;
-
+    
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
     _phoneText.textColor = UIColorFromHex(0x333333);
     [_phoneView addSubview:_phoneText];
@@ -58,7 +58,7 @@
     _verificationText.delegate = self;
     _verificationText.clearButtonMode = UITextFieldViewModeWhileEditing;
     _verificationText.keyboardType = UIKeyboardTypeNumberPad;
-
+    
     _verificationText.textColor = UIColorFromHex(0x333333);
     [_verificationView addSubview:_verificationText];
     
@@ -83,7 +83,7 @@
     _passWordText.secureTextEntry = YES;
     _passWordText.delegate = self;
     _passWordText.clearButtonMode = UITextFieldViewModeWhileEditing;
-
+    
     _passWordText.textColor = UIColorFromHex(0x333333);
     [self.passWordView addSubview:_passWordText];
     
@@ -101,7 +101,7 @@
     _againPassWordText.secureTextEntry = YES;
     _againPassWordText.delegate = self;
     _againPassWordText.clearButtonMode = UITextFieldViewModeWhileEditing;
-
+    
     _againPassWordText.textColor = UIColorFromHex(0x333333);
     [_againPassWordView addSubview:_againPassWordText];
     
@@ -122,7 +122,7 @@
     [_sureBtn addTarget:self action:@selector(SureClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_sureBtn];
 }
-
+//获取验证码事件
 -(void)GetVerificationClick{
     [self resign];
     if ([_phoneText.text isEqualToString:@""]) {
@@ -151,9 +151,10 @@
                 
             }
         }];
-
+        
     }
 }
+//确认事件
 -(void)SureClick{
     [self resign];
     
@@ -169,7 +170,7 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }else{
-     [self Verification];
+        [self Verification];
     }
     
     
@@ -184,6 +185,7 @@
     [_verificationBtn setTitleColor:RGB(0.54, 0.54, 0.54) forState:UIControlStateNormal];
     [_verificationBtn.titleLabel setFont:[UIFont systemFontOfSize:20]];
 }
+//验证验证码事件
 -(void)Verification{
     _pramerDic = [NSDictionary dictionary];
     _pramerDic = @{@"phone":_phoneText.text,@"code":_verificationText.text};
@@ -197,14 +199,14 @@
             [self sure];
         }
     }];
-
+    
 }
 -(void)sure{
     if (_isTure == NO){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"验证码不正确" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
-
+    
     else if ([_passWordText.text isEqualToString:@""]){
         
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"密码不能为空" buttonTitles:@"确定", nil];
@@ -220,26 +222,26 @@
         [alert showInView:self.view completion:nil];
     }
     else{
-            
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            self.pramerDic = [NSDictionary dictionary];
-            _pramerDic = @{@"phone":_phoneText.text,@"password":[self md5:_passWordText.text]};
-            [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kSetNewPassWord RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-                hud.hidden = YES;
-                [self resign];
-                NSLog(@"loginResult==%@",result);
-                int status = [[result objectForKey:@"status"] intValue];;
-                if (status == 1) {
-                    
-                    LoginViewController * logVC = [[LoginViewController alloc]init];
-                    [self.navigationController pushViewController:logVC animated:YES];
-                    
-                }else{
-                    NSString *mess = [result objectForKey:@"message"];
-                    [self errorMessages:mess];
-                }
-            }];
-        }
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.pramerDic = [NSDictionary dictionary];
+        _pramerDic = @{@"phone":_phoneText.text,@"password":[self md5:_passWordText.text]};
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kSetNewPassWord RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+            hud.hidden = YES;
+            [self resign];
+            NSLog(@"loginResult==%@",result);
+            int status = [[result objectForKey:@"status"] intValue];;
+            if (status == 1) {
+                
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];
+                
+            }else{
+                NSString *mess = [result objectForKey:@"message"];
+                [self errorMessages:mess];
+            }
+        }];
+    }
     
 }
 #pragma mark-- 倒计时关联方法
@@ -273,14 +275,14 @@
     [_verificationText resignFirstResponder];
     [_passWordText resignFirstResponder];
     [_againPassWordText resignFirstResponder];
-
+    
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [_phoneText resignFirstResponder];
     [_verificationText resignFirstResponder];
     [_passWordText resignFirstResponder];
     [_againPassWordText resignFirstResponder];
-
+    
     return YES;
 }
 - (void)didReceiveMemoryWarning {
@@ -289,13 +291,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

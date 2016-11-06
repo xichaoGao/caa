@@ -30,13 +30,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//    [user setObject:@"361770b96f9793d550ee6e62c1210e9f" forKey:@"token"];
     [self createUI];
     [self getHomeDatas];
     
     // Do any additional setup after loading the view.
 }
+//创建界面
 -(void)createUI{
     _leadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 220*WidthRate)];
     _leadView.userInteractionEnabled = YES;
@@ -59,7 +58,7 @@
     _faceLab.textAlignment = NSTextAlignmentCenter;
     _faceLab.font = [UIFont systemFontOfSize:20];
     [_leadImg addSubview:_faceLab];
-
+    
     _adView = [[UIView alloc]initWithFrame:CGRectMake(12,_leadView.bottom+10 * WidthRate, kScreenWidth - 24, 160 * WidthRate)];
     _adView.layer.masksToBounds = YES;
     _adView.layer.cornerRadius = 10;
@@ -130,9 +129,10 @@
     [_detailBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
     [_detailBtn addTarget:self action:@selector(detailClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_detailBtn];
-
+    
     
 }
+//获取首页数据
 -(void)getHomeDatas{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     _pramerDic = [NSDictionary dictionary];
@@ -143,10 +143,10 @@
         NSLog(@"loginResult==%@",result);
         int status = [[result objectForKey:@"status"] intValue];;
         if (status == 1) {
-           if([[result objectForKey:@"data"] count] > 0){
-            _showView.hidden = NO;
+            if([[result objectForKey:@"data"] count] > 0){
+                _showView.hidden = NO;
             }
-           AdMsgModel *adMsgModel = [AdMsgModel  mj_objectWithKeyValues:[result  objectForKey:@"data"]];
+            AdMsgModel *adMsgModel = [AdMsgModel  mj_objectWithKeyValues:[result  objectForKey:@"data"]];
             _relLabNum.text = [NSString stringWithFormat:@"%@ 屏",adMsgModel.device_count];
             _playLabNum.text = [NSString stringWithFormat:@"%@ 次",adMsgModel.play_count];
             _receLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.get_count];
@@ -165,17 +165,20 @@
         }
     }];
 }
+//引导手势
 -(void)leadDetailTap{
-
+    
     GraphicLeadViewController * logVC = [[GraphicLeadViewController alloc]init];
     logVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:logVC animated:YES];
 }
+//发布广告手势
 -(void)relAdTap{
     PerAdMesViewController * paVC = [[PerAdMesViewController alloc]init];
     paVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:paVC animated:YES];
 }
+//详情事件
 -(void)detailClick{
     ReleaseDetailViewController * rdVC = [[ReleaseDetailViewController alloc]init];
     rdVC.hidesBottomBarWhenPushed = YES;
@@ -187,13 +190,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

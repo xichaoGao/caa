@@ -18,26 +18,18 @@
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
-    
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    
-    
 }
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
     self.navigationItem.title = @"发布成功";
     [self createUI];
     // Do any additional setup after loading the view.
-/**
- <#Description#>
-
- @return <#return value description#>
- */
 }
+//创建界面
 -(void)createUI{
     _successLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 150)/2, 100*WidthRate, 150, 50)];
     _successLab.text = @"发布成功!";
@@ -63,7 +55,7 @@
     _tipLab.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:_tipLab];
 }
-
+//我的发布点击事件
 -(void)mineReleaseClick{
     MineReleaseViewController * mrVC = [[MineReleaseViewController alloc]init];
     mrVC.hidesBottomBarWhenPushed = YES;

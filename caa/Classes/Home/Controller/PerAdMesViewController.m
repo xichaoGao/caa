@@ -29,8 +29,6 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    
-    
 }
 
 - (void)viewDidLoad {
@@ -42,6 +40,7 @@
     [self createUI];
     // Do any additional setup after loading the view.
 }
+//创建界面
 -(void)createUI{
     _bgView = [[UIView alloc]initWithFrame:CGRectMake(12, 10*WidthRate, kScreenWidth-24, 160*WidthRate)];
     _bgView.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
@@ -176,6 +175,7 @@
     
     
 }
+//添加图片点击事件
 -(void)addPhotoClick{
     JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
     imagePickerController.delegate = self;
@@ -345,18 +345,14 @@
     
     return imageCopy;
 }
-
+//图片放大手势
 -(void)bigTap:(UITapGestureRecognizer *)tap{
     [_titleText resignFirstResponder];
     UIImageView *clickedImageView = (UIImageView *)tap.view;
     [XWScanImage scanBigImageWithImageView:clickedImageView];
 }
 
-
--(void)effectSelectTap:(UITapGestureRecognizer *)tap{
-    UIImageView * img = (UIImageView *)tap.view;
-    NSLog(@"%ld",(long)img.tag);
-}
+//效果点击对号
 -(void)selectedClick:(UIButton *)sender{
     [_titleText resignFirstResponder];
     sender.selected = !sender.selected;
@@ -379,6 +375,7 @@
             }
         }    }
 }
+//添加内容
 -(void)addTextTap{
     TextView * view = [[TextView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     [self.view addSubview:view];
@@ -400,6 +397,7 @@
     
     
 }
+//预览效果事件
 -(void)previewClick:(UIButton *)btn{
     btn.selected =!btn.selected;
     if (btn.selected == YES){
@@ -414,6 +412,7 @@
         [_previewBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
     }
 }
+//下一步 事件
 -(void)nextClick:(UIButton *)btn{
     btn.selected =!btn.selected;
     if (btn.selected == YES){

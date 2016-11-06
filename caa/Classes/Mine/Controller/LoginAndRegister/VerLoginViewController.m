@@ -85,6 +85,7 @@
     [self.view addSubview:_loginBtn];
 
 }
+//获取验证码事件
 -(void)GetVerificationClick{
     [self resign];
     if ([_phoneText.text isEqualToString:@""]) {
@@ -117,6 +118,7 @@
         }];
     }
 }
+//验证码登录事件
 -(void)LoginClick{
     [self resign];
     
@@ -150,13 +152,6 @@
                 NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
                 [user setObject:headImg forKey:@"headImg"];
 
-//                //给名字加密
-//               NSMutableDictionary *paramer = [NSMutableDictionary dictionaryWithDictionary:@{@"userID":userID,@"token":token,@"nickName":nickName}];
-//                EncryptionData *encryptionData = [[EncryptionData alloc] init];
-//                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:paramer options:NSJSONWritingPrettyPrinted error:nil];
-//                NSString *jsonString = [jsonData base64EncodedStringWithOptions:0];
-//                NSString *passPortMemberStatusMemberIDStr = [encryptionData encodeString:jsonString key:messageStr];
-//                
                 NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
                 [defult setObject:userID forKey:@"userID"];
                 [defult setObject:nickName forKey:@"nickName"];

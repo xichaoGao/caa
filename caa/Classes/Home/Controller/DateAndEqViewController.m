@@ -44,11 +44,7 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    
-    
     self.navigationController.navigationBarHidden = YES;
-    
-    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,6 +59,7 @@
     
     // Do any additional setup after loading the view.
 }
+//获取日期数据
 -(void)getDateDatas{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     _pramerDic = [NSDictionary dictionary];
@@ -80,12 +77,9 @@
                     DateModel * dateModel  = [DateModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
                     NSLog(@"%@",dateModel.date);
                     [_dateArr addObject:dateModel];
-                    
                 }
                 [self createUI];
-                
             }
-            
         }
         else if (status == -1){
             HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
@@ -99,10 +93,10 @@
         }
     }];
 }
+//创建日期按钮界面
 -(void)createUI{
     _dateView = [self createViewWithY:30*WidthRate Title:@"选择时间" contentArray:_dateArr part:1];
     [self.view addSubview:_dateView];
-    
     _totalLab = [[UILabel alloc]initWithFrame:CGRectMake(12, kScreenHeight - 120, 60, 20)];
     _totalLab.textColor = RGB(0.30, 0.30, 0.30);
     _totalLab.text = @"总计:";
@@ -179,7 +173,6 @@
     allBtn.layer.borderWidth = 0.5;
     allBtn.tag = 100000;
     [allBtn setImage:[UIImage imageNamed:@"home_all_tick"] forState:UIControlStateSelected];
-    //    [allBtn setImage:nil forState:UIControlStateNormal];
     [allBtn addTarget:self action:@selector(allSelectClick:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:allBtn];
     for (int i = 0 ; i< array.count ; i++ ){
@@ -237,6 +230,7 @@
     }
     return view;
 }
+//日期按钮点击事件
 -(void)touchDateClick:(UIButton*)sender{
     _num = 0;
     _addNum = 0;
@@ -270,10 +264,7 @@
                             }
                             _eqView = [self createViewWithH:_dateView.bottom +5 Title:@"可选商家" contentArray:_eqArr part:2];
                             [self.view addSubview:_eqView];
-                            
-                            
                         }
-                        
                     }
                     else if (status == -1){
                         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
@@ -304,6 +295,7 @@
         }
     }
 }
+//全选按钮点击事件
 -(void)allSelectClick:(UIButton *)sender{
     sender.selected = !sender.selected;
     [_idArr removeAllObjects];
@@ -323,7 +315,7 @@
             EqModel * eqMol = _eqArr[i];
             if (eqMol.current_ads != eqMol.max_ads){
                 [_idArr addObject:eqMol.device_id];
-                 [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%d",i]];
+                [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%d",i]];
             }
             _grayView = (UIView *)[self.view viewWithTag:2000+i];
             _grayView.hidden = YES;
@@ -334,6 +326,7 @@
     }
     
 }
+//设备按钮点击事件
 -(void)screenBtnClick:(UIButton *)sender{
     NSLog(@"%ld",(long)sender.tag);
     [_idArr removeAllObjects];
@@ -347,14 +340,12 @@
                 all.selected = !all.selected;
             }else{
                 all.selected = !all.selected;
-                
             }
-            
         }
         
         EqModel * eqMol = _eqArr[sender.tag%10000];
         [_idArr addObject:eqMol.device_id];
-         [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%ld",sender.tag%10000]];
+        [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%ld",sender.tag%10000]];
         
         _grayView = (UIView *)[self.view viewWithTag:2000+sender.tag%10000];
         _grayView.hidden = NO;
@@ -364,7 +355,7 @@
     else{
         EqModel * eqMol = _eqArr[sender.tag%10000];
         [_idArr removeObject:eqMol.device_id];
-         [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%ld",sender.tag%10000]];
+        [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%ld",sender.tag%10000]];
         _addNum++;
         if (_addNum == _num){
             _addNum = 0;
@@ -384,6 +375,7 @@
         
     }
 }
+//对号图片点击手势
 -(void)uncheckTap:(UITapGestureRecognizer *)tap{
     NSLog(@"%ld",tap.view.tag);
     UIButton * btn =  (UIButton *)[self.view viewWithTag:tap.view.tag%3000+10000];
@@ -399,7 +391,7 @@
         }
         EqModel * eqMol = _eqArr[tap.view.tag%3000];
         [_idArr removeObject:eqMol.device_id];
-         [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%d",(int)tap.view.tag%3000]];
+        [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%d",(int)tap.view.tag%3000]];
         _grayView = (UIView *)[self.view viewWithTag:tap.view.tag-1000];
         _grayView.hidden = YES;
         _selectedImg = (UIImageView *)[self.view viewWithTag:tap.view.tag];
@@ -423,63 +415,64 @@
         _selectedImg.hidden = YES;
     }
 }
+//发布按钮点击事件
 -(void)ReleaseClick{
-//    for (int i = 0 ;i < _dateArr.count ; i++){
-//        NSLog(@"%ld",[[_defalutDic objectForKey:[NSString stringWithFormat:@"%d",i]] count]);
-//        if ([[_defalutDic objectForKey:[NSString stringWithFormat:@"%d",i]] count] > 0){
-//            DateModel  * mol = _dateArr[i];
-//            NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",mol.timestamp],@"date",[NSString stringWithFormat:@"%d",mol.type],@"type",[_defalutDic objectForKey:[NSString stringWithFormat:@"%d",i]],@"device_id", nil];
-//            [_listArr addObject:dict];
-//        }
-//       
-//    }
-//    
-//    
-//    
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    _pramerDic = [NSDictionary dictionary];
-//    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-//    NSArray * md5Items = [KSubmitAd componentsSeparatedByString:@"/"];
-//    NSString * md5Str = [md5Items[0] stringByAppendingString:[self md5:@"bjyfkj4006010136"]];
-//    NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
-//    NSString *playlistStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:_listArr options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-//    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"animation":[self dictionaryToJson:[use objectForKey:@"animation"]],@"playlist":playlistStr};
-//    AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
-//    managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-//    managers.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    [managers POST:[BASEURL stringByAppendingString:KSubmitAd] parameters:_pramerDic constructingBodyWithBlock:^(id<AFMultipartFormData> formData){
-//        hud.hidden = YES;
-//        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-//        NSArray * photoArr = [user objectForKey:@"photoArray"];
-//        for ( int i = 0 ;i< photoArr.count ;i++){
-//        [formData appendPartWithFileData:photoArr[i] name:@"AvatarPath" fileName:@"icon.jpg" mimeType:@"image/jpg/file/png"];
-//        }
-//    }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
-//        
-//        NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        NSMutableDictionary *dic = [resultString mj_JSONObject];
-//        int status = [[dic objectForKey:@"status"] intValue];;
-//        if (status == 1) {
-//            [use setObject:nil forKey:@"text"];
-//            ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
-//            rsVC.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:rsVC animated:YES];
-//            
-//        }
-//        else if (status == -1){
-//            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
-//            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
-//                LoginViewController * logVC = [[LoginViewController alloc]init];
-//                [self.navigationController pushViewController:logVC animated:YES];            }];
-//        }
-//        else{
-//            NSString *mess = [dic objectForKey:@"message"];
-//            [self errorMessages:mess];
-//        }
-//        
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
-//        
-//    }];
+    //    for (int i = 0 ;i < _dateArr.count ; i++){
+    //        NSLog(@"%ld",[[_defalutDic objectForKey:[NSString stringWithFormat:@"%d",i]] count]);
+    //        if ([[_defalutDic objectForKey:[NSString stringWithFormat:@"%d",i]] count] > 0){
+    //            DateModel  * mol = _dateArr[i];
+    //            NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",mol.timestamp],@"date",[NSString stringWithFormat:@"%d",mol.type],@"type",[_defalutDic objectForKey:[NSString stringWithFormat:@"%d",i]],@"device_id", nil];
+    //            [_listArr addObject:dict];
+    //        }
+    //
+    //    }
+    //
+    //
+    //
+    //    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    //    _pramerDic = [NSDictionary dictionary];
+    //    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+    //    NSArray * md5Items = [KSubmitAd componentsSeparatedByString:@"/"];
+    //    NSString * md5Str = [md5Items[0] stringByAppendingString:[self md5:@"bjyfkj4006010136"]];
+    //    NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
+    //    NSString *playlistStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:_listArr options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+    //    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"animation":[self dictionaryToJson:[use objectForKey:@"animation"]],@"playlist":playlistStr};
+    //    AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
+    //    managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    //    managers.responseSerializer = [AFHTTPResponseSerializer serializer];
+    //    [managers POST:[BASEURL stringByAppendingString:KSubmitAd] parameters:_pramerDic constructingBodyWithBlock:^(id<AFMultipartFormData> formData){
+    //        hud.hidden = YES;
+    //        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    //        NSArray * photoArr = [user objectForKey:@"photoArray"];
+    //        for ( int i = 0 ;i< photoArr.count ;i++){
+    //        [formData appendPartWithFileData:photoArr[i] name:@"AvatarPath" fileName:@"icon.jpg" mimeType:@"image/jpg/file/png"];
+    //        }
+    //    }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
+    //
+    //        NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+    //        NSMutableDictionary *dic = [resultString mj_JSONObject];
+    //        int status = [[dic objectForKey:@"status"] intValue];;
+    //        if (status == 1) {
+    //            [use setObject:nil forKey:@"text"];
+    //            ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
+    //            rsVC.hidesBottomBarWhenPushed = YES;
+    //            [self.navigationController pushViewController:rsVC animated:YES];
+    //
+    //        }
+    //        else if (status == -1){
+    //            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+    //            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+    //                LoginViewController * logVC = [[LoginViewController alloc]init];
+    //                [self.navigationController pushViewController:logVC animated:YES];            }];
+    //        }
+    //        else{
+    //            NSString *mess = [dic objectForKey:@"message"];
+    //            [self errorMessages:mess];
+    //        }
+    //
+    //    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+    //
+    //    }];
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
     [user setObject:nil forKey:@"text"];
     ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
@@ -490,6 +483,7 @@
 -(void)setHighlighted:(BOOL)highlighted{
     
 }
+//md5 加密
 -(NSString *)md5:(NSString *)string{
     const char *str = [string UTF8String];
     unsigned char result[16];

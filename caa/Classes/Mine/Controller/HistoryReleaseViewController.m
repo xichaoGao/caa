@@ -90,8 +90,9 @@
     [_detailBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
     [_detailBtn addTarget:self action:@selector(detailClick) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_detailBtn];
-
+    
 }
+//详情事件
 -(void)detailClick{
     ReleaseDetailViewController * rdVC = [[ReleaseDetailViewController alloc]init];
     rdVC.hidesBottomBarWhenPushed = YES;
@@ -103,13 +104,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

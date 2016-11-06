@@ -42,7 +42,7 @@
     _phoneText.placeholder = @"手机号码";
     _phoneText.delegate = self;
     _phoneText.clearButtonMode = UITextFieldViewModeWhileEditing;
-
+    
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
     _phoneText.textColor = UIColorFromHex(0x333333);
     [_phoneView addSubview:_phoneText];
@@ -59,7 +59,7 @@
     _verificationText.delegate = self;
     _verificationText.clearButtonMode = UITextFieldViewModeWhileEditing;
     _verificationText.keyboardType = UIKeyboardTypeNumberPad;
-
+    
     _verificationText.textColor = UIColorFromHex(0x333333);
     [_verificationView addSubview:_verificationText];
     
@@ -84,7 +84,7 @@
     _passWordText.secureTextEntry = YES;
     _passWordText.delegate = self;
     _passWordText.clearButtonMode = UITextFieldViewModeWhileEditing;
-
+    
     _passWordText.textColor = UIColorFromHex(0x333333);
     [self.passWordView addSubview:_passWordText];
     
@@ -102,7 +102,7 @@
     _againPassWordText.secureTextEntry = YES;
     _againPassWordText.delegate = self;
     _againPassWordText.clearButtonMode = UITextFieldViewModeWhileEditing;
-
+    
     _againPassWordText.textColor = UIColorFromHex(0x333333);
     [_againPassWordView addSubview:_againPassWordText];
     
@@ -135,30 +135,31 @@
         [alert showInView:self.view completion:nil];
     }else{
         [self againCrateBtn];
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                self.pramerDic = [NSDictionary dictionary];
-                _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"1"};
-                [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-                    hud.hidden = YES;
-                    int  status = [[result objectForKey:@"status"] intValue];;
-                    if (status == 1) {
-                        [self againCrateBtn];
-                        [self controlTheTime];
-        
-                    }else{
-                        NSString *mess = [result objectForKey:@"message"];
-                       
-                        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
-                        [alert showInView:self.view completion:nil];
-                        [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
-                            LoginViewController * logVC = [[LoginViewController alloc]init];
-                            [self.navigationController pushViewController:logVC animated:YES];
-                        }];
-                       
-                    }
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.pramerDic = [NSDictionary dictionary];
+        _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"1"};
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+            hud.hidden = YES;
+            int  status = [[result objectForKey:@"status"] intValue];;
+            if (status == 1) {
+                [self againCrateBtn];
+                [self controlTheTime];
+                
+            }else{
+                NSString *mess = [result objectForKey:@"message"];
+                
+                HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:mess buttonTitles:@"确定", nil];
+                [alert showInView:self.view completion:nil];
+                [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                    LoginViewController * logVC = [[LoginViewController alloc]init];
+                    [self.navigationController pushViewController:logVC animated:YES];
                 }];
+                
+            }
+        }];
     }
 }
+//注册事件
 -(void)RegisterClick{
     [self resign];
     if ([_phoneText.text isEqualToString:@""]) {
@@ -189,27 +190,27 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"俩次密码不一致" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
-
+    
     else{
         
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                _pramerDic = [NSDictionary dictionary];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        _pramerDic = [NSDictionary dictionary];
         _pramerDic = @{@"phone":_phoneText.text,@"password":[self md5:_passWordText.text],@"code": _verificationText.text};
-                       [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kRegister RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-                    hud.hidden = YES;
-                    [self resign];
-                    NSLog(@"loginResult==%@",result);
-                    int status = [[result objectForKey:@"status"] intValue];;
-                    if ( status == 1) {
-                        LoginViewController * logVC = [[LoginViewController alloc]init];
-                        [self.navigationController pushViewController:logVC animated:YES];
-
-                    }
-                    else{
-                        NSString *mess = [result objectForKey:@"message"];
-                        [self errorMessages:mess];
-                    }
-                }];
+        [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kRegister RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+            hud.hidden = YES;
+            [self resign];
+            NSLog(@"loginResult==%@",result);
+            int status = [[result objectForKey:@"status"] intValue];;
+            if ( status == 1) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];
+                
+            }
+            else{
+                NSString *mess = [result objectForKey:@"message"];
+                [self errorMessages:mess];
+            }
+        }];
     }
     
     
@@ -255,7 +256,7 @@
     [_verificationText resignFirstResponder];
     [_passWordText resignFirstResponder];
     [_againPassWordText resignFirstResponder];
-
+    
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [_phoneText resignFirstResponder];
@@ -270,13 +271,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

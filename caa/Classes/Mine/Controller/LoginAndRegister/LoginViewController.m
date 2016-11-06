@@ -35,8 +35,6 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    
-    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,7 +48,7 @@
     _headImage.layer.cornerRadius = 50;
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
     NSLog(@"%@",[user objectForKey:@"headImg"]);
-     [_headImage sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"headImg"]] placeholderImage:[UIImage imageNamed:@"loading_pic"]];
+    [_headImage sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"headImg"]] placeholderImage:[UIImage imageNamed:@"loading_pic"]];
     [self.view addSubview:_headImage];
     
     //手机号
@@ -76,7 +74,7 @@
     _passWordText.secureTextEntry = YES;
     _passWordText.delegate = self;
     _passWordText.clearButtonMode = UITextFieldViewModeWhileEditing;
-
+    
     _passWordText.textColor = UIColorFromHex(0x333333);
     [self.passWordView addSubview:_passWordText];
     
@@ -123,17 +121,19 @@
     
     
 }
-
+//忘记密码事件
 -(void)ForgetPassWordClick{
     [self resign];
     GetBackPassWordViewController * gbpwVC = [[GetBackPassWordViewController alloc]init];
     [self.navigationController pushViewController:gbpwVC animated:YES];
 }
+//验证码登录事件
 -(void)VerificationLoginClick{
     [self resign];
     VerLoginViewController *vlVC = [[VerLoginViewController alloc]init];
     [self.navigationController pushViewController:vlVC animated:YES];
 }
+//登录事件
 -(void)LoginClick{
     [self resign];
     if ([_phoneText.text isEqualToString:@""]) {
@@ -153,29 +153,29 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         _pramerDic = [NSDictionary dictionary];
         _pramerDic = @{@"phone":_phoneText.text,@"password":[self md5:_passWordText.text],@"code":@""};
-
+        
         [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:kLogin RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             NSLog(@"loginResult==%@",result);
             int status = [[result objectForKey:@"status"] intValue];;
             if (status == 1) {
                 
-//                NSString *userID = @"d1";
+                //                NSString *userID = @"d1";
                 NSString *userID = [@"d" stringByAppendingFormat:@"%@",[[result objectForKey:@"data"]objectForKey:@"user_id"]];
                 NSString *nickName = [[result objectForKey:@"data"]objectForKey:@"nickname"];
                 NSString *token = [[result objectForKey:@"data"]objectForKey:@"token"];
                 NSString *headImg = [[result objectForKey:@"data"]objectForKey:@"headimg"];
                 NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
                 [user setObject:headImg forKey:@"headImg"];
-                                
+                
                 NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
                 [defult setObject:userID forKey:@"userID"];
                 [defult setObject:nickName forKey:@"nickName"];
                 [defult setObject:token forKey:@"token"];
-
+                
                 [defult synchronize];
                 
-//                [JPUSHService setTags:nil aliasInbackground:userID];
+                //                [JPUSHService setTags:nil aliasInbackground:userID];
                 [JPUSHService setTags:nil alias:userID fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
                     NSLog(@"%d   %@",iResCode,iAlias);
                 }];
@@ -191,6 +191,7 @@
     
     
 }
+//注册事件
 -(void)RegisterClick{
     [self resign];
     RegisterViewController * rVC  = [[RegisterViewController alloc]init];

@@ -147,6 +147,7 @@
     }
     return view;
 }
+//点击事件事件
 -(void)touchDateClick:(UIButton*)sender{
     sender.selected = !sender.selected;
     for (int i = 0 ; i <_dateArr.count;i++){
@@ -175,6 +176,7 @@
         }
     }
 }
+//详情事件
 -(void)detailClick{
     ReleaseDetailViewController * rdVC = [[ReleaseDetailViewController alloc]init];
     rdVC.hidesBottomBarWhenPushed = YES;
@@ -186,13 +188,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
