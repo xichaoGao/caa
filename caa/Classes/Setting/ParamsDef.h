@@ -26,7 +26,9 @@
 #define KGetEq @"Ads/getDevicesBySchedule"//设备
 #define KSubmitAd @"Ads/submitAds"//发布广告
 
-
+#define KLogout @"Member/userLogout"//退出登录
+#define KSetNickName @"Member/setNickname"//修改昵称
+#define KSetHeadImg @"Member/setHeadIMG"//修改头像
 
 
 #endif /* ParamsDef_h */

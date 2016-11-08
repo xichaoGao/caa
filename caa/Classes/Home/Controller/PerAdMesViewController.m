@@ -50,7 +50,8 @@
     _bgView.layer.cornerRadius = 5;
     [self.view addSubview:_bgView];
     _defaultLab = [[UILabel alloc]initWithFrame:CGRectMake((_bgView.width - 145*WidthRate)/2, (_bgView.height - 60*WidthRate)/2, 150*WidthRate, 60*WidthRate)];
-    _defaultLab.text = @"  添加商品照片";
+    _defaultLab.text = @"添加商品照片";
+    _defaultLab.textAlignment = NSTextAlignmentCenter;
     _defaultLab.textColor  = RGB(0.84, 0.84, 0.84);
     _defaultLab.font = [UIFont systemFontOfSize:18];
     [_bgView addSubview:_defaultLab];
@@ -91,10 +92,11 @@
         _effectImg.userInteractionEnabled = YES;
         _effectImg.tag = i+1000;
         [_effectImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"home_addmotion"]];
-        _effectNumLab = [[UILabel alloc]initWithFrame:CGRectMake(_effectImg.left + 11, _effectImg.bottom + 8, 30, 20)];
+        _effectNumLab = [[UILabel alloc]initWithFrame:CGRectMake(_effectImg.left, _effectImg.bottom + 8, _effectImg.width, 20)];
         _effectNumLab.userInteractionEnabled = YES;
         _effectNumLab.textColor = RGB(0.41, 0.41, 0.41);
         _effectNumLab.tag = 10000+i;
+        _effectNumLab.textAlignment = NSTextAlignmentCenter;
         _effectNumLab.text = [@"" stringByAppendingFormat:@"%@%d",@"效果",i+1];
         _effectNumLab.font  = [UIFont systemFontOfSize:10];
         [self.view addSubview:_effectImg];
@@ -379,6 +381,12 @@
 -(void)addTextTap{
     TextView * view = [[TextView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     [self.view addSubview:view];
+    view.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.3 animations:^{
+        view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        
+    }];
+    
     view.block=^(NSString * str){
         if ([str isEqualToString:@""]){
             _defTextDeLab.hidden = NO;

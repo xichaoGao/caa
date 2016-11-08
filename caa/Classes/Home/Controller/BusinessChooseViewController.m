@@ -20,6 +20,7 @@
     UIView * _hotUrbanView;
     UIView * _businessCircleView;
     NSString * _city;
+    NSMutableArray * _cityArr;
     NSString * _urban;
     NSMutableArray * _titleArr;
     NSMutableArray * _chooseCity;
@@ -50,7 +51,15 @@
     [super viewDidLoad];
     self.navigationItem.title = @"商圈选择";
     _titleArr = [NSMutableArray arrayWithArray: @[@"最近选择城市",@"热门城市",@"热门城区",@"商圈"]];
-    _chooseCity =[NSMutableArray arrayWithArray:@[@"北京"]];
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    _cityArr = [NSMutableArray arrayWithArray:[user objectForKey:@"city"]];
+    
+    if (_cityArr.count > 0){
+        _chooseCity =[NSMutableArray arrayWithArray:_cityArr];
+    }
+    else
+        _chooseCity =[NSMutableArray arrayWithArray:@[@"北京"]];
+    
     _hotCity = [NSMutableArray arrayWithCapacity:1];
     _hotUrban = [NSMutableArray arrayWithCapacity:1];
     _businessCircle = [NSMutableArray arrayWithCapacity:1];
@@ -294,6 +303,11 @@
             for (int i = 0 ; i <_businessCircle.count;i++){
                 if (sender.tag == 4000+i){
                     if (sender.selected == YES){
+                        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                        if (![_cityArr containsObject:_city]){
+                            [_cityArr addObject:_city];
+                            [user setObject:_cityArr forKey:@"city"];
+                        }
                         DateAndEqViewController * daeVC = [[DateAndEqViewController alloc]init];
                         daeVC.hidesBottomBarWhenPushed  = YES;
                         daeVC.area_id = _businessCireleID[i];

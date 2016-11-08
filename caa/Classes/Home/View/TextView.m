@@ -112,8 +112,12 @@
     [_textView resignFirstResponder];
 }
 -(void)sureClick{
+    self.transform = CGAffineTransformMakeScale(1, 1);
+    [UIView animateWithDuration:0.3 animations:^{
+        self.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        
+    }];
     [_textView resignFirstResponder];
-    self.hidden = YES;
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
     [user setObject:_textView.text forKey:@"text"];
     [user synchronize];

@@ -46,6 +46,9 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    [user setObject:@[] forKey:@"city"];
+    [user synchronize];
     /*
      *  键盘弹出事件
      */
