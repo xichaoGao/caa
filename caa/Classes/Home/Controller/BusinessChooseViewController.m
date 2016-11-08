@@ -170,6 +170,7 @@
                 if (sender.tag == 2000+i){
                     if (sender.selected == YES){
                         [_businessCircleView removeFromSuperview];
+                        [_hotUrbanView removeFromSuperview];
                         NSLog(@"&&&&&&%ld",(long)sender.tag);
                         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                         _pramerDic = [NSDictionary dictionary];

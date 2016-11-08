@@ -142,7 +142,9 @@
             hud.hidden = YES;
             int  status = [[result objectForKey:@"status"] intValue];;
             if (status == 1) {
-                [self againCrateBtn];
+                UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取验证码成功" delegate:self cancelButtonTitle: nil otherButtonTitles:nil, nil];
+                [alert show];
+                [self performSelector:@selector(dismiss:)withObject:alert afterDelay:0.1];                [self againCrateBtn];
                 [self controlTheTime];
                 
             }else{
@@ -158,6 +160,9 @@
             }
         }];
     }
+}
+-(void)dismiss:(UIAlertView *)alert{
+    [alert dismissWithClickedButtonIndex:[alert cancelButtonIndex] animated:YES];
 }
 //注册事件
 -(void)RegisterClick{

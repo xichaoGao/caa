@@ -16,6 +16,7 @@
 
 @interface DateAndEqViewController ()
 {
+    UIButton * allBtn;
     UIView *_dateView;
     UIView *_eqView;
     NSMutableArray *_dateArr;
@@ -24,14 +25,17 @@
     UIView * _grayView;
     UIImageView * _selectedImg;
     NSMutableArray *_defaultArr;
-    NSMutableArray *_idArr;
     NSMutableDictionary *_defalutDic;
-    NSMutableArray *_listArr;
+    
+    
 }
+@property(nonatomic,strong)NSMutableArray *idArr;
+@property(nonatomic,strong)NSMutableArray *listArr;
 @property(nonatomic,strong)NSDictionary *pramerDic;
 @property(nonatomic,assign)int num;
 @property(nonatomic,assign)int addNum;
-@property(nonatomic,strong)DateModel *eqMol;
+@property(nonatomic,assign)int  totalNum;
+@property(nonatomic,assign)int  defalutTag;
 
 @end
 
@@ -48,6 +52,10 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults *u = [NSUserDefaults standardUserDefaults];
+    for ( int i=0; i<6; i++) {
+        [u setObject:@[] forKey:[NSString stringWithFormat:@"%d",i]];
+    }
     self.navigationItem.title = @"日期和设备选择";
     _listArr = [NSMutableArray arrayWithCapacity:1];
     _defalutDic = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -103,7 +111,7 @@
     _totalLab.font = [UIFont systemFontOfSize:20];
     [self.view addSubview:_totalLab];
     _totalNumLab = [[UILabel alloc]initWithFrame:CGRectMake(_totalLab.right , _totalLab.top, 100, 20)];
-    _totalNumLab.text = @"100屏";
+    _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum];
     _totalNumLab.font = [UIFont boldSystemFontOfSize:20];
     _totalNumLab.textColor = RGB(0.30, 0.30, 0.30);
     [self.view addSubview:_totalNumLab];
@@ -166,7 +174,7 @@
     allSelectLab.textColor = RGB(0.30, 0.30, 0.30);
     allSelectLab.font = [UIFont systemFontOfSize:17];
     [view addSubview:allSelectLab];
-    UIButton * allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     allBtn.frame = CGRectMake(allSelectLab.left-20, allSelectLab.top+4, 17*WidthRate, 17*WidthRate);
     allBtn.layer.masksToBounds = YES;
     allBtn.layer.borderColor = RGB(0.30, 0.30, 0.30).CGColor;
@@ -175,6 +183,8 @@
     [allBtn setImage:[UIImage imageNamed:@"home_all_tick"] forState:UIControlStateSelected];
     [allBtn addTarget:self action:@selector(allSelectClick:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:allBtn];
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    _idArr = [user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]];
     for (int i = 0 ; i< array.count ; i++ ){
         EqModel * mol = (EqModel *)array[i];
         UIButton * screenBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -212,21 +222,46 @@
         screenTitleLab.textColor = RGB(0.30, 0.30, 0.30);
         screenTitleLab.font = [UIFont systemFontOfSize:12];
         [view addSubview:screenTitleLab];
+        _selectedImg.hidden = YES;
+        _grayView.hidden = YES;
+        
         if ([mol.max_ads isEqualToString:mol.current_ads]){
-            EqModel * mol = (EqModel *)array[i];
             screenBtn.enabled = NO;
             _grayView.hidden = NO;
             screenTitleLab.text = [NSString stringWithFormat:@"%@(满)",mol.name];
         }else{
             _num++;
-            EqModel * mol = (EqModel *)array[i];
             screenBtn.enabled = YES;
             _grayView.hidden = YES;
             screenTitleLab.text = mol.name;
         }
-        _selectedImg.hidden = YES;
-        _grayView.hidden = YES;
-        
+        if ([[user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]] isKindOfClass:[NSString class]]){
+            _selectedImg.hidden = YES;
+            _grayView.hidden = YES;
+        }
+        else {
+            if (_idArr.count > 0){
+                _addNum = (int)_idArr.count;
+                for (int j = 0;j<_idArr.count;j++){
+                    
+                    if (_idArr[j] == mol.device_id){
+                        _selectedImg.hidden = NO;
+                        _grayView.hidden = NO;
+                    }
+                }
+            }else
+                _addNum = 0;
+            
+        }
+    }
+    if ([[user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]] isKindOfClass:[NSArray class]]){
+        NSMutableArray * arr = [NSMutableArray arrayWithArray:[user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]]];
+        if (arr.count == _num){
+            if (allBtn.selected == YES){
+                
+            }else
+                allBtn.selected = !allBtn.selected;
+        }
     }
     return view;
 }
@@ -234,19 +269,17 @@
 -(void)touchDateClick:(UIButton*)sender{
     _num = 0;
     _addNum = 0;
-    _eqMol = nil;
     [_eqView removeFromSuperview];
     sender.selected = !sender.selected;
     for (int i = 0 ; i <_dateArr.count;i++){
         if (sender.tag == 100+i){
             if (sender.selected == YES){
-                NSLog(@"&&&&&&%ld",(long)sender.tag);
                 sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 _pramerDic = [NSDictionary dictionary];
                 NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
                 DateModel * mol = (DateModel *)_dateArr[i];
-                _eqMol = mol;
+                _defalutTag = i;
                 _pramerDic = @{@"token":[use objectForKey:@"token"],@"area_id":_area_id,@"timestamp":[NSString stringWithFormat:@"%d",mol.timestamp],@"type":[NSString stringWithFormat:@"%d",mol.type]};
                 [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetEq RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                     hud.hidden = YES;
@@ -258,12 +291,11 @@
                             [_eqArr removeAllObjects];
                             for (int i = 0 ; i<dataArr.count ; i++){
                                 EqModel * eqModel  = [EqModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
-                                NSLog(@"%@",eqModel.device_id);
                                 [_eqArr addObject:eqModel];
                                 
                             }
-                            _eqView = [self createViewWithH:_dateView.bottom +5 Title:@"可选商家" contentArray:_eqArr part:2];
-                            [self.view addSubview:_eqView];
+                            [self performSelectorOnMainThread:@selector(createEqUI) withObject:nil waitUntilDone:nil];
+                            
                         }
                     }
                     else if (status == -1){
@@ -279,11 +311,9 @@
                 }];
             }
             else{
-                NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
                 sender.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
             }
         }else {
-            
             UIButton * btn = (UIButton *)[self.view viewWithTag:100+i];
             if (btn.selected == YES){
                 btn.selected = !btn.selected;
@@ -295,73 +325,120 @@
         }
     }
 }
+-(void)createEqUI{
+    _eqView = [self createViewWithH:_dateView.bottom +5 Title:@"可选商家" contentArray:_eqArr part:2];
+    [self.view addSubview:_eqView];
+}
 //全选按钮点击事件
 -(void)allSelectClick:(UIButton *)sender{
     sender.selected = !sender.selected;
-    [_idArr removeAllObjects];
-    for (int i = 0 ; i <_eqArr.count;i++){
-        if (sender.selected == YES) {
+    //    NSMutableArray * array = [NSMutableArray arrayWithCapacity:1];
+    
+    if (sender.selected == YES) {
+        for (int i = 0 ; i <_eqArr.count;i++){
             EqModel * eqMol = _eqArr[i];
+            NSLog(@"%@",_idArr);
             if (eqMol.current_ads != eqMol.max_ads){
-                [_idArr addObject:eqMol.device_id];
-                [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%d",i]];
+                _totalNum++;
+                NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                if([[user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]] isKindOfClass:[NSArray class]]){
+                    NSMutableArray * arr = [NSMutableArray arrayWithArray:[user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]]];
+                    [arr addObject:eqMol.device_id];
+                    [user setObject:arr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
+                }else{
+                    [_idArr addObject:eqMol.device_id];
+                    [user setObject:_idArr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
+                    
+                }
             }
             _grayView = (UIView *)[self.view viewWithTag:2000+i];
             _grayView.hidden = NO;
             _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
             _selectedImg.hidden = NO;
         }
+        if (_addNum == 0){
+            _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum];
+        }
         else{
+            _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum-_addNum];
+            _totalNum = _totalNum -_addNum;
+            _addNum = _num-_addNum;
+        }
+    }
+    else{
+        for (int i = 0 ; i <_eqArr.count;i++){
+            
             EqModel * eqMol = _eqArr[i];
             if (eqMol.current_ads != eqMol.max_ads){
-                [_idArr addObject:eqMol.device_id];
-                [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%d",i]];
+                NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                NSMutableArray * arr = [NSMutableArray arrayWithArray:[user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]]];
+                [arr removeAllObjects];
+                [user setObject:arr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
+                _totalNum--;
+                
             }
+            
             _grayView = (UIView *)[self.view viewWithTag:2000+i];
             _grayView.hidden = YES;
             _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
             _selectedImg.hidden = YES;
             
         }
+        _addNum = 0;
+        _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum];
     }
-    
 }
+
 //设备按钮点击事件
 -(void)screenBtnClick:(UIButton *)sender{
-    NSLog(@"%ld",(long)sender.tag);
-    [_idArr removeAllObjects];
     sender.selected  = !sender.selected;
     if (sender.selected == YES) {
+        NSLog(@"addnum%d",_addNum);
         _addNum++;
+        _totalNum++;
+        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+        
+        _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum];
         if (_addNum == _num){
-            _addNum = 0;
             UIButton * all = (UIButton *)[self.view viewWithTag:100000];
             if (all.selected != YES){
                 all.selected = !all.selected;
             }else{
-                all.selected = !all.selected;
             }
         }
-        
         EqModel * eqMol = _eqArr[sender.tag%10000];
-        [_idArr addObject:eqMol.device_id];
-        [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%ld",sender.tag%10000]];
         
+        if([[user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]] isKindOfClass:[NSArray class]]){
+            NSMutableArray * arr = [NSMutableArray arrayWithArray:[user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]]];
+            [arr addObject:eqMol.device_id];
+            [user setObject:arr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
+        }else{
+            [_idArr addObject:eqMol.device_id];
+            [user setObject:_idArr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
+            
+        }
         _grayView = (UIView *)[self.view viewWithTag:2000+sender.tag%10000];
         _grayView.hidden = NO;
         _selectedImg = (UIImageView *)[self.view viewWithTag:3000+sender.tag%10000];
         _selectedImg.hidden = NO;
     }
     else{
+        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+        NSMutableArray *arr  =[NSMutableArray arrayWithArray: [user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]]];
         EqModel * eqMol = _eqArr[sender.tag%10000];
-        [_idArr removeObject:eqMol.device_id];
-        [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%ld",sender.tag%10000]];
-        _addNum++;
+        for  (int i = 0 ; i<arr.count;i++){
+            if (arr[i] ==eqMol.device_id){
+                [arr removeObjectAtIndex:i];
+            }
+        }
+        [user setObject:arr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
+        _addNum--;
+        _totalNum--;
+        _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum];
         if (_addNum == _num){
             _addNum = 0;
             UIButton * all = (UIButton *)[self.view viewWithTag:100000];
             if (all.selected != YES){
-                all.selected = !all.selected;
             }else{
                 all.selected = !all.selected;
                 
@@ -377,38 +454,52 @@
 }
 //对号图片点击手势
 -(void)uncheckTap:(UITapGestureRecognizer *)tap{
-    NSLog(@"%ld",tap.view.tag);
     UIButton * btn =  (UIButton *)[self.view viewWithTag:tap.view.tag%3000+10000];
     if (btn.selected == YES){
         btn.selected = !btn.selected;
-        
-        UIButton * all = (UIButton *)[self.view viewWithTag:100000];
-        if (all.selected == YES){
-            all.selected = !all.selected;
-        }else{
-            all.selected = !all.selected;
-            
+        _addNum--;
+        if (_addNum < _num){
+            UIButton * all = (UIButton *)[self.view viewWithTag:100000];
+            if (all.selected == YES){
+                all.selected = !all.selected;
+            }else{
+            }
         }
         EqModel * eqMol = _eqArr[tap.view.tag%3000];
-        [_idArr removeObject:eqMol.device_id];
-        [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%d",(int)tap.view.tag%3000]];
+        
+        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+        NSMutableArray *arr  =[NSMutableArray arrayWithArray: [user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]]];
+        [arr removeObject:eqMol.device_id];
+        _totalNum--;
+        _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum];
+        [user setObject:arr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
         _grayView = (UIView *)[self.view viewWithTag:tap.view.tag-1000];
         _grayView.hidden = YES;
         _selectedImg = (UIImageView *)[self.view viewWithTag:tap.view.tag];
         _selectedImg.hidden = YES;
     }
-    else
-    {
-        UIButton * all = (UIButton *)[self.view viewWithTag:100000];
-        if (all.selected == YES){
-            all.selected = !all.selected;
-        }else{
-            all.selected = !all.selected;
-            
+    else{
+        _addNum--;
+        if (_addNum < _num){
+            UIButton * all = (UIButton *)[self.view viewWithTag:100000];
+            if (all.selected == YES){
+                all.selected = !all.selected;
+            }else{
+            }
         }
+        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+        NSMutableArray *arr  =[NSMutableArray arrayWithArray: [user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]]];
         EqModel * eqMol = _eqArr[tap.view.tag%3000];
-        [_idArr removeObject:eqMol.device_id];
-        [_defalutDic setObject:_idArr forKey:[NSString stringWithFormat:@"%d",(int)tap.view.tag%3000]];
+        
+        for  (int i = 0 ; i<arr.count;i++){
+            if (arr[i] ==eqMol.device_id){
+                [arr removeLastObject];
+            }
+        }
+        [user setObject:arr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
+        
+        _totalNum--;
+        _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum];
         _grayView = (UIView *)[self.view viewWithTag:tap.view.tag-1000];
         _grayView.hidden = YES;
         _selectedImg = (UIImageView *)[self.view viewWithTag:tap.view.tag];

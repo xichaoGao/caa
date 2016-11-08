@@ -142,6 +142,10 @@
             int status = [[result objectForKey:@"status"] intValue];
             NSLog(@"KLSDFJKLSDFKLS___%d",status);
             if (status == 1) {
+                UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取验证码成功" delegate:self cancelButtonTitle: nil otherButtonTitles:nil, nil];
+                [alert show];
+                [self performSelector:@selector(dismiss:)withObject:alert afterDelay:0.1];
+                
                 [self againCrateBtn];
                 [self controlTheTime];
                 
@@ -153,6 +157,9 @@
         }];
         
     }
+}
+-(void)dismiss:(UIAlertView *)alert{
+    [alert dismissWithClickedButtonIndex:[alert cancelButtonIndex] animated:YES];
 }
 //确认事件
 -(void)SureClick{

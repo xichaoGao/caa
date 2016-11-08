@@ -102,8 +102,10 @@
         _pramerDic = @{@"phone":_phoneText.text,@"authPhone":@"0"};
         [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kSendVefification RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
-            
-            int  Status = [[result objectForKey:@"status"] intValue];
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"获取验证码成功" delegate:self cancelButtonTitle: nil otherButtonTitles:nil, nil];
+            alert.backgroundColor = UIColorFromHex(0xe8e8e8);
+            [alert show];
+            [self performSelector:@selector(dismiss:)withObject:alert afterDelay:0.1];            int  Status = [[result objectForKey:@"status"] intValue];
             NSLog(@"status ----%d",(int)[result objectForKey:@"status"]);
             
             if ( Status == 1 ) {
@@ -118,6 +120,10 @@
         }];
     }
 }
+-(void)dismiss:(UIAlertView *)alert{
+    [alert dismissWithClickedButtonIndex:[alert cancelButtonIndex] animated:YES];
+}
+
 //验证码登录事件
 -(void)LoginClick{
     [self resign];
