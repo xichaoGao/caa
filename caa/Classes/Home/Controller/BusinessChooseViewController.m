@@ -41,6 +41,7 @@
     self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
+    
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -71,6 +72,7 @@
 //创建界面
 -(void)createUI{
     _chooseCityView = [self createViewWithY:30*WidthRate Title:_titleArr contentArray:_chooseCity part:0];
+    
     [self.view addSubview:_chooseCityView];
     _hotCityView = [self createViewWithY:_chooseCityView.bottom+10 Title:_titleArr contentArray:_hotCity part:1];
     [self.view addSubview:_hotCityView];
@@ -150,26 +152,27 @@
         case 1:
             for (int i = 0 ; i <_chooseCity.count;i++){
                 if (sender.tag == 1000+i){
-                    if (sender.selected == YES){
-                        NSLog(@"&&&&&&%ld",(long)sender.tag);
-                        sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
-                        
-                        
-                    }
-                    else{
-                        NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
-                        sender.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
-                    }
+                    sender.enabled = NO;
+                    //                    if (sender.selected == YES){
+                    //                        NSLog(@"&&&&&&%ld",(long)sender.tag);
+                    //                        sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
+                    //
+                    //
+                    //                    }
+                    //                    else{
+                    //                        NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
+                    //                        sender.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
+                    //                    }
                 }else {
-                    
-                    UIButton * btn = (UIButton *)[self.view viewWithTag:1000+i];
-                    if (btn.selected == YES){
-                        btn.selected = !btn.selected;
-                        btn.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
-                    }
-                    else{
-                        btn.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
-                    }
+                    sender.enabled = NO;;
+                    //                    UIButton * btn = (UIButton *)[self.view viewWithTag:1000+i];
+                    //                    if (btn.selected == YES){
+                    //                        btn.selected = !btn.selected;
+                    //                        btn.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
+                    //                    }
+                    //                    else{
+                    //                        btn.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
+                    //                    }
                 }
             }
             break;

@@ -19,7 +19,11 @@
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"忘记密码";
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    if ([[user objectForKey:@"phone"] length] == 11){
+        _phoneText.text = [user objectForKey:@"phone"];
+    }else
+        _phoneText.placeholder = @"手机号码";
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -29,6 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"忘记密码";
     [self CreateUI];
     // Do any additional setup after loading the view.
 }
@@ -236,10 +241,11 @@
         [[GetDataHandle sharedGetDataHandle] analysisDataWithType:@"POST" SubUrlString:kSetNewPassWord RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
             hud.hidden = YES;
             [self resign];
-            NSLog(@"loginResult==%@",result);
             int status = [[result objectForKey:@"status"] intValue];;
             if (status == 1) {
-                
+                NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                [user setObject:_phoneText.text forKey:@"phone"];
+                [user synchronize];
                 LoginViewController * logVC = [[LoginViewController alloc]init];
                 [self.navigationController pushViewController:logVC animated:YES];
                 

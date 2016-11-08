@@ -19,7 +19,11 @@
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    if ([[user objectForKey:@"phone"] length] == 11){
+        _phoneText.text = [user objectForKey:@"phone"];
+    }else
+        _phoneText.placeholder = @"手机号码";
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -38,7 +42,7 @@
     [self.view addSubview:_phoneView];
     
     _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
-    _phoneText.placeholder = @"手机号码";
+    
     _phoneText.delegate = self;
     _phoneText.clearButtonMode = UITextFieldViewModeWhileEditing;
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
@@ -161,7 +165,9 @@
                 NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
                 [defult setObject:userID forKey:@"userID"];
                 [defult setObject:nickName forKey:@"nickName"];
-                [defult setObject:token forKey:@"token"];                [defult synchronize];
+                [defult setObject:token forKey:@"token"];
+                [defult setObject:_phoneText.text forKey:@"phone"];
+                [defult synchronize];
                 
                 [JPUSHService setTags:nil aliasInbackground:userID];
                 TabBarViewController * tbVC = [[TabBarViewController alloc]init];

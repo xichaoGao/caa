@@ -20,8 +20,11 @@
 @implementation LoginViewController
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    _phoneText.text = @"";
-    _phoneText.placeholder = @"手机号码";
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    if ([[user objectForKey:@"phone"] length] == 11){
+        _phoneText.text = [user objectForKey:@"phone"];
+    }else
+        _phoneText.placeholder = @"手机号码";
     _passWordText.text = @"";
     _passWordText.placeholder = @"密码";
     self.navigationController.navigationBarHidden = YES;
@@ -47,7 +50,6 @@
     _headImage.layer.masksToBounds = YES;
     _headImage.layer.cornerRadius = 50;
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-    NSLog(@"%@",[user objectForKey:@"headImg"]);
     [_headImage sd_setImageWithURL:[NSURL URLWithString:[user objectForKey:@"headImg"]] placeholderImage:[UIImage imageNamed:@"loading_pic"]];
     [self.view addSubview:_headImage];
     
@@ -56,7 +58,7 @@
     [self.view addSubview:_phoneView];
     
     _phoneText = [[UITextField alloc]initWithFrame:CGRectMake(0, 0,_phoneView.width , _phoneView.height-1)];
-    _phoneText.placeholder = @"手机号码";
+   
     _phoneText.delegate = self;
     _phoneText.clearButtonMode = UITextFieldViewModeWhileEditing;
     _phoneText.keyboardType = UIKeyboardTypeNumberPad;
@@ -169,13 +171,12 @@
                 [user setObject:headImg forKey:@"headImg"];
                 
                 NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
+                [defult setObject:_phoneText.text forKey:@"phone"];
                 [defult setObject:userID forKey:@"userID"];
                 [defult setObject:nickName forKey:@"nickName"];
                 [defult setObject:token forKey:@"token"];
                 
                 [defult synchronize];
-                
-                //                [JPUSHService setTags:nil aliasInbackground:userID];
                 [JPUSHService setTags:nil alias:userID fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
                     NSLog(@"%d   %@",iResCode,iAlias);
                 }];
