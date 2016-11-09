@@ -83,7 +83,7 @@
     
     NSString *nsTextCotent = textView.text;
     
-    int existTextNum = [nsTextCotent length];
+    int existTextNum = (int)[nsTextCotent length];
     
     int remainTextNum = 50 - existTextNum;
     

@@ -292,7 +292,7 @@
                                 [_eqArr addObject:eqModel];
                                 
                             }
-                            [self performSelectorOnMainThread:@selector(createEqUI) withObject:nil waitUntilDone:nil];
+                            [self performSelectorOnMainThread:@selector(createEqUI) withObject:nil waitUntilDone:YES];
                             
                         }
                     }
