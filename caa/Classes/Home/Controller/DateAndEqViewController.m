@@ -138,7 +138,7 @@
         btn.layer.masksToBounds = YES;
         btn.layer.cornerRadius = 5;
         btn.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
-        btn.layer.borderWidth = 0.5;
+        btn.layer.borderWidth = 1;
         btn.tag = 100*tag + i;
         btn.titleLabel.font = [UIFont systemFontOfSize:17];
         DateModel * da = array[i];
@@ -176,7 +176,7 @@
     allBtn.frame = CGRectMake(allSelectLab.left-20, allSelectLab.top+4, 17*WidthRate, 17*WidthRate);
     allBtn.layer.masksToBounds = YES;
     allBtn.layer.borderColor = RGB(0.30, 0.30, 0.30).CGColor;
-    allBtn.layer.borderWidth = 0.5;
+    allBtn.layer.borderWidth = 1;
     allBtn.tag = 100000;
     [allBtn setImage:[UIImage imageNamed:@"home_all_tick"] forState:UIControlStateSelected];
     [allBtn addTarget:self action:@selector(allSelectClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -574,10 +574,6 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         
     }];
-//        [use setObject:nil forKey:@"text"];
-//        ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
-//        rsVC.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:rsVC animated:YES];
     
 }
 -(void)setHighlighted:(BOOL)highlighted{
