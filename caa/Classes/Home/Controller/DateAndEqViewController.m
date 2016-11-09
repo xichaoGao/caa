@@ -265,17 +265,17 @@
 }
 //日期按钮点击事件
 -(void)touchDateClick:(UIButton*)sender{
-    _num = 0;
-    _addNum = 0;
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
     [_eqView removeFromSuperview];
     sender.selected = !sender.selected;
     for (int i = 0 ; i <_dateArr.count;i++){
         if (sender.tag == 100+i){
             if (sender.selected == YES){
+                _num = 0;
+                _addNum = 0;
                 sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 _pramerDic = [NSDictionary dictionary];
-                NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
                 DateModel * mol = (DateModel *)_dateArr[i];
                 _defalutTag = i;
                 _pramerDic = @{@"token":[use objectForKey:@"token"],@"area_id":_area_id,@"timestamp":[NSString stringWithFormat:@"%d",mol.timestamp],@"type":[NSString stringWithFormat:@"%d",mol.type]};
@@ -309,6 +309,15 @@
                 }];
             }
             else{
+                [_eqView removeFromSuperview];
+                _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum-_num];
+                _totalNum = _totalNum - _num;
+                if([[use objectForKey:[NSString stringWithFormat:@"%d",(int)sender.tag - 100]] isKindOfClass:[NSArray class]]){
+                    NSMutableArray * arr = [NSMutableArray arrayWithArray:[use objectForKey:[NSString stringWithFormat:@"%d",(int)sender.tag - 100]]];
+                    [arr removeAllObjects];
+                    [use setObject:arr forKey:[NSString stringWithFormat:@"%d",(int)sender.tag - 100]];
+                }
+
                 sender.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
             }
         }else {

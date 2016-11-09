@@ -20,6 +20,7 @@
     UIView * _hotUrbanView;
     UIView * _businessCircleView;
     NSString * _city;
+    int t;
     NSMutableArray * _cityArr;
     NSString * _urban;
     NSMutableArray * _titleArr;
@@ -227,7 +228,8 @@
                     }
                     else{
                         NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
-                        
+                        [_businessCircleView removeFromSuperview];
+                        [_hotUrbanView removeFromSuperview];
                         sender.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
                     }
                 }else {
@@ -247,7 +249,7 @@
             for (int i = 0 ; i <_hotUrban.count;i++){
                 if (sender.tag == 3000+i){
                     if (sender.selected == YES){
-                        
+                        [_businessCircleView removeFromSuperview];
                         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                         _pramerDic = [NSDictionary dictionary];
                         NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
@@ -287,6 +289,7 @@
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                     }
                     else{
+                         [_businessCircleView removeFromSuperview];
                         sender.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
                     }
                 }else {
@@ -302,19 +305,11 @@
                 }
             }
             break;
-        case 4:
+        case 4:{
             for (int i = 0 ; i <_businessCircle.count;i++){
                 if (sender.tag == 4000+i){
                     if (sender.selected == YES){
-                        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-                        if (![_cityArr containsObject:_city]){
-                            [_cityArr addObject:_city];
-                            [user setObject:_cityArr forKey:@"city"];
-                        }
-                        DateAndEqViewController * daeVC = [[DateAndEqViewController alloc]init];
-                        daeVC.hidesBottomBarWhenPushed  = YES;
-                        daeVC.area_id = _businessCireleID[i];
-                        [self.navigationController pushViewController:daeVC animated:YES];
+                        t = i;
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                     }
                     else{
@@ -332,6 +327,16 @@
                     }
                 }
             }
+            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+            if (![_cityArr containsObject:_city]){
+                [_cityArr addObject:_city];
+                [user setObject:_cityArr forKey:@"city"];
+            }
+            DateAndEqViewController * daeVC = [[DateAndEqViewController alloc]init];
+            daeVC.hidesBottomBarWhenPushed  = YES;
+            daeVC.area_id = _businessCireleID[t];
+            [self.navigationController pushViewController:daeVC animated:YES];
+        }
             break;
         default:
             break;
