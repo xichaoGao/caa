@@ -24,7 +24,16 @@
 @property(nonatomic,strong)UILabel * textDeLab;
 @property(nonatomic,strong)UILabel * defTextDeLab;
 
+@property(nonatomic,strong)UIView * contentView;
+@property(nonatomic,strong)UIView *contentBgView;
+@property(nonatomic,strong)UILabel *cotentLab;
+@property(nonatomic,strong)UILabel * contentTextDeLab;
+@property(nonatomic,strong)UILabel * defContentTextDeLab;
+@property(nonatomic,strong)UILabel *addressLab;
+@property(nonatomic,strong)UITextField * addressTextField;
 
 @property(nonatomic,strong)UIButton * previewBtn;
 @property(nonatomic,strong)UIButton * nextBtn;
+
+
 @end

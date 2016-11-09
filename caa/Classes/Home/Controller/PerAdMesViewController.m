@@ -11,6 +11,7 @@
 #import "JKImagePickerController.h"
 #import "XWScanImage.h"
 #import "TextView.h"
+#import "PreView.h"
 @interface PerAdMesViewController ()<UITextFieldDelegate,JKImagePickerControllerDelegate>
 @property (strong,nonatomic)NSMutableArray *assetsArray;
 @property(nonatomic,strong)NSMutableArray * imgArray;
@@ -143,11 +144,65 @@
     _defTextDeLab.textColor = RGB(0.84, 0.84, 0.84);
     [_textBgView addSubview:_defTextDeLab];
     
+    _contentView = [[UIView alloc]initWithFrame:CGRectMake(0, _textBgView.bottom+5, kScreenWidth, 100*WidthRate)];
+    [self.view addSubview:_contentView];
+    _cotentLab = [[UILabel alloc]initWithFrame:CGRectMake(12, 5*WidthRate, 80, 30)];
+    _cotentLab.font = [UIFont systemFontOfSize:15];
+    _cotentLab.textColor = RGB(0.41, 0.41, 0.41);
+    _cotentLab.text = @"活动内容:";
+    [_contentView addSubview:_cotentLab];
+    
+    _contentBgView = [[UIView alloc]initWithFrame:CGRectMake(_cotentLab.right, _cotentLab.origin.y, kScreenWidth - _cotentLab.right-17, 60*WidthRate)];
+    _contentBgView.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
+    _contentBgView.layer.borderWidth = 1;
+    _contentBgView.userInteractionEnabled = YES;
+    [_contentView addSubview:_contentBgView];
+    
+    
+    UITapGestureRecognizer *tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addContentTextTap)];
+    [_contentBgView addGestureRecognizer:tapGess];
+    
+    
+    _contentTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _contentBgView.width-10, _contentBgView.height -5)];
+    _contentTextDeLab.font = [UIFont systemFontOfSize:12];
+    _contentTextDeLab.numberOfLines = 4;
+    _contentTextDeLab.text = [use objectForKey:@"contentText"]?[use objectForKey:@"contentText"]:@"";
+    _contentTextDeLab.textColor = RGB(0.41, 0.41, 0.41);
+    [_contentBgView addSubview:_contentTextDeLab];
+    
+    
+    _defContentTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _contentBgView.width-10, _contentBgView.height -5)];
+    _defContentTextDeLab.numberOfLines = 0;
+    _defContentTextDeLab.text = @"请输入活动内容";
+    _defContentTextDeLab.font = [UIFont systemFontOfSize:14];
+    _defContentTextDeLab.textColor = RGB(0.84, 0.84, 0.84);
+    [_contentBgView addSubview:_defContentTextDeLab];
+    
+    
+    _addressLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _contentBgView.bottom + 10*WidthRate, 80, 30)];
+    _addressLab.text = @"活动地址:";
+    _addressLab.textColor = RGB(0.41, 0.41, 0.41);
+    _addressLab.font = [UIFont systemFontOfSize:15];
+    [_contentView addSubview:_addressLab];
+    
+    _addressTextField = [[UITextField alloc]initWithFrame:CGRectMake(_addressLab.right + 5, _contentBgView.bottom + 10*WidthRate, kScreenWidth-_addressLab.right-22, 30)];
+    _addressTextField.placeholder = @"请输入活动地址";
+    _addressTextField.delegate = self;
+    _addressTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _addressTextField.textColor = RGB(0.41, 0.41, 0.41);
+    _addressTextField.font = [UIFont systemFontOfSize:13];
+    [_contentView addSubview:_addressTextField];
+    
+    UIView *addressLine = [[UIView alloc]initWithFrame:CGRectMake(0, _addressTextField.height-1, _addressTextField.width, 1)];
+    addressLine.backgroundColor = RGB(0.84, 0.84, 0.84);;
+    [_addressTextField addSubview:addressLine];
+    
     _previewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _previewBtn.frame = CGRectMake(20,kScreenHeight-120*WidthRate , 120*WidthRate, 30*WidthRate);
     _previewBtn.layer.masksToBounds = YES;
     _previewBtn.layer.cornerRadius = 15*WidthRate;
     _previewBtn.layer.borderWidth = 1;
+    _previewBtn.tag = 100000;
     _previewBtn.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
     [_previewBtn setBackgroundColor:[UIColor whiteColor]];
     [_previewBtn setTitle:@"预览" forState:UIControlStateNormal];
@@ -174,8 +229,10 @@
         _defTextDeLab.hidden = NO;
     }else
         _defTextDeLab.hidden = YES;
-    
-    
+    if ([_contentTextDeLab.text isEqualToString:@""]){
+        _defContentTextDeLab.hidden = NO;
+    }else
+        _defContentTextDeLab.hidden = YES;
 }
 //添加图片点击事件
 -(void)addPhotoClick{
@@ -379,7 +436,11 @@
 }
 //添加内容
 -(void)addTextTap{
+    NSUserDefaults * use = [NSUserDefaults standardUserDefaults];
     TextView * view = [[TextView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    view.textView.text = [use objectForKey:@"text"]?[use objectForKey:@"text"]:@"";
+    view.placeHolderLabel.text = @"请输入你的意见最多50字";
+    
     [self.view addSubview:view];
     view.transform = CGAffineTransformMakeScale(0.01, 0.01);
     [UIView animateWithDuration:0.3 animations:^{
@@ -388,6 +449,9 @@
     }];
     
     view.block=^(NSString * str){
+        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+        [user setObject:str forKey:@"text"];
+        [user synchronize];
         if ([str isEqualToString:@""]){
             _defTextDeLab.hidden = NO;
             _textDeLab.hidden = YES;
@@ -405,15 +469,63 @@
     
     
 }
+//添加活动内容手势
+-(void)addContentTextTap{
+    NSUserDefaults * use = [NSUserDefaults standardUserDefaults];
+    
+    TextView * view = [[TextView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    view.textView.text = [use objectForKey:@"contentText"]?[use objectForKey:@"contentText"]:@"";
+    view.placeHolderLabel.text = @"请输入活动内容";
+    view.residueLabel.hidden = YES;
+    [self.view addSubview:view];
+    view.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.3 animations:^{
+        view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        
+    }];
+    view.block=^(NSString * str){
+        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+        [user setObject:str forKey:@"contentText"];
+        [user synchronize];
+        if ([str isEqualToString:@""]){
+            _defContentTextDeLab.hidden = NO;
+            _contentTextDeLab.hidden = YES;
+            _defContentTextDeLab.text = @"请输入活动内容";
+        }else
+        {
+            _contentTextDeLab.hidden = NO;
+            _defContentTextDeLab.hidden = YES;
+            _contentTextDeLab.text = str;
+            
+        }
+        
+    };
+    
+}
 //预览效果事件
 -(void)previewClick:(UIButton *)btn{
     btn.selected =!btn.selected;
     if (btn.selected == YES){
-        btn.selected = !btn.selected;
+        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+        [user setObject:_addressTextField.text forKey:@"address"];
+        [user setObject:_textDeLab.text forKey:@"text"];
+        [user setObject:_contentTextDeLab.text forKey:@"contentText"];
         [_previewBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
-        BusinessChooseViewController * bcVC = [[BusinessChooseViewController alloc]init];
-        bcVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:bcVC animated:YES];
+        PreView * view = [[PreView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        [self.view addSubview:view];
+        view.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        [UIView animateWithDuration:0.3 animations:^{
+            view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            
+        }];
+        view.block =^(){
+            UIButton *btn = [self.view viewWithTag:100000];
+            if (btn.selected == YES){
+            btn.selected = !btn.selected;
+                [btn setBackgroundColor:[UIColor whiteColor]];
+            }
+        };
+        
     }
     else{
         [_previewBtn setBackgroundColor:[UIColor whiteColor]];
@@ -427,13 +539,8 @@
         btn.selected = !btn.selected;
         NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
         [user setObject:_titleText.text forKey:@"title"];
-        
+        [user setObject:_addressTextField.text forKey:@"address"];
         [_nextBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
-        NSDictionary * vDic = @{@"动画文字":_textDeLab.text};
-        NSArray * value = [NSArray arrayWithObject:vDic];
-        NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:@"1",@"type",value,@"value" ,nil];
-        [user setObject:dic forKey:@"animation"];
-        
         BusinessChooseViewController * bcVC = [[BusinessChooseViewController alloc]init];
         bcVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:bcVC animated:YES];
@@ -445,6 +552,7 @@
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [_titleText resignFirstResponder];
+    [_addressTextField resignFirstResponder];
     return YES;
 }
 

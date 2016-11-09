@@ -21,7 +21,6 @@
         self.backgroundColor = [UIColor whiteColor];
         _textView =[ [UITextView alloc]initWithFrame:CGRectMake(15,20,frame.size.width-30 ,220)];
         _textView.delegate = self;
-        _textView.text = [use objectForKey:@"text"]?[use objectForKey:@"text"]:@"";
         _textView.textColor = RGB(0.41, 0.41, 0.41);
         _textView.layer.borderWidth = 1.0;//边宽
         _textView.layer.cornerRadius = 5.0;//设置圆角
@@ -31,7 +30,6 @@
         //再创建个可以放置默认字的lable
         _placeHolderLabel = [[UILabel alloc]initWithFrame:CGRectMake(10,20,_textView.width-20,60)];
         _placeHolderLabel.numberOfLines = 0;
-        _placeHolderLabel.text = @"请输入你的意见最多50字";
         _placeHolderLabel.textColor = RGB(0.84, 0.84, 0.84);
         _placeHolderLabel.backgroundColor =[UIColor clearColor];
         
@@ -118,9 +116,7 @@
         
     }];
     [_textView resignFirstResponder];
-    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-    [user setObject:_textView.text forKey:@"text"];
-    [user synchronize];
+    
     self.block(_textView.text);
 }
 

@@ -82,6 +82,7 @@
 		0E812A741DCB515700076EC1 /* ReleaseDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A731DCB515700076EC1 /* ReleaseDetailTableViewCell.m */; };
 		0E8F2AE11DCC3AC0002FDD23 /* DateAndEqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F2AE01DCC3AC0002FDD23 /* DateAndEqViewController.m */; };
 		0E8F2AE41DCC9360002FDD23 /* ReleaseSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F2AE31DCC9360002FDD23 /* ReleaseSuccessViewController.m */; };
+		0EE24EF71DD2CA2100AE6199 /* PreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE24EF61DD2CA2100AE6199 /* PreView.m */; };
 		5C16BA70F86F124C17075DFC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD18A227BB14C06C5A522C46 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -242,6 +243,8 @@
 		0E8F2AE01DCC3AC0002FDD23 /* DateAndEqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateAndEqViewController.m; path = Classes/Home/Controller/DateAndEqViewController.m; sourceTree = "<group>"; };
 		0E8F2AE21DCC9360002FDD23 /* ReleaseSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReleaseSuccessViewController.h; path = Classes/Home/Controller/ReleaseSuccessViewController.h; sourceTree = "<group>"; };
 		0E8F2AE31DCC9360002FDD23 /* ReleaseSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReleaseSuccessViewController.m; path = Classes/Home/Controller/ReleaseSuccessViewController.m; sourceTree = "<group>"; };
+		0EE24EF51DD2CA2100AE6199 /* PreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreView.h; path = Classes/Home/View/PreView.h; sourceTree = "<group>"; };
+		0EE24EF61DD2CA2100AE6199 /* PreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreView.m; path = Classes/Home/View/PreView.m; sourceTree = "<group>"; };
 		9A8C8286377303B5211B415D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AD18A227BB14C06C5A522C46 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC1B7E292FDBECF78930FC90 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -476,6 +479,8 @@
 				0E812A6A1DCADCB100076EC1 /* TextView.m */,
 				0E812A721DCB515700076EC1 /* ReleaseDetailTableViewCell.h */,
 				0E812A731DCB515700076EC1 /* ReleaseDetailTableViewCell.m */,
+				0EE24EF51DD2CA2100AE6199 /* PreView.h */,
+				0EE24EF61DD2CA2100AE6199 /* PreView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -853,6 +858,7 @@
 				0E6BBB091DCA0DE000A01F44 /* JKPhotoBrowserCell.m in Sources */,
 				0E812A6E1DCB2C8500076EC1 /* ReleaseDetailViewController.m in Sources */,
 				0E6BBAE01DC9D70300A01F44 /* BusinessChooseViewController.m in Sources */,
+				0EE24EF71DD2CA2100AE6199 /* PreView.m in Sources */,
 				0E38726C1DC328D300698B90 /* MineViewController.m in Sources */,
 				0E38725E1DC328A900698B90 /* HYAlertView.m in Sources */,
 				0E3872691DC328BC00698B90 /* TabBarViewController.m in Sources */,

@@ -516,64 +516,68 @@
 //发布按钮点击事件
 -(void)ReleaseClick{
     NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-//    for (int i = 0 ;i < _dateArr.count ; i++){
-//        if ([[use objectForKey:[NSString stringWithFormat:@"%d",i]] isKindOfClass:[NSArray class]]){
-//            if ([[use objectForKey:[NSString stringWithFormat:@"%d",i]] count] > 0){
-//                DateModel  * mol = _dateArr[i];
-//                NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",mol.timestamp],@"date",[NSString stringWithFormat:@"%d",mol.type],@"type",[use objectForKey:[NSString stringWithFormat:@"%d",i]],@"device_id", nil];
-//                [_listArr addObject:dict];
-//            }
-//        }
-//    }
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    _pramerDic = [NSDictionary dictionary];
-//    NSArray * md5Items = [KSubmitAd componentsSeparatedByString:@"/"];
-//    NSString * md5Str = [md5Items[0] stringByAppendingString:[self md5:@"bjyfkj4006010136"]];
-//    NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
-//    NSString *animationStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:[use objectForKey:@"animation"] options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-//    NSString *playlistStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:_listArr options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-//    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"animation":[animationStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"playlist":[playlistStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]};
-//    AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
-//    managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-//    managers.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    [managers POST:[BASEURL stringByAppendingString:KSubmitAd] parameters:_pramerDic constructingBodyWithBlock:^(id<AFMultipartFormData> formData){
-//        hud.hidden = YES;
-//        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-//        NSArray * photoArr = [user objectForKey:@"photoArray"];
-//        for ( int i = 0 ;i< photoArr.count ;i++){
-//            [formData appendPartWithFileData:photoArr[i] name:@"poster" fileName:@"icon.jpg" mimeType:@"image/jpg/file/png"];
-//        }
-//    }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
-//        
-//        NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        NSMutableDictionary *dic = [resultString mj_JSONObject];
-//        int status = [[dic objectForKey:@"status"] intValue];;
-//        if (status == 1) {
-//            [use setObject:nil forKey:@"text"];
-//            ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
-//            rsVC.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:rsVC animated:YES];
-//            
-//        }
-//        else if (status == -1){
-//            [use setObject:nil forKey:@"text"];
-//            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
-//            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
-//                LoginViewController * logVC = [[LoginViewController alloc]init];
-//                [self.navigationController pushViewController:logVC animated:YES];            }];
-//        }
-//        else{
-//            NSString *mess = [dic objectForKey:@"message"];
-//            [self errorMessages:mess];
-//        }
-//        
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
-//        
-//    }];
-        [use setObject:nil forKey:@"text"];
-        ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
-        rsVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:rsVC animated:YES];
+    for (int i = 0 ;i < _dateArr.count ; i++){
+        if ([[use objectForKey:[NSString stringWithFormat:@"%d",i]] isKindOfClass:[NSArray class]]){
+            if ([[use objectForKey:[NSString stringWithFormat:@"%d",i]] count] > 0){
+                DateModel  * mol = _dateArr[i];
+                NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",mol.timestamp],@"date",[NSString stringWithFormat:@"%d",mol.type],@"type",[use objectForKey:[NSString stringWithFormat:@"%d",i]],@"device_id", nil];
+                [_listArr addObject:dict];
+            }
+        }
+    }
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _pramerDic = [NSDictionary dictionary];
+    NSArray * md5Items = [KSubmitAd componentsSeparatedByString:@"/"];
+    NSString * md5Str = [md5Items[0] stringByAppendingString:[self md5:@"bjyfkj4006010136"]];
+    NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
+    
+    NSString *playlistStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:_listArr options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"content":[use objectForKey:@"text"],@"scroll_text1":[use objectForKey:@"contentText"],@"scroll_text2":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]};
+    AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
+    managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    managers.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [managers POST:[BASEURL stringByAppendingString:KSubmitAd] parameters:_pramerDic constructingBodyWithBlock:^(id<AFMultipartFormData> formData){
+        hud.hidden = YES;
+        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+        NSArray * photoArr = [user objectForKey:@"photoArray"];
+        for ( int i = 0 ;i< photoArr.count ;i++){
+            [formData appendPartWithFileData:photoArr[i] name:@"poster" fileName:@"icon.jpg" mimeType:@"image/jpg/file/png"];
+        }
+    }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
+        
+        NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *dic = [resultString mj_JSONObject];
+        int status = [[dic objectForKey:@"status"] intValue];;
+        if (status == 1) {
+            [use setObject:nil forKey:@"text"];
+            [use setObject:nil forKey:@"contentText"];
+            [use setObject:nil forKey:@"address"];
+            ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
+            rsVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:rsVC animated:YES];
+            
+        }
+        else if (status == -1){
+            [use setObject:nil forKey:@"text"];
+            [use setObject:nil forKey:@"contentText"];
+            [use setObject:nil forKey:@"address"];
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
+        else{
+            NSString *mess = [dic objectForKey:@"message"];
+            [self errorMessages:mess];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+        
+    }];
+//        [use setObject:nil forKey:@"text"];
+//        ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
+//        rsVC.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:rsVC animated:YES];
     
 }
 -(void)setHighlighted:(BOOL)highlighted{
