@@ -22,11 +22,11 @@
         view.backgroundColor = [UIColor whiteColor];
         [self addSubview:view];
         _bgView =[ [UIView alloc]initWithFrame:CGRectMake(0,0,view.width-150*WidthRate ,view.height-80)];
-        _bgView.backgroundColor = [UIColor blackColor];
+        _bgView.backgroundColor = [UIColor lightGrayColor];
         [view addSubview:_bgView];
         
         _codeImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, _bgView.bottom+5, 70, 70)];
-        [_codeImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"loading_pic"]];
+        [_codeImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"code"]];
         [view addSubview:_codeImg];
         _tipLab = [[UILabel alloc]initWithFrame:CGRectMake(_codeImg.right, _codeImg.top+5, 60, 30)];
         _tipLab.textAlignment = NSTextAlignmentCenter;

@@ -21,7 +21,7 @@
         view.backgroundColor = [UIColor whiteColor];
         [self addSubview:view];
         _bgView =[ [UIView alloc]initWithFrame:CGRectMake(0,0,view.width-180*WidthRate ,view.height-50)];
-        _bgView.backgroundColor = [UIColor blackColor];
+        _bgView.backgroundColor = [UIColor lightGrayColor];
         [view addSubview:_bgView];
         
         
@@ -54,7 +54,7 @@
         [view addSubview:_adImg];
         
         _codeImg = [[UIImageView alloc]initWithFrame:CGRectMake(_bgView.right, _adImg.bottom+5, _adImg.width-67, view.height - _adImg.height - 10)];
-        [_codeImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"loading_pic"]];
+        [_codeImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"code"]];
         [view addSubview:_codeImg];
         _tipLab = [[UILabel alloc]initWithFrame:CGRectMake(view.right-67, _codeImg.top+5, 67-3, 60)];
         _tipLab.textAlignment = NSTextAlignmentCenter;
