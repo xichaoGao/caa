@@ -21,6 +21,7 @@
         self.backgroundColor = [UIColor whiteColor];
         _textView =[ [UITextView alloc]initWithFrame:CGRectMake(15,20,frame.size.width-30 ,220)];
         _textView.delegate = self;
+        [_textView becomeFirstResponder];
         _textView.textColor = RGB(0.41, 0.41, 0.41);
         _textView.layer.borderWidth = 1.0;//边宽
         _textView.layer.cornerRadius = 5.0;//设置圆角

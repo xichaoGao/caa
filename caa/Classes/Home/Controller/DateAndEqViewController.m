@@ -541,8 +541,9 @@
         NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
         NSArray * photoArr = [user objectForKey:@"photoArray"];
         for ( int i = 0 ;i< photoArr.count ;i++){
-            [formData appendPartWithFileData:photoArr[i] name:@"poster" fileName:@"icon.jpg" mimeType:@"image/jpg/file/png"];
+            [formData appendPartWithFileData:photoArr[i] name:@"poster[]" fileName:@"icon.jpg" mimeType:@"image/jpg/file/png"];
         }
+        
     }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
         
         NSString *resultString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -552,6 +553,7 @@
             [use setObject:nil forKey:@"text"];
             [use setObject:nil forKey:@"contentText"];
             [use setObject:nil forKey:@"address"];
+            [use setObject:@[] forKey:@"photoArray"];
             ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
             rsVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:rsVC animated:YES];

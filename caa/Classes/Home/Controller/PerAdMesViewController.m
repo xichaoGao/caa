@@ -12,10 +12,12 @@
 #import "XWScanImage.h"
 #import "TextView.h"
 #import "PreView.h"
+#import "PreView1.h"
 @interface PerAdMesViewController ()<UITextFieldDelegate,JKImagePickerControllerDelegate>
 @property (strong,nonatomic)NSMutableArray *assetsArray;
 @property(nonatomic,strong)NSMutableArray * imgArray;
 @property(nonatomic,strong)NSMutableArray  *photoArray;
+@property(nonatomic,assign)int selectTag;
 @end
 
 @implementation PerAdMesViewController
@@ -90,7 +92,7 @@
     _effectLab.text = @"动画效果:";
     [self.view addSubview:_effectLab];
     
-    for (int i=0 ; i<4 ; i++){
+    for (int i=0 ; i<2 ; i++){
         _effectImg = [[UIImageView alloc]initWithFrame:CGRectMake(_effectLab.right +(60*WidthRate +5)*i , _effectLab.origin.y+10, 50*WidthRate, 50*WidthRate)];
         _effectImg.userInteractionEnabled = YES;
         _effectImg.tag = i+1000;
@@ -421,7 +423,7 @@
         if (sender.tag == 20000+i){
             if (sender.selected == YES){
                 NSLog(@"&&&&&&%ld",(long)sender.tag);
-                
+                _selectTag = i;
             }
             else{
                 NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
@@ -507,32 +509,67 @@
 //预览效果事件
 -(void)previewClick:(UIButton *)btn{
     btn.selected =!btn.selected;
-    if (btn.selected == YES){
-        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-        [user setObject:_addressTextField.text forKey:@"address"];
-        [user setObject:_textDeLab.text forKey:@"text"];
-        [user setObject:_contentTextDeLab.text forKey:@"contentText"];
-        [_previewBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
-        PreView * view = [[PreView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-        [self.view addSubview:view];
-        view.transform = CGAffineTransformMakeScale(0.01, 0.01);
-        [UIView animateWithDuration:0.3 animations:^{
-            view.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            
-        }];
-        view.block =^(){
-            UIButton *btn = [self.view viewWithTag:100000];
+    switch (_selectTag) {
+        case 0:
             if (btn.selected == YES){
-            btn.selected = !btn.selected;
-                [btn setBackgroundColor:[UIColor whiteColor]];
+                NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                [user setObject:_addressTextField.text forKey:@"address"];
+                [user setObject:_textDeLab.text forKey:@"text"];
+                [user setObject:_contentTextDeLab.text forKey:@"contentText"];
+                [_previewBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
+                PreView * view = [[PreView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+                [self.view addSubview:view];
+                view.transform = CGAffineTransformMakeScale(0.01, 0.01);
+                [UIView animateWithDuration:0.3 animations:^{
+                    view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                    
+                }];
+                view.block =^(){
+                    UIButton *btn = [self.view viewWithTag:100000];
+                    if (btn.selected == YES){
+                        btn.selected = !btn.selected;
+                        [btn setBackgroundColor:[UIColor whiteColor]];
+                    }
+                };
+                
             }
-        };
-        
+            else{
+                [_previewBtn setBackgroundColor:[UIColor whiteColor]];
+                [_previewBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
+            }
+            break;
+            case 1:
+            if (btn.selected == YES){
+                NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                [user setObject:_addressTextField.text forKey:@"address"];
+                [user setObject:_textDeLab.text forKey:@"text"];
+                [user setObject:_contentTextDeLab.text forKey:@"contentText"];
+                [_previewBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
+                PreView1 * view = [[PreView1 alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+                [self.view addSubview:view];
+                view.transform = CGAffineTransformMakeScale(0.01, 0.01);
+                [UIView animateWithDuration:0.3 animations:^{
+                    view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                    
+                }];
+                view.block =^(){
+                    UIButton *btn = [self.view viewWithTag:100000];
+                    if (btn.selected == YES){
+                        btn.selected = !btn.selected;
+                        [btn setBackgroundColor:[UIColor whiteColor]];
+                    }
+                };
+                
+            }
+            else{
+                [_previewBtn setBackgroundColor:[UIColor whiteColor]];
+                [_previewBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
+            }
+            break;
+        default:
+            break;
     }
-    else{
-        [_previewBtn setBackgroundColor:[UIColor whiteColor]];
-        [_previewBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
-    }
+    
 }
 //下一步 事件
 -(void)nextClick:(UIButton *)btn{
