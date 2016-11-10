@@ -81,6 +81,8 @@
 		0E812A711DCB2DB900076EC1 /* ScreenDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A701DCB2DB900076EC1 /* ScreenDetailViewController.m */; };
 		0E812A741DCB515700076EC1 /* ReleaseDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A731DCB515700076EC1 /* ReleaseDetailTableViewCell.m */; };
 		0E86DD7A1DD400460016E365 /* PreView1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E86DD791DD400460016E365 /* PreView1.m */; };
+		0E86DD7D1DD43DDA0016E365 /* AdsListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E86DD7C1DD43DDA0016E365 /* AdsListModel.m */; };
+		0E86DD801DD4418A0016E365 /* AdsDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E86DD7F1DD4418A0016E365 /* AdsDetailModel.m */; };
 		0E8F2AE11DCC3AC0002FDD23 /* DateAndEqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F2AE01DCC3AC0002FDD23 /* DateAndEqViewController.m */; };
 		0E8F2AE41DCC9360002FDD23 /* ReleaseSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F2AE31DCC9360002FDD23 /* ReleaseSuccessViewController.m */; };
 		0EE24EF71DD2CA2100AE6199 /* PreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE24EF61DD2CA2100AE6199 /* PreView.m */; };
@@ -242,6 +244,10 @@
 		0E812A731DCB515700076EC1 /* ReleaseDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReleaseDetailTableViewCell.m; path = Classes/Home/View/ReleaseDetailTableViewCell.m; sourceTree = "<group>"; };
 		0E86DD781DD400460016E365 /* PreView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreView1.h; path = Classes/Home/View/PreView1.h; sourceTree = "<group>"; };
 		0E86DD791DD400460016E365 /* PreView1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreView1.m; path = Classes/Home/View/PreView1.m; sourceTree = "<group>"; };
+		0E86DD7B1DD43DDA0016E365 /* AdsListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdsListModel.h; path = Classes/Home/Model/AdsListModel.h; sourceTree = "<group>"; };
+		0E86DD7C1DD43DDA0016E365 /* AdsListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdsListModel.m; path = Classes/Home/Model/AdsListModel.m; sourceTree = "<group>"; };
+		0E86DD7E1DD4418A0016E365 /* AdsDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdsDetailModel.h; path = Classes/Home/Model/AdsDetailModel.h; sourceTree = "<group>"; };
+		0E86DD7F1DD4418A0016E365 /* AdsDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdsDetailModel.m; path = Classes/Home/Model/AdsDetailModel.m; sourceTree = "<group>"; };
 		0E8F2ADF1DCC3AC0002FDD23 /* DateAndEqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DateAndEqViewController.h; path = Classes/Home/Controller/DateAndEqViewController.h; sourceTree = "<group>"; };
 		0E8F2AE01DCC3AC0002FDD23 /* DateAndEqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateAndEqViewController.m; path = Classes/Home/Controller/DateAndEqViewController.m; sourceTree = "<group>"; };
 		0E8F2AE21DCC9360002FDD23 /* ReleaseSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReleaseSuccessViewController.h; path = Classes/Home/Controller/ReleaseSuccessViewController.h; sourceTree = "<group>"; };
@@ -471,6 +477,10 @@
 				0E76D79E1DCDAEA10066544C /* DateModel.m */,
 				0E76D7A31DCDB4950066544C /* EqModel.h */,
 				0E76D7A41DCDB4950066544C /* EqModel.m */,
+				0E86DD7B1DD43DDA0016E365 /* AdsListModel.h */,
+				0E86DD7C1DD43DDA0016E365 /* AdsListModel.m */,
+				0E86DD7E1DD4418A0016E365 /* AdsDetailModel.h */,
+				0E86DD7F1DD4418A0016E365 /* AdsDetailModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -865,6 +875,7 @@
 				0E6BBAE01DC9D70300A01F44 /* BusinessChooseViewController.m in Sources */,
 				0EE24EF71DD2CA2100AE6199 /* PreView.m in Sources */,
 				0E38726C1DC328D300698B90 /* MineViewController.m in Sources */,
+				0E86DD801DD4418A0016E365 /* AdsDetailModel.m in Sources */,
 				0E38725E1DC328A900698B90 /* HYAlertView.m in Sources */,
 				0E3872691DC328BC00698B90 /* TabBarViewController.m in Sources */,
 				0E6BBB061DCA0DDF00A01F44 /* JKImagePickerController.m in Sources */,
@@ -884,6 +895,7 @@
 				0E812A711DCB2DB900076EC1 /* ScreenDetailViewController.m in Sources */,
 				0E3872671DC328BC00698B90 /* BaseModel.m in Sources */,
 				0E3872A41DC33E6E00698B90 /* UIViewAdditions.m in Sources */,
+				0E86DD7D1DD43DDA0016E365 /* AdsListModel.m in Sources */,
 				0E6BBB001DCA0DDF00A01F44 /* JKAssets.m in Sources */,
 				0E70126E1DC6E25E00E22A68 /* NotificationConfigure.m in Sources */,
 				0E86DD7A1DD400460016E365 /* PreView1.m in Sources */,

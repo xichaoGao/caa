@@ -7,8 +7,14 @@
 //
 
 #import "ScreenDetailViewController.h"
-
+#import "AdsDetailModel.h"
+#import "LoginViewController.h"
 @interface ScreenDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    UIView * tagView;
+    NSMutableArray * dataArr;
+}
+@property(nonatomic,strong)NSDictionary *pramerDic;
 
 @end
 
@@ -28,9 +34,52 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"屏幕详情";
+    dataArr = [NSMutableArray arrayWithCapacity:1];
     [self createUI];
+    [self getDataSource];
     // Do any additional setup after loading the view.
 }
+-(void)getDataSource{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _pramerDic = [NSDictionary dictionary];
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+    _pramerDic = @{@"token":[use objectForKey:@"token"],@"device_id":_device_id};
+    
+    
+    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetAdsDet RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        hud.hidden = YES;
+        int status = [[result objectForKey:@"status"] intValue];;
+        if (status == 1) {
+            AdsDetailModel * model = [AdsDetailModel mj_objectWithKeyValues:[result objectForKey:@"data"]];
+            if ( ![model.photo isEqualToString:@""]){
+                _faceImg.hidden = YES;
+                _faceLab.hidden = YES;
+                [_screenImg sd_setImageWithURL:[NSURL URLWithString:model.photo]];
+            }else{
+                _faceLab.hidden = NO;
+                _faceImg.hidden = NO;
+            }
+            _titleLab.text = model.name;
+//            NSMutableArray *arr = [NSMutableArray arrayWithArray:@[@"人气最高",@"小资",@"口味最佳",@"环境最佳",@"服务员最佳"]];
+            tagView = [self createViewWithY:_bgView.bottom+10 Title:@"餐厅标签" contentArray:model.tags];
+            [self.view addSubview:tagView];
+            
+            dataArr  = model.playlist;
+            [_listTableView reloadData];
+        }
+        else if (status == -1){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
+        else{
+            NSString *mess = [result objectForKey:@"message"];
+            [self errorMessages:mess];
+        }
+    }];
+}
+
 -(void)createUI{
     _screenImg = [[UIImageView alloc]initWithFrame:CGRectMake(12, 10, kScreenWidth - 24, 160*WidthRate)];
     _screenImg.layer.masksToBounds = YES;
@@ -54,7 +103,6 @@
     _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(12, 5, 150, 25*WidthRate)];
     _titleLab.textColor = RGB(0.96, 0.55, 0.40);
     _titleLab.font = [UIFont systemFontOfSize:20];
-    _titleLab.text = @"外婆家一屏";
     [_bgView addSubview:_titleLab];
     _hotLab = [[UILabel alloc]initWithFrame:CGRectMake(_bgView.width - 120, 5, 40, 25*WidthRate)];
     _hotLab.text = @"热度:";
@@ -66,9 +114,7 @@
         [_heartImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"home_detail_heat"]];
         [_bgView addSubview:_heartImg];
     }
-    NSMutableArray *arr = [NSMutableArray arrayWithArray:@[@"人气最高",@"小资",@"口味最佳",@"环境最佳",@"服务员最佳"]];
-    UIView * tagView = [self createViewWithY:_bgView.bottom+10 Title:@"餐厅标签" contentArray:arr];
-    [self.view addSubview:tagView];
+   
     _listLab = [[UILabel alloc]initWithFrame:CGRectMake(12, tagView.bottom + 10*WidthRate, 150, 25*WidthRate)];
     _listLab.textColor = RGB(0.41, 0.41, 0.41);
     _listLab.text = @"正在播放广告列表";
@@ -108,12 +154,13 @@
     return view;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    
+    return dataArr.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString * cellID=@"cellID";
     UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
-    cell.textLabel.text = @"流口水的姐夫来喀什绝地反击";
+    cell.textLabel.text = dataArr[indexPath.row];
     cell.textLabel.textColor = RGB(0.41, 0.41, 0.41);
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];

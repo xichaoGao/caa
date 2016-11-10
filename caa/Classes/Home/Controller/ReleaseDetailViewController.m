@@ -9,16 +9,22 @@
 #import "ReleaseDetailViewController.h"
 #import "ReleaseDetailTableViewCell.h"
 #import "ScreenDetailViewController.h"
+#import "AdsListModel.h"
+#import "LoginViewController.h"
+
 static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewCell";
 @interface ReleaseDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSMutableArray * _dataArray;
 }
+@property(nonatomic,assign)int pageID;
 @property(nonatomic,strong)UIView *bgView;
 @property(nonatomic,strong)UILabel * nowReleaseLab;
 @property(nonatomic,strong)UILabel * releaseNumLab;
 @property(nonatomic,strong)UIView * lineView;
 @property(nonatomic,strong)UITableView * tableView;
+@property(nonatomic,strong)NSDictionary *pramerDic;
+
 @end
 
 @implementation ReleaseDetailViewController
@@ -35,10 +41,42 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _pageID = 1;
     self.navigationItem.title = @"发布详情";
     _dataArray = [NSMutableArray array];
+    [self getDataSource];
     [self createUI];
     // Do any additional setup after loading the view.
+}
+-(void)getDataSource{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _pramerDic = [NSDictionary dictionary];
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+    _pramerDic = @{@"token":[use objectForKey:@"token"]};
+    
+    
+    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetAdsList RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        hud.hidden = YES;
+        int status = [[result objectForKey:@"status"] intValue];;
+        if (status == 1) {
+            NSArray * arr = [result objectForKey:@"data"];
+            for (int i = 0 ;i < arr.count ;i++){
+                AdsListModel * model = [AdsListModel mj_objectWithKeyValues:arr[i]];
+                [_dataArray addObject:model];
+            }
+            [_tableView reloadData];
+        }
+        else if (status == -1){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
+        else{
+            NSString *mess = [result objectForKey:@"message"];
+            [self errorMessages:mess];
+        }
+    }];
 }
 -(void)createUI{
     _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 30)];
@@ -50,7 +88,7 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
     [_bgView addSubview:_nowReleaseLab];
     _releaseNumLab = [[UILabel alloc]initWithFrame:CGRectMake(_nowReleaseLab.right, 0, 40, 30)];
     _releaseNumLab.textColor = RGB(0.32, 0.32, 0.32);
-    _releaseNumLab.text = @"10屏";
+    _releaseNumLab.text = [NSString stringWithFormat:@"%lu 屏",(unsigned long)[_dataArray count]];
     _releaseNumLab.font = [UIFont systemFontOfSize:16];
     [_bgView addSubview:_releaseNumLab];
     _lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _bgView.bottom, kScreenWidth, 0.5)];
@@ -72,27 +110,31 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 5;
+    return _dataArray.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReleaseDetailTableViewCell * releaseDetailTableViewCell = [tableView dequeueReusableCellWithIdentifier:ReleaseDetailTableViewCellIdenfire];
-    [releaseDetailTableViewCell.screenImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
-    releaseDetailTableViewCell.titleLab.text = @"老师的空间福";
-    releaseDetailTableViewCell.playNumLab.text = [NSString stringWithFormat:@"%d次",25];
-    releaseDetailTableViewCell.receNumLab.text = [NSString stringWithFormat:@"%d次",25];
-    releaseDetailTableViewCell.toShopNumLab.text = [NSString stringWithFormat:@"%d次",25];
+    AdsListModel * mol = _dataArray[indexPath.row];
+    [releaseDetailTableViewCell.screenImg sd_setImageWithURL:[NSURL URLWithString:mol.logo] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
+    releaseDetailTableViewCell.titleLab.text = mol.name;
+    releaseDetailTableViewCell.playNumLab.text = [NSString stringWithFormat:@"%@次",mol.play_count];
+    releaseDetailTableViewCell.receNumLab.text = [NSString stringWithFormat:@"%@次",mol.get_count];
+    releaseDetailTableViewCell.toShopNumLab.text = [NSString stringWithFormat:@"%@次",mol.use_count];
     return releaseDetailTableViewCell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ScreenDetailViewController * sdVC = [[ScreenDetailViewController alloc]init];
     sdVC.hidesBottomBarWhenPushed = YES;
+    sdVC.device_id = ((AdsListModel *)_dataArray[indexPath.row]).device_id;
     [self.navigationController pushViewController:sdVC animated:YES];
 }
 -(void)releaseDetailTableViewHeaderRefresh{
-    
+    _pageID = 1;
+    [self getDataSource];
 }
 -(void)releaseDetailTableViewFooterRefresh{
-    
+    _pageID ++;
+    [self getDataSource];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

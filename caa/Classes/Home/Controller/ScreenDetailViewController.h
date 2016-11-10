@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 
 @interface ScreenDetailViewController : BaseViewController
+@property(nonatomic,strong)NSString * device_id;
 @property(nonatomic,strong)UIImageView * screenImg;
 @property(nonatomic,strong)UIImageView * faceImg;
 @property(nonatomic,strong)UILabel * faceLab;

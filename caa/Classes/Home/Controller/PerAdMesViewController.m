@@ -38,6 +38,8 @@
     [super viewDidLoad];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setObject:nil forKey:@"photoArray"];
+    [user setObject:@"" forKey:@"text"];
+    [user setObject:@"" forKey:@"contentText"];
     _photoArray = [NSMutableArray arrayWithCapacity:1];
     _assetsArray = [NSMutableArray array];
     _imgArray = [NSMutableArray array];

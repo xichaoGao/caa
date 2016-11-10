@@ -29,6 +29,7 @@
 #define KLogout @"Member/userLogout"//退出登录
 #define KSetNickName @"Member/setNickname"//修改昵称
 #define KSetHeadImg @"Member/setHeadIMG"//修改头像
-
+#define KGetAdsList @"Member/getMyAdsList"//广告列表
+#define KGetAdsDet @"Member/getAdsDetail"//广告详情
 
 #endif /* ParamsDef_h */

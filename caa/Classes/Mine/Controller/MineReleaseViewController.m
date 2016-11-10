@@ -37,8 +37,12 @@
     [super viewDidLoad];
     self.navigationItem.title  = @"我的发布";
     _dateArr = [NSMutableArray arrayWithArray:@[@"sdf",@"sdf",@"sd",@"sdf",@"adf",@"df"]];
+    
     [self createUI];
     // Do any additional setup after loading the view.
+}
+-(void)getDataSoure{
+    
 }
 -(void)createUI{
     UILabel * nowLab = [[UILabel alloc]initWithFrame:CGRectMake(12, 20*WidthRate, 100, 30)];
