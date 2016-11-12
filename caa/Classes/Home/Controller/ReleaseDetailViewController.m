@@ -60,10 +60,15 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
         int status = [[result objectForKey:@"status"] intValue];;
         if (status == 1) {
             NSArray * arr = [result objectForKey:@"data"];
+            
             for (int i = 0 ;i < arr.count ;i++){
                 AdsListModel * model = [AdsListModel mj_objectWithKeyValues:arr[i]];
                 [_dataArray addObject:model];
             }
+            if (_dataArray.count > 0){
+            _releaseNumLab.text = [NSString stringWithFormat:@"%d 屏",(int)[_dataArray count]];
+            }else
+            _releaseNumLab.text = @"0 屏";
             [_tableView reloadData];
         }
         else if (status == -1){
@@ -88,7 +93,7 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
     [_bgView addSubview:_nowReleaseLab];
     _releaseNumLab = [[UILabel alloc]initWithFrame:CGRectMake(_nowReleaseLab.right, 0, 40, 30)];
     _releaseNumLab.textColor = RGB(0.32, 0.32, 0.32);
-    _releaseNumLab.text = [NSString stringWithFormat:@"%lu 屏",(unsigned long)[_dataArray count]];
+    _releaseNumLab.text = [NSString stringWithFormat:@"%d 屏",(int)[_dataArray count]];
     _releaseNumLab.font = [UIFont systemFontOfSize:16];
     [_bgView addSubview:_releaseNumLab];
     _lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _bgView.bottom, kScreenWidth, 0.5)];

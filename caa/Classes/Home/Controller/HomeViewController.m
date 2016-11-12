@@ -70,8 +70,7 @@
     _adView.layer.borderWidth = 1;
     _adView.layer.borderColor = KBorderColor;
     [self.view addSubview:_adView];
-    UITapGestureRecognizer *tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relAdTap)];
-    [_adView addGestureRecognizer:tapGess];
+   
     
     _relImg = [[UIImageView alloc]initWithFrame:CGRectMake((_adView.width - 180*WidthRate)/2,( _adView.height - 40*WidthRate)/2, 35*WidthRate, 35*WidthRate)];
     _relImg.image = [UIImage imageNamed:@"home_advertising"];
@@ -156,6 +155,10 @@
             _playLabNum.text = [NSString stringWithFormat:@"%@ 次",adMsgModel.play_count];
             _receLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.get_count];
             _useLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.use_count];
+            if (![adMsgModel.device_count isEqualToString:@"0"]){
+                UITapGestureRecognizer *tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relAdTap)];
+                [_adView addGestureRecognizer:tapGess];
+            }
             
         }
         else if (status == -1){

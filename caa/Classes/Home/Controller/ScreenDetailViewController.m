@@ -50,6 +50,7 @@
         hud.hidden = YES;
         int status = [[result objectForKey:@"status"] intValue];;
         if (status == 1) {
+            _bgView.hidden = NO;
             AdsDetailModel * model = [AdsDetailModel mj_objectWithKeyValues:[result objectForKey:@"data"]];
             if ( ![model.photo isEqualToString:@""]){
                 _faceImg.hidden = YES;
@@ -60,12 +61,18 @@
                 _faceImg.hidden = NO;
             }
             _titleLab.text = model.name;
-//            NSMutableArray *arr = [NSMutableArray arrayWithArray:@[@"人气最高",@"小资",@"口味最佳",@"环境最佳",@"服务员最佳"]];
-            tagView = [self createViewWithY:_bgView.bottom+10 Title:@"餐厅标签" contentArray:model.tags];
+            //            NSMutableArray *arr = [NSMutableArray arrayWithArray:@[@"人气最高",@"小资",@"口味最佳",@"环境最佳",@"服务员最佳"]];
+            if ( model.tags.count > 0){
+                tagView = [self createViewWithY:_bgView.bottom+10 Title:@"餐厅标签" contentArray:model.tags];
+                _listLab.hidden = NO;
+            }
             [self.view addSubview:tagView];
             
             dataArr  = model.playlist;
-            [_listTableView reloadData];
+            if(dataArr.count >0){
+                _listTableView.hidden = NO;
+                [_listTableView reloadData];
+            }
         }
         else if (status == -1){
             HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
@@ -99,6 +106,7 @@
     [_screenImg addSubview:_faceLab];
     
     _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, _screenImg.bottom + 5, kScreenWidth, 25*WidthRate)];
+    _bgView.hidden = YES;
     [self.view addSubview:_bgView];
     _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(12, 5, 150, 25*WidthRate)];
     _titleLab.textColor = RGB(0.96, 0.55, 0.40);
@@ -114,11 +122,12 @@
         [_heartImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"home_detail_heat"]];
         [_bgView addSubview:_heartImg];
     }
-   
+    
     _listLab = [[UILabel alloc]initWithFrame:CGRectMake(12, tagView.bottom + 10*WidthRate, 150, 25*WidthRate)];
     _listLab.textColor = RGB(0.41, 0.41, 0.41);
     _listLab.text = @"正在播放广告列表";
     _listLab.font = [UIFont systemFontOfSize:18];
+    _listLab.hidden = YES;
     [self.view addSubview:_listLab];
     _listTableView = [[UITableView alloc]initWithFrame:CGRectMake(-6*WidthRate, _listLab.bottom + 10, kScreenWidth -24, 150)];
     _listTableView.delegate = self;
@@ -127,6 +136,7 @@
     _listTableView.separatorStyle = UITableViewCellSelectionStyleNone;
     _listTableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_listTableView];
+    _listTableView.hidden = YES;
 }
 -(UIView *)createViewWithY:(CGFloat) y Title:(NSString *)title contentArray:(NSMutableArray *)array{
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, y, kScreenWidth, (((array.count-1)/4 +1) *50*WidthRate)+40*WidthRate)];
@@ -172,13 +182,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
