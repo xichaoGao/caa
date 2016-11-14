@@ -64,7 +64,7 @@
     [_bgView addSubview:_defaultLab];
     
     _addBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    _addBtn.frame = CGRectMake(_bgView.right-45, _bgView.bottom - 45, 25, 25);
+    _addBtn.frame = CGRectMake(_bgView.right-55, _bgView.bottom - 55, 35, 35);
     [_addBtn setBackgroundImage:[UIImage imageNamed:@"home_addphotos"] forState:UIControlStateNormal];
     [_addBtn addTarget:self action:@selector(addPhotoClick) forControlEvents:UIControlEventTouchUpInside];
     [_bgView addSubview:_addBtn];
@@ -94,7 +94,7 @@
     _effectLab.text = @"动画效果:";
     [self.view addSubview:_effectLab];
     
-    for (int i=0 ; i<2 ; i++){
+    for (int i=0 ; i<1 ; i++){
         _effectImg = [[UIImageView alloc]initWithFrame:CGRectMake(_effectLab.right +(60*WidthRate +5)*i , _effectLab.origin.y+10, 50*WidthRate, 50*WidthRate)];
         _effectImg.userInteractionEnabled = YES;
         _effectImg.tag = i+1000;
@@ -209,6 +209,7 @@
     _previewBtn.layer.cornerRadius = 15*WidthRate;
     _previewBtn.layer.borderWidth = 1;
     _previewBtn.tag = 100000;
+    _previewBtn.enabled = NO;
     _previewBtn.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
     [_previewBtn setBackgroundColor:[UIColor whiteColor]];
     [_previewBtn setTitle:@"预览" forState:UIControlStateNormal];
@@ -412,6 +413,29 @@
 }
 //图片放大手势
 -(void)bigTap:(UITapGestureRecognizer *)tap{
+    for (int i = 0;i<1;i++){
+        UIButton * btn = (UIButton *)[self.view viewWithTag:20000+i];
+        btn.selected = !btn.selected;
+        if (btn.tag == (tap.view.tag%1000 + 20000)){
+            if (!(btn.selected = YES)){
+                _previewBtn.enabled = YES;
+                _selectTag = i;
+                btn.selected = !btn.selected;
+            }
+            else{
+                _previewBtn.enabled = YES;
+                _selectTag = i;
+            }
+        
+        }else{
+            if ((btn.selected = YES)){
+                btn.selected = !btn.selected;
+            }
+            else{
+            }
+            
+        }
+    }
     [_titleText resignFirstResponder];
     UIImageView *clickedImageView = (UIImageView *)tap.view;
     [XWScanImage scanBigImageWithImageView:clickedImageView];
@@ -424,21 +448,25 @@
     for (int i = 0 ; i< 4;i++){
         if (sender.tag == 20000+i){
             if (sender.selected == YES){
-                NSLog(@"&&&&&&%ld",(long)sender.tag);
+                _previewBtn.enabled = YES;
                 _selectTag = i;
+                
             }
             else{
-                NSLog(@"$$$$$$$$$%ld",(long)sender.tag);
+                _previewBtn.enabled = NO;
+                _selectTag = -1;
             }
         }else {
             
             UIButton * btn = (UIButton *)[self.view viewWithTag:20000+i];
             if (btn.selected == YES){
+                _previewBtn.enabled = YES;
+                _selectTag = i;
                 btn.selected = !btn.selected;
             }
-            else{
-            }
-        }    }
+            
+        }
+    }
 }
 //添加内容
 -(void)addTextTap{
@@ -540,7 +568,7 @@
                 [_previewBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
             }
             break;
-            case 1:
+        case 1:
             if (btn.selected == YES){
                 NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
                 [user setObject:_addressTextField.text forKey:@"address"];

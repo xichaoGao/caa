@@ -130,7 +130,7 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"手机号不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
-    else if (_phoneText.text.length <11){
+    else if (_phoneText.text.length !=11){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"您输入的不是手机号" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }else{

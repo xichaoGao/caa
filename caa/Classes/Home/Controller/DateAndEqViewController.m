@@ -218,7 +218,7 @@
         UILabel * screenTitleLab = [[UILabel alloc]initWithFrame:CGRectMake(screenBtn.left, screenBtn.bottom+5, screenBtn.width, 20)];
         screenTitleLab.textAlignment = NSTextAlignmentCenter;
         screenTitleLab.textColor = RGB(0.30, 0.30, 0.30);
-        screenTitleLab.font = [UIFont systemFontOfSize:12];
+        screenTitleLab.font = [UIFont systemFontOfSize:9];
         [view addSubview:screenTitleLab];
         _selectedImg.hidden = YES;
         _grayView.hidden = YES;
@@ -357,11 +357,12 @@
                     [user setObject:_idArr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
                     
                 }
-            }
+            
             _grayView = (UIView *)[self.view viewWithTag:2000+i];
             _grayView.hidden = NO;
             _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
             _selectedImg.hidden = NO;
+            }
         }
         if (_addNum == 0){
             _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum];
@@ -383,13 +384,13 @@
                 [user setObject:arr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
                 _totalNum--;
                 
-            }
+            
             
             _grayView = (UIView *)[self.view viewWithTag:2000+i];
             _grayView.hidden = YES;
             _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
             _selectedImg.hidden = YES;
-            
+           } 
         }
         _addNum = 0;
         _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum];
@@ -532,7 +533,7 @@
     NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
     
     NSString *playlistStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:_listArr options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"content":[use objectForKey:@"text"],@"scroll_text1":[use objectForKey:@"contentText"],@"scroll_text2":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]};
+    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"content":[use objectForKey:@"text"],@"scroll_text1":[use objectForKey:@"contentText"],@"scroll_text2":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"start_time":@"1478188800",@"end_time":@"1478188800",@"promotion_content":@"优惠",@"promotion_expire":@"1",@"promotion_get_type":@"0"};
     AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
     managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     managers.responseSerializer = [AFHTTPResponseSerializer serializer];

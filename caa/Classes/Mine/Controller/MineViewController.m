@@ -154,6 +154,12 @@
             loginVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:loginVC animated:YES];
         }
+        else if (status == -1){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
         else{
             NSString *mess = [result objectForKey:@"message"];
             [self errorMessages:mess];
