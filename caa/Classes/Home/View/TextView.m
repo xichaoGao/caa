@@ -45,8 +45,20 @@
         //最后添加上即可
         [self addSubview :_textView];
         [self.textView addSubview:self.placeHolderLabel];
+        
+        _cancleBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        _cancleBtn.frame = CGRectMake(20, _textView.bottom + 50*WidthRate, 80, 40);
+        [_cancleBtn setTitle:@"取消" forState: UIControlStateNormal];
+        [_cancleBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _cancleBtn.backgroundColor = RGB(0.95, 0.39, 0.21);
+        _cancleBtn.titleLabel.font = [UIFont systemFontOfSize:20];
+        _cancleBtn.layer.cornerRadius = 20;
+        [_cancleBtn addTarget:self action:@selector(cancleClick) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_cancleBtn];
+        
+        
         _sureBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _sureBtn.frame = CGRectMake(_textView.right -100, _textView.bottom + 50*WidthRate, 80, 40);
+        _sureBtn.frame = CGRectMake(kScreenWidth -100, _textView.bottom + 50*WidthRate, 80, 40);
         [_sureBtn setTitle:@"确定" forState: UIControlStateNormal];
         [_sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _sureBtn.backgroundColor = RGB(0.95, 0.39, 0.21);
@@ -109,6 +121,17 @@
 {
     //隐藏键盘
     [_textView resignFirstResponder];
+}
+-(void)cancleClick{
+    
+    self.transform = CGAffineTransformMakeScale(1, 1);
+    [UIView animateWithDuration:0.3 animations:^{
+        self.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        
+    }];
+    [_textView resignFirstResponder];
+    self.block(@"");
+
 }
 -(void)sureClick{
     self.transform = CGAffineTransformMakeScale(1, 1);

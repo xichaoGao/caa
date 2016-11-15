@@ -83,6 +83,8 @@
 		0E86DD7A1DD400460016E365 /* PreView1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E86DD791DD400460016E365 /* PreView1.m */; };
 		0E86DD7D1DD43DDA0016E365 /* AdsListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E86DD7C1DD43DDA0016E365 /* AdsListModel.m */; };
 		0E86DD801DD4418A0016E365 /* AdsDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E86DD7F1DD4418A0016E365 /* AdsDetailModel.m */; };
+		0E89FA621DDB13A9004DD2D8 /* LDCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E89FA5F1DDB13A9004DD2D8 /* LDCalendarView.m */; };
+		0E89FA631DDB13A9004DD2D8 /* NSDate+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E89FA611DDB13A9004DD2D8 /* NSDate+extend.m */; };
 		0E8F2AE11DCC3AC0002FDD23 /* DateAndEqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F2AE01DCC3AC0002FDD23 /* DateAndEqViewController.m */; };
 		0E8F2AE41DCC9360002FDD23 /* ReleaseSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F2AE31DCC9360002FDD23 /* ReleaseSuccessViewController.m */; };
 		0EE24EF71DD2CA2100AE6199 /* PreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE24EF61DD2CA2100AE6199 /* PreView.m */; };
@@ -248,6 +250,10 @@
 		0E86DD7C1DD43DDA0016E365 /* AdsListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdsListModel.m; path = Classes/Home/Model/AdsListModel.m; sourceTree = "<group>"; };
 		0E86DD7E1DD4418A0016E365 /* AdsDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdsDetailModel.h; path = Classes/Home/Model/AdsDetailModel.h; sourceTree = "<group>"; };
 		0E86DD7F1DD4418A0016E365 /* AdsDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdsDetailModel.m; path = Classes/Home/Model/AdsDetailModel.m; sourceTree = "<group>"; };
+		0E89FA5E1DDB13A9004DD2D8 /* LDCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LDCalendarView.h; path = Classes/Thirds/LDCalenderView/LDCalendarView.h; sourceTree = "<group>"; };
+		0E89FA5F1DDB13A9004DD2D8 /* LDCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LDCalendarView.m; path = Classes/Thirds/LDCalenderView/LDCalendarView.m; sourceTree = "<group>"; };
+		0E89FA601DDB13A9004DD2D8 /* NSDate+extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+extend.h"; path = "Classes/Thirds/LDCalenderView/NSDate+extend.h"; sourceTree = "<group>"; };
+		0E89FA611DDB13A9004DD2D8 /* NSDate+extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+extend.m"; path = "Classes/Thirds/LDCalenderView/NSDate+extend.m"; sourceTree = "<group>"; };
 		0E8F2ADF1DCC3AC0002FDD23 /* DateAndEqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DateAndEqViewController.h; path = Classes/Home/Controller/DateAndEqViewController.h; sourceTree = "<group>"; };
 		0E8F2AE01DCC3AC0002FDD23 /* DateAndEqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateAndEqViewController.m; path = Classes/Home/Controller/DateAndEqViewController.m; sourceTree = "<group>"; };
 		0E8F2AE21DCC9360002FDD23 /* ReleaseSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReleaseSuccessViewController.h; path = Classes/Home/Controller/ReleaseSuccessViewController.h; sourceTree = "<group>"; };
@@ -401,6 +407,7 @@
 		0E3872201DC310A700698B90 /* Thirds */ = {
 			isa = PBXGroup;
 			children = (
+				0E89FA5D1DDB1392004DD2D8 /* LDCalendarView */,
 				0E812A651DCAD97D00076EC1 /* XWScanImage */,
 				0E6BBAE11DCA0DB600A01F44 /* JKAssets */,
 				0E76E2831DC86C41008A06C1 /* Push */,
@@ -634,6 +641,17 @@
 			name = XWScanImage;
 			sourceTree = "<group>";
 		};
+		0E89FA5D1DDB1392004DD2D8 /* LDCalendarView */ = {
+			isa = PBXGroup;
+			children = (
+				0E89FA5E1DDB13A9004DD2D8 /* LDCalendarView.h */,
+				0E89FA5F1DDB13A9004DD2D8 /* LDCalendarView.m */,
+				0E89FA601DDB13A9004DD2D8 /* NSDate+extend.h */,
+				0E89FA611DDB13A9004DD2D8 /* NSDate+extend.m */,
+			);
+			name = LDCalendarView;
+			sourceTree = "<group>";
+		};
 		32D775FAE73A06FF6B6A76B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -854,6 +872,7 @@
 			files = (
 				0E3872721DC3290500698B90 /* GetDataHandle.m in Sources */,
 				0E7012711DC766B800E22A68 /* PerAdMesViewController.m in Sources */,
+				0E89FA631DDB13A9004DD2D8 /* NSDate+extend.m in Sources */,
 				0E8F2AE41DCC9360002FDD23 /* ReleaseSuccessViewController.m in Sources */,
 				0E6BBB0B1DCA0DE000A01F44 /* JKUtil.m in Sources */,
 				0E3872A11DC33E6E00698B90 /* MBProgressHUD+Package.m in Sources */,
@@ -888,6 +907,7 @@
 				0E6BBB0C1DCA0DE000A01F44 /* PhotoAlbumManager.m in Sources */,
 				0E3872A21DC33E6E00698B90 /* NSString+Additions.m in Sources */,
 				0E6BBB011DCA0DDF00A01F44 /* JKAssetsCollectionFooterView.m in Sources */,
+				0E89FA621DDB13A9004DD2D8 /* LDCalendarView.m in Sources */,
 				0E76D7991DCDA49A0066544C /* UrbanModel.m in Sources */,
 				0E3871E41DC3033F00698B90 /* AppDelegate.m in Sources */,
 				0E6BBB051DCA0DDF00A01F44 /* JKAssetsViewCell.m in Sources */,

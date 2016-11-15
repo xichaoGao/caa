@@ -86,9 +86,10 @@
         //最后添加上即可
         
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _closeBtn.frame = CGRectMake(view.right -30, 0, 30, 30);
+        _closeBtn.frame = CGRectMake(10, 5, 25, 25);
         _closeBtn.layer.masksToBounds = YES;
-        _closeBtn.layer.cornerRadius = 15;
+        _closeBtn.layer.cornerRadius = 12.5;
+        _closeBtn.backgroundColor = [UIColor lightGrayColor];
         [_closeBtn setImage:[UIImage imageNamed:@"btn_cancle"] forState:UIControlStateNormal];
         [_closeBtn addTarget:self action:@selector(CloseClick) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:_closeBtn];

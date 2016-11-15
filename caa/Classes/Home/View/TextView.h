@@ -12,6 +12,7 @@
 @property(nonatomic,strong)UITextView  * textView;
 @property(nonatomic,strong)UILabel *placeHolderLabel;
 @property(nonatomic,strong)UILabel *residueLabel;// 输入文本时剩余字数
+@property(nonatomic,strong)UIButton * cancleBtn;
 @property(nonatomic,strong)UIButton * sureBtn;
 @property(nonatomic,copy)void (^block)(NSString*);
 

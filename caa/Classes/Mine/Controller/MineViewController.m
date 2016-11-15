@@ -368,7 +368,9 @@
     return [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",result[0],result[1],result[2],result[3],result[4],result[5],result[6],result[7],result[8],result[9],result[10],result[11],result[12],result[13],result[14],result[15]];
 }
 -(void)changeContentTap{
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
     TextView * view = [[TextView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-49)];
+    view.textView.text = [use objectForKey:@"nickName"];
     view.placeHolderLabel.hidden = YES;
     view.residueLabel.hidden = YES;
     [self.view addSubview:view];
@@ -380,6 +382,10 @@
     }];
     
     view.block=^(NSString * str){
+        if ([str isEqualToString:@""]){
+            
+        }
+        else{
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         _pramerDic = [NSDictionary dictionary];
         NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
@@ -405,8 +411,9 @@
             }
         }];
         
-        
-    };
+        }
+        };
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
