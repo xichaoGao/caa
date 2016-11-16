@@ -533,7 +533,7 @@
     NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
     
     NSString *playlistStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:_listArr options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"content":[use objectForKey:@"text"],@"scroll_text1":[use objectForKey:@"contentText"],@"scroll_text2":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"start_time":@"1478188800",@"end_time":@"1478188800",@"promotion_content":@"优惠",@"promotion_expire":@"1",@"promotion_get_type":@"0"};
+    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"content":[use objectForKey:@"text"],@"shop_name":[use objectForKey:@"contentText"],@"shop_address":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"start_time":[use objectForKey:@"beginTime"],@"end_time":[use objectForKey:@"endTime"],@"promotion_content":[use objectForKey:@"redContent"],@"promotion_expire":@"1",@"promotion_get_type":[use objectForKey:@"limit"]};
     AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
     managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     managers.responseSerializer = [AFHTTPResponseSerializer serializer];

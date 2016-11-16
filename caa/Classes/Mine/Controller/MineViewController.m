@@ -383,7 +383,10 @@
     
     view.block=^(NSString * str){
         if ([str isEqualToString:@""]){
-            
+        }
+        else if ([str isEqualToString:[use objectForKey:@"nickName"]]){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"昵称未做改动" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:nil];
         }
         else{
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

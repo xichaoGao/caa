@@ -7,6 +7,7 @@
 //
 
 #import "PreView.h"
+#import "NSDate+extend.h"
 
 @implementation PreView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -59,30 +60,44 @@
         [_adImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"loading_pic"]];
         [view addSubview:_adImg];
         
-        _codeImg = [[UIImageView alloc]initWithFrame:CGRectMake(_bgView.right, _adImg.bottom+10, _adImg.width-67, view.height - _adImg.height - 15)];
+        _codeImg = [[UIImageView alloc]initWithFrame:CGRectMake(_bgView.right, _adImg.bottom+10, _adImg.width-80*WidthRate, view.height - _adImg.height - 15)];
         [_codeImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"code"]];
         [view addSubview:_codeImg];
-        _tipLab = [[UILabel alloc]initWithFrame:CGRectMake(view.right-67, _codeImg.top+5, 67-3, 30)];
+        _tipLab = [[UILabel alloc]initWithFrame:CGRectMake(view.right-80*WidthRate, _codeImg.top+5*WidthRate, 80*WidthRate-3, 20)];
         _tipLab.textAlignment = NSTextAlignmentCenter;
-        _tipLab.numberOfLines = 0;
         _tipLab.text = [NSString stringWithFormat:@"%@",_tipStr];
         _tipLab.textColor = [UIColor redColor];
         _tipLab.font = [UIFont systemFontOfSize:12];
         [view addSubview:_tipLab];
         
-        UILabel * defaultLab = [[UILabel alloc]initWithFrame:CGRectMake(view.right-67, view.height - 45*WidthRate, 67, 40*WidthRate)];
-        defaultLab.textColor = [UIColor redColor];
-        defaultLab.text = @"微信扫一扫领取优惠券";
-        defaultLab.numberOfLines = 2;
-        defaultLab.textAlignment = NSTextAlignmentLeft;
-        defaultLab.font = [UIFont systemFontOfSize:12];
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:defaultLab.text];
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle setLineSpacing:5];//调整行间距
-        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [defaultLab.text length])];
-        defaultLab.attributedText = attributedString;
-
-        [view addSubview:defaultLab];
+        
+        
+        UILabel * beiginLab = [[UILabel alloc]initWithFrame:CGRectMake(view.right-80*WidthRate, _tipLab.bottom+5, 80*WidthRate, 20)];
+        beiginLab.text = [NSDate stringWithTimestamp:[[use objectForKey:@"beginTime"] doubleValue] format:@"MM-dd"];
+        beiginLab.textColor = [UIColor redColor];
+        beiginLab.font = [UIFont systemFontOfSize:14];
+        beiginLab.textAlignment = NSTextAlignmentCenter;
+        [view addSubview:beiginLab];
+        
+        UILabel * endLab = [[UILabel alloc]initWithFrame:CGRectMake(view.right-80*WidthRate, beiginLab.bottom+5, 80*WidthRate, 20)];
+        endLab.text = [NSString stringWithFormat:@"至%@",[NSDate stringWithTimestamp:[[use objectForKey:@"endTime"] doubleValue] format:@"MM-dd"]];
+        endLab.textColor = [UIColor redColor];
+        endLab.font = [UIFont systemFontOfSize:14];
+        endLab.textAlignment = NSTextAlignmentCenter;
+        [view addSubview:endLab];
+//        UILabel * defaultLab = [[UILabel alloc]initWithFrame:CGRectMake(view.right-67, view.height - 45*WidthRate, 67, 40*WidthRate)];
+//        defaultLab.textColor = [UIColor redColor];
+//        defaultLab.text = @"微信扫一扫领取优惠券";
+//        defaultLab.numberOfLines = 2;
+//        defaultLab.textAlignment = NSTextAlignmentLeft;
+//        defaultLab.font = [UIFont systemFontOfSize:12];
+//        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:defaultLab.text];
+//        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//        [paragraphStyle setLineSpacing:5];//调整行间距
+//        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [defaultLab.text length])];
+//        defaultLab.attributedText = attributedString;
+//
+//        [view addSubview:defaultLab];
         //最后添加上即可
         
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];

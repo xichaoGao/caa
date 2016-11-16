@@ -9,21 +9,21 @@
 #import "BaseViewController.h"
 
 @interface HomeViewController : BaseViewController
-@property(nonatomic,strong)UIView * leadView;
-@property(nonatomic,strong)UIImageView * leadImg;
-@property(nonatomic,strong)UIImageView * faceImg;
-@property(nonatomic,strong)UILabel * faceLab;
-@property(nonatomic,strong)UIView * adView;
-@property(nonatomic,strong)UIImageView * relImg;
-@property(nonatomic,strong)UILabel * relAdLab;
-@property(nonatomic,strong)UIView * showView;
-@property(nonatomic,strong)UILabel * relLab;
-@property(nonatomic,strong)UILabel * relLabNum;
-@property(nonatomic,strong)UILabel * playLab;
-@property(nonatomic,strong)UILabel * playLabNum;
-@property(nonatomic,strong)UILabel * receLab;
-@property(nonatomic,strong)UILabel * receLabNum;
-@property(nonatomic,strong)UILabel * useLab;
-@property(nonatomic,strong)UILabel * useLabNum;
-@property(nonatomic,strong)UIButton * detailBtn;
+@property(nonatomic,strong)UIView * leadView;//引导图背景
+@property(nonatomic,strong)UIImageView * leadImg;//引导图片
+@property(nonatomic,strong)UIImageView * faceImg;//笑脸图片
+@property(nonatomic,strong)UILabel * faceLab;//笑脸下文字
+@property(nonatomic,strong)UIView * adView;//发布广告背景
+@property(nonatomic,strong)UIImageView * relImg;//发布图片
+@property(nonatomic,strong)UILabel * relAdLab;//发布广告
+@property(nonatomic,strong)UIView * showView;//显示背景
+@property(nonatomic,strong)UILabel * relLab;//正在发布
+@property(nonatomic,strong)UILabel * relLabNum;//发布屏数
+@property(nonatomic,strong)UILabel * playLab;//播放
+@property(nonatomic,strong)UILabel * playLabNum;//播放次数
+@property(nonatomic,strong)UILabel * receLab;//领取
+@property(nonatomic,strong)UILabel * receLabNum;//领取人数
+@property(nonatomic,strong)UILabel * useLab;//使用
+@property(nonatomic,strong)UILabel * useLabNum;//使用人数
+@property(nonatomic,strong)UIButton * detailBtn;//详情
 @end

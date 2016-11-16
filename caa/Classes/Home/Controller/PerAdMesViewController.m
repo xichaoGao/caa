@@ -53,9 +53,16 @@
     [super viewDidLoad];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setObject:nil forKey:@"photoArray"];
+    [user setObject:@"" forKey:@"title"];
+    [user setObject:@"" forKey:@"beginTime"];
+    [user setObject:@"" forKey:@"endTime"];
     [user setObject:@"" forKey:@"text"];
     [user setObject:@"" forKey:@"contentText"];
+    [user setObject:@"" forKey:@"address"];
     [user setObject:@"" forKey:@"useDirText"];
+    [user setObject:@"" forKey:@"redContent"];
+    [user setObject:@"活动内限领一次" forKey:@"limit"];
+    _selectTag = -1;
     _photoArray = [NSMutableArray arrayWithCapacity:1];
     _assetsArray = [NSMutableArray array];
     _imgArray = [NSMutableArray array];
@@ -202,6 +209,7 @@
     _endTimeLab.layer.borderWidth = 1;
     _endTimeLab.tag = 302;
     _endTimeLab.userInteractionEnabled = YES;
+    _endTimeLab.textColor = RGB(0.41, 0.41, 0.41);
     _endTimeLab.textAlignment = NSTextAlignmentCenter;
     [_bgScrollView addSubview:_endTimeLab];
     UITapGestureRecognizer *tapGesEnd = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addTimeTap:)];
@@ -392,7 +400,8 @@
     [_bgScrollView addSubview:_limitLab];
     _limitView = [self createWithX:_limitLab.right Y:_limitLab.origin.y Button:limitTypeArr tag:300000];
     [_bgScrollView addSubview:_limitView];
-
+    [use setObject:limitTypeArr[0] forKey:@"limit"];
+    [use synchronize];
     
     
     
@@ -409,7 +418,6 @@
     _previewBtn.layer.cornerRadius = 15*WidthRate;
     _previewBtn.layer.borderWidth = 1;
     _previewBtn.tag = 100;
-    _previewBtn.enabled = NO;
     _previewBtn.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
     [_previewBtn setBackgroundColor:[UIColor whiteColor]];
     [_previewBtn setTitle:@"预览" forState:UIControlStateNormal];
@@ -670,6 +678,9 @@
                 if (btn.tag == sender.tag){
                     btn.selected = !btn.selected;
                     if (btn.selected == YES){
+                        NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+                        [use setObject:limitTypeArr[i] forKey:@"limit"];
+                        [use synchronize];
                         btn.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                         _btnBgView.hidden = YES;
                         UIButton *btn = (UIButton *)[self.view viewWithTag:3000000];
@@ -735,9 +746,10 @@
                             NSString *partStr = [NSDate stringWithTimestamp:interval.doubleValue/1000.0 format:@"yyyy-MM-dd"];
                             weakSelf.beginTimeLab.text = partStr;
                             weakSelf.calendarView = nil;
-//                            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-//                            [user setObject:interval.doubleValue/1000.0 forKey:@"beginTime"];
-//                            [user synchronize];
+                            NSString * time = [NSString stringWithFormat:@"%.f",interval.doubleValue/1000.0];
+                            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                            [user setObject:time forKey:@"beginTime"];
+                            [user synchronize];
                         }
                     }
                 };
@@ -761,6 +773,10 @@
                             NSString *partStr = [NSDate stringWithTimestamp:interval.doubleValue/1000.0 format:@"yyyy-MM-dd"];
                             weakSelf.endTimeLab.text = partStr;
                             weakSelf.calendarView = nil;
+                            NSString * time = [NSString stringWithFormat:@"%.f",interval.doubleValue/1000.0];
+                            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                            [user setObject:time forKey:@"endTime"];
+                            [user synchronize];
                         }
                     }
                 };
@@ -979,19 +995,16 @@
     for (int i = 0 ; i< 4;i++){
         if (sender.tag == 20000+i){
             if (sender.selected == YES){
-                _previewBtn.enabled = YES;
                 _selectTag = i;
                 
             }
             else{
-                _previewBtn.enabled = NO;
                 _selectTag = -1;
             }
         }else {
             
             UIButton * btn = (UIButton *)[self.view viewWithTag:20000+i];
             if (btn.selected == YES){
-                _previewBtn.enabled = YES;
                 _selectTag = i;
                 btn.selected = !btn.selected;
             }
@@ -1105,6 +1118,37 @@
 }
 //预览效果事件
 -(void)previewClick:(UIButton *)btn{
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    [user setObject:_addressTextField.text forKey:@"address"];
+    if (![[user objectForKey:@"photoArray"] isKindOfClass:[NSArray class]]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"图片不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if (_selectTag == -1){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"未选择预览效果图" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"text"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"推荐文字不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"beginTime"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动开始时间不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"endTime"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"contentText"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动内容不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"address"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动地址不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else{
     btn.selected =!btn.selected;
     switch (_selectTag) {
         case 0:
@@ -1168,16 +1212,53 @@
         default:
             break;
     }
-    
+    }
 }
 //下一步 事件
 -(void)nextClick:(UIButton *)btn{
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    [user setObject:_titleText.text forKey:@"title"];
+    [user setObject:_addressTextField.text forKey:@"address"];
+    [user setObject:_redBagContentTextField.text forKey:@"redContent"];
+
+    if (![[user objectForKey:@"photoArray"] isKindOfClass:[NSArray class]]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"图片不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"title"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"标题不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+
+    }
+    else if ([[user objectForKey:@"text"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"推荐文字不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"beginTime"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动开始时间不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"endTime"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"contentText"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动内容不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"address"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动地址不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+   
+    else if ([[user objectForKey:@"redContent"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠内容不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else{
     btn.selected =!btn.selected;
     if (btn.selected == YES){
         btn.selected = !btn.selected;
-        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-        [user setObject:_titleText.text forKey:@"title"];
-        [user setObject:_addressTextField.text forKey:@"address"];
         [_nextBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
         BusinessChooseViewController * bcVC = [[BusinessChooseViewController alloc]init];
         bcVC.hidesBottomBarWhenPushed = YES;
@@ -1186,6 +1267,7 @@
     else{
         [_nextBtn setBackgroundColor:[UIColor whiteColor]];
         [_nextBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
+    }
     }
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{

@@ -405,6 +405,17 @@ static const NSInteger kTotalNum = (kRow - 1) * kCol;
         }
         else {
             //未选中,想选择
+            for (int i = 0; i< _selectArray.count;i++){
+                NSUInteger index = [_currentMonthDateArray indexOfObject:_selectArray[i]];
+                UIButton *btn = (UIButton *)[_dateBgView viewWithTag:100 + index];
+                btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+                btn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+                
+                [btn setImage:nil forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor hexColorWithString:@"2b2b2b"] forState:UIControlStateNormal];
+                [btn setBackgroundColor:[UIColor clearColor]];
+            }
+            [_selectArray removeAllObjects];
             [_selectArray addObject:interval];
             btn.imageEdgeInsets = UIEdgeInsetsMake(0, btn.frame.size.width - 12, btn.frame.size.height - 10, 0);
             btn.titleEdgeInsets = UIEdgeInsetsMake(0, -12, 0, 0);

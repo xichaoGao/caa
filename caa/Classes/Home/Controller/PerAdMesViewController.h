@@ -9,52 +9,52 @@
 #import "BaseViewController.h"
 
 @interface PerAdMesViewController : BaseViewController
-@property(nonatomic,strong)UIView * bgView;
-@property(nonatomic,strong)UIImageView * photoImg;
-@property(nonatomic,strong)UILabel * defaultLab;
-@property(nonatomic,strong)UIButton * addBtn;
-@property(nonatomic,strong)UILabel * titleLab;
-@property(nonatomic,strong)UITextField *titleText;
-@property(nonatomic,strong)UIView * titleLine;
-@property(nonatomic,strong)UILabel * effectLab;
-@property(nonatomic,strong)UIImageView * effectImg;
-@property(nonatomic,strong)UILabel * effectNumLab;
-@property(nonatomic,strong)UILabel * textLab;
-@property(nonatomic,strong)UIView * textBgView;
-@property(nonatomic,strong)UILabel * textDeLab;
-@property(nonatomic,strong)UILabel * defTextDeLab;
+@property(nonatomic,strong)UIView * bgView; //背景
+@property(nonatomic,strong)UIImageView * photoImg;//广告图片
+@property(nonatomic,strong)UILabel * defaultLab;//默认字样
+@property(nonatomic,strong)UIButton * addBtn;//添加图片按钮
+@property(nonatomic,strong)UILabel * titleLab;//标题
+@property(nonatomic,strong)UITextField *titleText;//标题输入框
+@property(nonatomic,strong)UIView * titleLine;//下划线
+@property(nonatomic,strong)UILabel * effectLab;//效果
+@property(nonatomic,strong)UIImageView * effectImg;//效果图片
+@property(nonatomic,strong)UILabel * effectNumLab;//效果标题
+@property(nonatomic,strong)UILabel * textLab;//推荐
+@property(nonatomic,strong)UIView * textBgView;//背景
+@property(nonatomic,strong)UILabel * textDeLab;//显示推荐的文字
+@property(nonatomic,strong)UILabel * defTextDeLab;//默认填写
 
-@property(nonatomic,strong)UILabel * actionTimeLab;
-@property(nonatomic,strong)UILabel * beginTimeLab;
-@property(nonatomic,strong)UILabel * andLab;
-@property(nonatomic,strong)UILabel * endTimeLab;
+@property(nonatomic,strong)UILabel * actionTimeLab;//活动时间
+@property(nonatomic,strong)UILabel * beginTimeLab;//开始时间
+@property(nonatomic,strong)UILabel * andLab;//连接
+@property(nonatomic,strong)UILabel * endTimeLab;//结束时间
 
-@property(nonatomic,strong)UIView * contentView;
-@property(nonatomic,strong)UIView *contentBgView;
-@property(nonatomic,strong)UILabel *cotentLab;
-@property(nonatomic,strong)UILabel * contentTextDeLab;
-@property(nonatomic,strong)UILabel * defContentTextDeLab;
-@property(nonatomic,strong)UILabel *addressLab;
-@property(nonatomic,strong)UITextField * addressTextField;
+@property(nonatomic,strong)UIView * contentView;//活动背景
+@property(nonatomic,strong)UIView *contentBgView;//活动内容背景
+@property(nonatomic,strong)UILabel *cotentLab;//活动
+@property(nonatomic,strong)UILabel * contentTextDeLab;//显示活动内容
+@property(nonatomic,strong)UILabel * defContentTextDeLab;//默认活动内容填写
+@property(nonatomic,strong)UILabel *addressLab;//地址
+@property(nonatomic,strong)UITextField * addressTextField;//输入地址
 
-@property(nonatomic,strong)UILabel * typeLab;
+@property(nonatomic,strong)UILabel * typeLab;  //营销类型
 
-@property(nonatomic,strong)UILabel * redBagCount;
-@property(nonatomic,strong)UITextField *redBagTextField;
-@property(nonatomic,strong)UILabel * redBagContent;
-@property(nonatomic,strong)UITextField *redBagContentTextField;
-@property(nonatomic,strong)UILabel * dateLab;
-@property(nonatomic,strong)UITextField *dateTextField;
+@property(nonatomic,strong)UILabel * redBagCount;//红包个数
+@property(nonatomic,strong)UITextField *redBagTextField;//输入红包个数
+@property(nonatomic,strong)UILabel * redBagContent;//红包内容
+@property(nonatomic,strong)UITextField *redBagContentTextField;//输入红包内容
+@property(nonatomic,strong)UILabel * dateLab;//有限期
+@property(nonatomic,strong)UITextField *dateTextField;//输入有效期
 
 
-@property(nonatomic,strong)UILabel * useDirLab;
-@property(nonatomic,strong)UIView *useDirBgView;
-@property(nonatomic,strong)UILabel *useDirCotentLab;
-@property(nonatomic,strong)UILabel * useDirContentTextDeLab;
+@property(nonatomic,strong)UILabel * useDirLab;//使用说明
+@property(nonatomic,strong)UIView *useDirBgView;//使用说明背景
+@property(nonatomic,strong)UILabel *useDirCotentLab;//使用说明显示
+@property(nonatomic,strong)UILabel * useDirContentTextDeLab;//默认使用说明
 
-@property(nonatomic,strong)UILabel * useCondLab;
+@property(nonatomic,strong)UILabel * useCondLab;//使用条件
 
-@property(nonatomic,strong)UILabel * limitLab;
+@property(nonatomic,strong)UILabel * limitLab;//领取限制
 
 
 
