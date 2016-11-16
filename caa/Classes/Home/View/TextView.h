@@ -14,6 +14,6 @@
 @property(nonatomic,strong)UILabel *residueLabel;// 输入文本时剩余字数
 @property(nonatomic,strong)UIButton * cancleBtn;
 @property(nonatomic,strong)UIButton * sureBtn;
-@property(nonatomic,copy)void (^block)(NSString*);
+@property(nonatomic,copy)void (^block)(NSString* , int);
 
 @end

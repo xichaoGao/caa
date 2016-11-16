@@ -323,7 +323,7 @@
     _redBagContentTextField.delegate = self;
     _redBagContentTextField.placeholder = @"请输入红包内容";
     _redBagContentTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    _redBagTextField.textColor = RGB(0.41, 0.41, 0.41);
+    _redBagContentTextField.textColor = RGB(0.41, 0.41, 0.41);
     [_redBgView addSubview:_redBagContentTextField];
     
     
@@ -339,7 +339,7 @@
     _dateTextField.delegate = self;
     _dateTextField.placeholder = @"请输入有效期限";
     _dateTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    _redBagTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _dateTextField.keyboardType = UIKeyboardTypeNumberPad;
     _dateTextField.textColor = RGB(0.41, 0.41, 0.41);
     [_redBgView addSubview:_dateTextField];
     
@@ -367,7 +367,7 @@
     [_useDirBgView addGestureRecognizer:tapGe];
     
     
-    _useDirCotentLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, _useDirBgView.width-5, 30 )];
+    _useDirCotentLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _useDirBgView.width, 30 )];
     _useDirCotentLab.font = [UIFont systemFontOfSize:12];
     _useDirCotentLab.numberOfLines = 4;
     _useDirCotentLab.text = [use objectForKey:@"useDirText"]?[use objectForKey:@"useDirText"]:@"";
@@ -375,7 +375,7 @@
     [_useDirBgView addSubview:_useDirCotentLab];
     
     
-    _useDirContentTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, _useDirBgView.width, 30 )];
+    _useDirContentTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _useDirBgView.width, 30 )];
     _useDirContentTextDeLab.numberOfLines = 0;
     _useDirContentTextDeLab.text = @"这里填写简短的优惠券使用说明";
     _useDirContentTextDeLab.font = [UIFont systemFontOfSize:14];
@@ -1017,16 +1017,38 @@
     self.leftBtn.hidden = YES;
     TextView * view = [[TextView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     view.textView.text = [use objectForKey:@"useDirText"]?[use objectForKey:@"useDirText"]:@"";
-    view.placeHolderLabel.text = @"请输入说明文字";
+    view.placeHolderLabel.text = @"这里填写简短的优惠券使用说明";
     view.residueLabel.hidden = YES;
+    if ([[use objectForKey:@"useDirText"] length]>0){
+        view.placeHolderLabel.hidden = YES;
+    }else
+        view.placeHolderLabel.hidden = NO;
     [self.view addSubview:view];
     view.transform = CGAffineTransformMakeScale(0.01, 0.01);
     [UIView animateWithDuration:0.3 animations:^{
         view.transform = CGAffineTransformMakeScale(1.0, 1.0);
         
     }];
-    view.block=^(NSString * str){
+    view.block=^(NSString * str, int index){
         self.leftBtn.hidden = NO;
+        if (index == 0){
+            if ([str isEqualToString:[use objectForKey:@"useDirText"]]&& [ str isEqualToString:@""]){
+                _defContentTextDeLab.hidden = NO;
+                _contentTextDeLab.hidden = YES;
+                _defContentTextDeLab.text = @"请输入说明文字";
+                
+            }
+            else if (![str isEqualToString:[use objectForKey:@"useDirText"]]){
+                _defContentTextDeLab.hidden = NO;
+                _contentTextDeLab.hidden = YES;
+                _defContentTextDeLab.text = @"请输入说明文字";
+            }
+            else{
+                _contentTextDeLab.hidden = NO;
+                _defContentTextDeLab.hidden = YES;
+                _contentTextDeLab.text = str;
+            }
+        }else{
         NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
         [user setObject:str forKey:@"useDirText"];
         [user synchronize];
@@ -1041,7 +1063,7 @@
             _useDirCotentLab.text = str;
             
         }
-        
+        }
     };
 }
 //添加内容
@@ -1050,8 +1072,12 @@
     NSUserDefaults * use = [NSUserDefaults standardUserDefaults];
     TextView * view = [[TextView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     view.textView.text = [use objectForKey:@"text"]?[use objectForKey:@"text"]:@"";
-    view.placeHolderLabel.text = @"请输入你的意见最多50字";
-    
+    view.placeHolderLabel.text = @"请输入你的描述文字最多50字";
+    if ([[use objectForKey:@"text"] length]>0){
+        view.placeHolderLabel.hidden = YES;
+    }else
+        view.placeHolderLabel.hidden = NO;
+
     [self.view addSubview:view];
     view.transform = CGAffineTransformMakeScale(0.01, 0.01);
     [UIView animateWithDuration:0.3 animations:^{
@@ -1059,8 +1085,26 @@
         
     }];
     
-    view.block=^(NSString * str){
+    view.block=^(NSString * str,int index){
         self.leftBtn.hidden = NO;
+        if (index == 0){
+            if ([str isEqualToString:[use objectForKey:@"text"]]&& [ str isEqualToString:@""]){
+                _defContentTextDeLab.hidden = NO;
+                _contentTextDeLab.hidden = YES;
+                _defContentTextDeLab.text = @"请输入文字描述";
+                
+            }
+            else if (![str isEqualToString:[use objectForKey:@"text"]]){
+                _defContentTextDeLab.hidden = NO;
+                _contentTextDeLab.hidden = YES;
+                _defContentTextDeLab.text = @"请输入文字描述";
+            }
+            else{
+                _contentTextDeLab.hidden = NO;
+                _defContentTextDeLab.hidden = YES;
+                _contentTextDeLab.text = str;
+            }
+        }else{
         NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
         [user setObject:str forKey:@"text"];
         [user synchronize];
@@ -1075,7 +1119,7 @@
             _textDeLab.text = str;
             
         }
-        
+        }
     };
     
     
@@ -1091,13 +1135,36 @@
     view.placeHolderLabel.text = @"请输入活动内容";
     view.residueLabel.hidden = YES;
     [self.view addSubview:view];
+    if ([[use objectForKey:@"contentText"] length]>0){
+        view.placeHolderLabel.hidden = YES;
+    }else
+        view.placeHolderLabel.hidden = NO;
+
     view.transform = CGAffineTransformMakeScale(0.01, 0.01);
     [UIView animateWithDuration:0.3 animations:^{
         view.transform = CGAffineTransformMakeScale(1.0, 1.0);
         
     }];
-    view.block=^(NSString * str){
+    view.block=^(NSString * str , int index){
         self.leftBtn.hidden = NO;
+        if (index == 0){
+            if ([str isEqualToString:[use objectForKey:@"contentText"]]&& [ str isEqualToString:@""]){
+                _defContentTextDeLab.hidden = NO;
+                _contentTextDeLab.hidden = YES;
+                _defContentTextDeLab.text = @"请输入活动内容";
+
+            }
+            else if (![str isEqualToString:[use objectForKey:@"contentText"]]){
+                _defContentTextDeLab.hidden = NO;
+                _contentTextDeLab.hidden = YES;
+                _defContentTextDeLab.text = @"请输入活动内容";
+            }
+            else{
+                _contentTextDeLab.hidden = NO;
+                _defContentTextDeLab.hidden = YES;
+                _contentTextDeLab.text = str;
+            }
+        }else{
         NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
         [user setObject:str forKey:@"contentText"];
         [user synchronize];
@@ -1112,8 +1179,9 @@
             _contentTextDeLab.text = str;
             
         }
-        
+     }   
     };
+    
     
 }
 //预览效果事件

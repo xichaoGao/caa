@@ -381,7 +381,7 @@
         
     }];
     
-    view.block=^(NSString * str){
+    view.block=^(NSString * str,int index){
         if ([str isEqualToString:@""]){
         }
         else if ([str isEqualToString:[use objectForKey:@"nickName"]]){

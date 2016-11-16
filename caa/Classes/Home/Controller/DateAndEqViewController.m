@@ -551,19 +551,14 @@
         NSMutableDictionary *dic = [resultString mj_JSONObject];
         int status = [[dic objectForKey:@"status"] intValue];;
         if (status == 1) {
-            [use setObject:nil forKey:@"text"];
-            [use setObject:nil forKey:@"contentText"];
-            [use setObject:nil forKey:@"address"];
-            [use setObject:@[] forKey:@"photoArray"];
+           
             ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
             rsVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:rsVC animated:YES];
             
         }
         else if (status == -1){
-            [use setObject:nil forKey:@"text"];
-            [use setObject:nil forKey:@"contentText"];
-            [use setObject:nil forKey:@"address"];
+            
             HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
             [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
                 LoginViewController * logVC = [[LoginViewController alloc]init];

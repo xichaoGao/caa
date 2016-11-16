@@ -66,11 +66,7 @@
         _sureBtn.layer.cornerRadius = 20;
         [_sureBtn addTarget:self action:@selector(sureClick) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_sureBtn];
-        if ([[use objectForKey:@"text"] length]>0){
-            _placeHolderLabel.hidden = YES;
-        }else
-            _placeHolderLabel.hidden = NO;
-
+        
         
     }
     return self;
@@ -130,7 +126,7 @@
         
     }];
     [_textView resignFirstResponder];
-    self.block(@"");
+    self.block(_textView.text,0);
 
 }
 -(void)sureClick{
@@ -141,7 +137,7 @@
     }];
     [_textView resignFirstResponder];
     
-    self.block(_textView.text);
+    self.block(_textView.text,1);
 }
 
 /*
