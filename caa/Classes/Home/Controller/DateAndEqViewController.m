@@ -243,6 +243,7 @@
                 for (int j = 0;j<_idArr.count;j++){
                     
                     if (_idArr[j] == mol.device_id){
+                        screenBtn.selected = !screenBtn.selected;
                         _selectedImg.hidden = NO;
                         _grayView.hidden = NO;
                     }
@@ -317,7 +318,7 @@
                     [arr removeAllObjects];
                     [use setObject:arr forKey:[NSString stringWithFormat:@"%d",(int)sender.tag - 100]];
                 }
-
+                
                 sender.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
             }
         }else {
@@ -357,11 +358,12 @@
                     [user setObject:_idArr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
                     
                 }
-            
-            _grayView = (UIView *)[self.view viewWithTag:2000+i];
-            _grayView.hidden = NO;
-            _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
-            _selectedImg.hidden = NO;
+                UIButton * btn =  (UIButton *)[self.view viewWithTag:i+10000];
+                btn.selected = !btn.selected;
+                _grayView = (UIView *)[self.view viewWithTag:2000+i];
+                _grayView.hidden = NO;
+                _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
+                _selectedImg.hidden = NO;
             }
         }
         if (_addNum == 0){
@@ -384,13 +386,14 @@
                 [user setObject:arr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
                 _totalNum--;
                 
-            
-            
-            _grayView = (UIView *)[self.view viewWithTag:2000+i];
-            _grayView.hidden = YES;
-            _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
-            _selectedImg.hidden = YES;
-           } 
+                UIButton * btn =  (UIButton *)[self.view viewWithTag:i+10000];
+                btn.selected = !btn.selected;
+                
+                _grayView = (UIView *)[self.view viewWithTag:2000+i];
+                _grayView.hidden = YES;
+                _selectedImg = (UIImageView *)[self.view viewWithTag:3000+i];
+                _selectedImg.hidden = YES;
+            }
         }
         _addNum = 0;
         _totalNumLab.text = [NSString stringWithFormat:@"%d 屏",_totalNum];
@@ -551,7 +554,7 @@
         NSMutableDictionary *dic = [resultString mj_JSONObject];
         int status = [[dic objectForKey:@"status"] intValue];;
         if (status == 1) {
-           
+            
             ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
             rsVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:rsVC animated:YES];

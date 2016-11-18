@@ -679,7 +679,7 @@
                     btn.selected = !btn.selected;
                     if (btn.selected == YES){
                         NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-                        [use setObject:limitTypeArr[i] forKey:@"limit"];
+                        [use setObject:[NSString stringWithFormat:@"%d",i] forKey:@"limit"];
                         [use synchronize];
                         btn.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                         _btnBgView.hidden = YES;
@@ -1208,6 +1208,10 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
+    else if ([[user objectForKey:@"endTime"] intValue] < [[user objectForKey:@"beginTime"] intValue]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不符合" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
     else if ([[user objectForKey:@"contentText"] isEqualToString:@""]){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动内容不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
@@ -1304,6 +1308,10 @@
     }
     else if ([[user objectForKey:@"beginTime"] isEqualToString:@""]){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动开始时间不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"endTime"] intValue] < [[user objectForKey:@"beginTime"] intValue]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不符合" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
     else if ([[user objectForKey:@"endTime"] isEqualToString:@""]){
