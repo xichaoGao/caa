@@ -311,6 +311,15 @@
                     if (sender.selected == YES){
                         t = i;
                         sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
+                        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                        if (![_cityArr containsObject:_city]){
+                            [_cityArr addObject:_city];
+                            [user setObject:_cityArr forKey:@"city"];
+                        }
+                        DateAndEqViewController * daeVC = [[DateAndEqViewController alloc]init];
+                        daeVC.hidesBottomBarWhenPushed  = YES;
+                        daeVC.area_id = _businessCireleID[t];
+                        [self.navigationController pushViewController:daeVC animated:YES];
                     }
                     else{
                         sender.layer.borderColor = RGB(0.44, 0.44, 0.44).CGColor;
@@ -327,15 +336,7 @@
                     }
                 }
             }
-            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-            if (![_cityArr containsObject:_city]){
-                [_cityArr addObject:_city];
-                [user setObject:_cityArr forKey:@"city"];
-            }
-            DateAndEqViewController * daeVC = [[DateAndEqViewController alloc]init];
-            daeVC.hidesBottomBarWhenPushed  = YES;
-            daeVC.area_id = _businessCireleID[t];
-            [self.navigationController pushViewController:daeVC animated:YES];
+           
         }
             break;
         default:
