@@ -340,19 +340,19 @@
 //全选按钮点击事件
 -(void)allSelectClick:(UIButton *)sender{
     sender.selected = !sender.selected;
-    //    NSMutableArray * array = [NSMutableArray arrayWithCapacity:1];
     
     if (sender.selected == YES) {
         for (int i = 0 ; i <_eqArr.count;i++){
             EqModel * eqMol = _eqArr[i];
-            NSLog(@"%@",_idArr);
             if (eqMol.current_ads != eqMol.max_ads){
                 _totalNum++;
                 NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
                 if([[user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]] isKindOfClass:[NSArray class]]){
                     NSMutableArray * arr = [NSMutableArray arrayWithArray:[user objectForKey:[NSString stringWithFormat:@"%d",_defalutTag]]];
-                    [arr addObject:eqMol.device_id];
-                    [user setObject:arr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
+                    if ( ![arr containsObject:eqMol.device_id]){
+                        [arr addObject:eqMol.device_id];
+                        [user setObject:arr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
+                    }
                 }else{
                     [_idArr addObject:eqMol.device_id];
                     [user setObject:_idArr forKey:[NSString stringWithFormat:@"%d",_defalutTag]];
@@ -536,7 +536,7 @@
     NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
     
     NSString *playlistStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:_listArr options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-
+    
     _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"area_id":_area_id,@"content":[use objectForKey:@"text"],@"shop_name":[use objectForKey:@"contentText"],@"shop_address":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]],@"start_time":[use objectForKey:@"beginTime"],@"end_time":[use objectForKey:@"endTime"],@"promotion_count":[use objectForKey:@"promotion_count"],@"promotion_content":[use objectForKey:@"redContent"],@"promotion_expire":@"1",@"promotion_get_type":[use objectForKey:@"limit"]};
     AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
     managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];

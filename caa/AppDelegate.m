@@ -14,6 +14,9 @@
 #import "IQKeyboardManager.h"
 #import "JPUSHService.h"
 #import <AdSupport/AdSupport.h>
+#import <AVFoundation/AVFoundation.h>
+
+
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h> // 这里是iOS10需要用到的框架
 #endif
@@ -32,8 +35,9 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 {
     BOOL _goBackground;
 }
-@end
+@property (nonatomic,strong) AVAudioPlayer *audioPlayer;//播放器
 
+@end
 @implementation AppDelegate
 //AppKey: b415106cea8b70ed3aabce2a
 //Master Secret :c2105b3585b520daaf78b8f9
@@ -121,8 +125,38 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     NSMutableDictionary *dic = [content mj_JSONObject];
     NSLog(@"%@",dic);
     NSLog(@"%@ %@",[dic objectForKey:@"cmd"],[dic objectForKey:@"msg"]);
-//       NSDictionary *extras = [userInfo valueForKey:@"extras"];
-//    NSString *customizeField1 = [extras valueForKey:@"customizeField1"]; //服务端传递的Extras附加字段，key是自己定义的
+     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    if ([[dic objectForKey:@"cmd"] isEqualToString:@"promotion_get"]){
+    NSArray * dataArr = [dic objectForKey:@"data"];
+    for  ( int i = 0; i < dataArr.count ;i++){
+        if ([[user objectForKey:@"userID"] isEqualToString:dataArr[i][@"user_id"]] ){
+//            NSString * nick = dataArr[i][@"nickname"];
+//            NSString * content = dataArr[i][@"content"];
+            NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包领取成功.mp3" ofType:nil];
+            NSURL *url=[NSURL fileURLWithPath:urlStr];
+            NSError *error=nil;
+            //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
+            _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+            //设置播放器属性
+            _audioPlayer.numberOfLoops=0;//设置为0不循环
+            [_audioPlayer play];
+        }
+    }
+    }
+    else{
+        NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包核销成功.mp3" ofType:nil];
+        NSURL *url=[NSURL fileURLWithPath:urlStr];
+        NSError *error=nil;
+        //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
+        _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+        //设置播放器属性
+        _audioPlayer.numberOfLoops=0;//设置为0不循环
+        [_audioPlayer play];
+
+//        NSString * nick = dic[@"nickname"];
+//        NSString * content = dic[@"content"];
+        
+    }
    
 }
 // ---------------------------------------------------------------------------------
