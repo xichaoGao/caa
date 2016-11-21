@@ -189,8 +189,8 @@
                         _pramerDic = [NSDictionary dictionary];
                         
                         NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-                        _pramerDic = @{@"token":[use objectForKey:@"token"],@"city":[_hotCity[i] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]};
-                        NSLog(@"%@",[_hotCity[i] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+                        _pramerDic = @{@"token":[use objectForKey:@"token"],@"city":[_hotCity[i] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]};
+                        NSLog(@"%@",[_hotCity[i] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]);
                         [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetUrban RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                             hud.hidden = YES;
                             NSLog(@"loginResult==%@ ",result);
@@ -253,7 +253,7 @@
                         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                         _pramerDic = [NSDictionary dictionary];
                         NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-                        _pramerDic = @{@"token":[use objectForKey:@"token"],@"city": [_city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ,@"district":[_hotUrban[i] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]};
+                        _pramerDic = @{@"token":[use objectForKey:@"token"],@"city": [_city stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] ,@"district":[_hotUrban[i] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]};
                         NSLog(@"%@",_hotCity[i]);
                         [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetArea RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                             hud.hidden = YES;

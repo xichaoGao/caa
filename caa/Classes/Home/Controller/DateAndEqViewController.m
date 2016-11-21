@@ -536,7 +536,8 @@
     NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
     
     NSString *playlistStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:_listArr options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"area_id":_area_id,@"content":[use objectForKey:@"text"],@"shop_name":[use objectForKey:@"contentText"],@"shop_address":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"start_time":[use objectForKey:@"beginTime"],@"end_time":[use objectForKey:@"endTime"],@"promotion_count":[use objectForKey:@"promotion_count"],@"promotion_content":[use objectForKey:@"redContent"],@"promotion_expire":@"1",@"promotion_get_type":[use objectForKey:@"limit"]};
+
+    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"area_id":_area_id,@"content":[use objectForKey:@"text"],@"shop_name":[use objectForKey:@"contentText"],@"shop_address":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]],@"start_time":[use objectForKey:@"beginTime"],@"end_time":[use objectForKey:@"endTime"],@"promotion_count":[use objectForKey:@"promotion_count"],@"promotion_content":[use objectForKey:@"redContent"],@"promotion_expire":@"1",@"promotion_get_type":[use objectForKey:@"limit"]};
     AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
     managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     managers.responseSerializer = [AFHTTPResponseSerializer serializer];
