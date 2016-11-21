@@ -26,7 +26,8 @@
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    [self getHomeDatas];
+
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -155,7 +156,7 @@
             _playLabNum.text = [NSString stringWithFormat:@"%@ 次",adMsgModel.play_count];
             _receLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.get_count];
             _useLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.use_count];
-            if (![adMsgModel.device_count isEqualToString:@"0"]){
+            if ([adMsgModel.device_count isEqualToString:@"0"]){
                 UITapGestureRecognizer *tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relAdTap)];
                 [_adView addGestureRecognizer:tapGess];
             }

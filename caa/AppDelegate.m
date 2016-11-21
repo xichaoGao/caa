@@ -143,7 +143,7 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
         }
     }
     }
-    else{
+    else if ([[dic objectForKey:@"cmd"] isEqualToString:@"promotion_use"]){
         NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包核销成功.mp3" ofType:nil];
         NSURL *url=[NSURL fileURLWithPath:urlStr];
         NSError *error=nil;
@@ -156,6 +156,14 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 //        NSString * nick = dic[@"nickname"];
 //        NSString * content = dic[@"content"];
         
+    }else{
+        if ([[dic objectForKey:@"token"] isEqualToString:[user objectForKey:@"token"]]){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:[dic objectForKey:@"msg"]  buttonTitles:@"确定", nil];
+            [alert showInView:self.window completion:nil];
+            LoginViewController * logVC  = [[LoginViewController alloc]init];
+            UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
+            self.window.rootViewController = nav;
+        }
     }
    
 }
