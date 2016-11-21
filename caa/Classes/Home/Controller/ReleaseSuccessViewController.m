@@ -47,7 +47,7 @@
     _mineReleaseBtn.layer.cornerRadius = 20;
     [_mineReleaseBtn addTarget:self action:@selector(mineReleaseClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_mineReleaseBtn];
-
+    
     _tipLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 200)/2, _mineReleaseBtn.bottom + 40, 200, 30)];
     _tipLab.textColor = RGB(0.41, 0.41, 0.41);
     _tipLab.textAlignment = NSTextAlignmentCenter;
@@ -70,13 +70,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

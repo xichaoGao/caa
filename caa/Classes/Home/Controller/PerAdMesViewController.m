@@ -60,6 +60,7 @@
     [user setObject:@"" forKey:@"contentText"];
     [user setObject:@"" forKey:@"address"];
     [user setObject:@"" forKey:@"useDirText"];
+    [user setObject:@"" forKey:@"promotion_count"];
     [user setObject:@"" forKey:@"redContent"];
     [user setObject:@"活动内限领一次" forKey:@"limit"];
     _selectTag = -1;
@@ -234,7 +235,7 @@
     [_contentBgView addGestureRecognizer:tapGess];
     
     
-    _contentTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _contentBgView.width-10, _contentBgView.height -5)];
+    _contentTextDeLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _contentBgView.width-10, _contentBgView.height-5)];
     _contentTextDeLab.font = [UIFont systemFontOfSize:12];
     _contentTextDeLab.numberOfLines = 4;
     _contentTextDeLab.text = [use objectForKey:@"contentText"]?[use objectForKey:@"contentText"]:@"";
@@ -288,7 +289,7 @@
     _typeLab.font = [UIFont systemFontOfSize:15];
     [_bgScrollView addSubview:_typeLab];
     
-   _vouchersView  = [self createWithX:_typeLab.right Y:title.bottom+25*WidthRate Button:vouchersArr tag:100000];
+    _vouchersView  = [self createWithX:_typeLab.right Y:title.bottom+25*WidthRate Button:vouchersArr tag:100000];
     [_bgScrollView addSubview:_vouchersView];
     
     
@@ -348,7 +349,7 @@
     _setLab.textColor = RGB(0.41, 0.41, 0.41);
     _setLab.font = [UIFont systemFontOfSize:17];
     [_bgScrollView addSubview:_setLab];
-
+    
     
     _useDirLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _setLab.bottom+35*WidthRate, 80, 30)];
     _useDirLab.font = [UIFont systemFontOfSize:15];
@@ -383,7 +384,7 @@
     [_useDirBgView addSubview:_useDirContentTextDeLab];
     
     
-
+    
     _useCondLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _useDirBgView.bottom + 10*WidthRate, 80, 30)];
     _useCondLab.text = @"使用条件:";
     _useCondLab.textColor = RGB(0.41, 0.41, 0.41);
@@ -391,8 +392,8 @@
     [_bgScrollView addSubview:_useCondLab];
     UIView * useCondView = [self createWithX:_useCondLab.right Y:_useDirBgView.bottom + 10*WidthRate Button:useTypeArr tag:200000];
     [_bgScrollView addSubview:useCondView];
-
-
+    
+    
     _limitLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _useCondLab.bottom +10*WidthRate, 80, 30)];
     _limitLab.text = @"领取限制:";
     _limitLab.textColor = RGB(0.41, 0.41, 0.41);
@@ -495,7 +496,7 @@
         if (i == 0){
             btn.selected  = !btn.selected;
         }
-       
+        
     }
     
     return  bgView;
@@ -536,11 +537,11 @@
         case 1:
         {
             for (int i= 0; i< vouchersArr.count ;i++){
-            
+                
                 UIButton *btn = (UIButton *)[self.view viewWithTag:100000+i];
-               _btnBgView = [self.view viewWithTag:10];
+                _btnBgView = [self.view viewWithTag:10];
                 if (btn.tag == sender.tag){
-                     btn.selected = !btn.selected;
+                    btn.selected = !btn.selected;
                     if (btn.selected == YES){
                         [UIView animateWithDuration:0.05 animations:^{
                             CGPoint  p1 = _redBgView.center;
@@ -556,7 +557,7 @@
                         btn.selected = !btn.selected;
                         [btn setTitle:vouchersArr[i] forState:UIControlStateNormal];
                         [btn setTitle:vouchersArr[i] forState:UIControlStateSelected];
-
+                        
                     }
                     else{
                         
@@ -565,7 +566,7 @@
                         btn.selected = !btn.selected;
                         [btn setTitle:@"" forState:UIControlStateNormal];
                         [btn setTitle:@"" forState:UIControlStateSelected];
-
+                        
                         _btnBgView.hidden = NO;
                     }
                 }
@@ -573,10 +574,10 @@
                     if (btn.selected == YES){
                         btn.selected = !btn.selected;
                         btn.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
-
+                        
                     }
                     else{
-
+                        
                     }
                 }
             }
@@ -634,11 +635,11 @@
                             p2.y -=30*useTypeArr.count;
                             _limitView.center = p2;
                         }];
-
+                        
                     }
                     else{
                         btn.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
-
+                        
                         _btnBgView.hidden = NO;
                     }
                 }
@@ -668,7 +669,7 @@
                 _btnBgView.hidden = YES;
             }
         }
-
+            
             break;
         case 3:
         {
@@ -691,7 +692,7 @@
                     }
                     else{
                         btn.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
-
+                        
                         _btnBgView.hidden = NO;
                     }
                 }
@@ -755,11 +756,11 @@
                 };
             }
             [self.calendarView show];
-}
+        }
             break;
         case 302:
         {
-
+            
             if (!_calendarView) {
                 _calendarView = [[LDCalendarView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,SCREEN_HEIGHT)];
                 [self.view addSubview:_calendarView];
@@ -1049,20 +1050,20 @@
                 _contentTextDeLab.text = str;
             }
         }else{
-        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-        [user setObject:str forKey:@"useDirText"];
-        [user synchronize];
-        if ([str isEqualToString:@""]){
-            _useDirContentTextDeLab.hidden = NO;
-            _useDirCotentLab.hidden = YES;
-            _useDirContentTextDeLab.text = @"请输入说明文字";
-        }else
-        {
-            _useDirCotentLab.hidden = NO;
-            _useDirContentTextDeLab.hidden = YES;
-            _useDirCotentLab.text = str;
-            
-        }
+            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+            [user setObject:str forKey:@"useDirText"];
+            [user synchronize];
+            if ([str isEqualToString:@""]){
+                _useDirContentTextDeLab.hidden = NO;
+                _useDirCotentLab.hidden = YES;
+                _useDirContentTextDeLab.text = @"请输入说明文字";
+            }else
+            {
+                _useDirCotentLab.hidden = NO;
+                _useDirContentTextDeLab.hidden = YES;
+                _useDirCotentLab.text = str;
+                
+            }
         }
     };
 }
@@ -1077,7 +1078,7 @@
         view.placeHolderLabel.hidden = YES;
     }else
         view.placeHolderLabel.hidden = NO;
-
+    
     [self.view addSubview:view];
     view.transform = CGAffineTransformMakeScale(0.01, 0.01);
     [UIView animateWithDuration:0.3 animations:^{
@@ -1105,20 +1106,20 @@
                 _contentTextDeLab.text = str;
             }
         }else{
-        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-        [user setObject:str forKey:@"text"];
-        [user synchronize];
-        if ([str isEqualToString:@""]){
-            _defTextDeLab.hidden = NO;
-            _textDeLab.hidden = YES;
-            _defTextDeLab.text = @"请输入文字描述";
-        }else
-        {
-            _textDeLab.hidden = NO;
-            _defTextDeLab.hidden = YES;
-            _textDeLab.text = str;
-            
-        }
+            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+            [user setObject:str forKey:@"text"];
+            [user synchronize];
+            if ([str isEqualToString:@""]){
+                _defTextDeLab.hidden = NO;
+                _textDeLab.hidden = YES;
+                _defTextDeLab.text = @"请输入文字描述";
+            }else
+            {
+                _textDeLab.hidden = NO;
+                _defTextDeLab.hidden = YES;
+                _textDeLab.text = str;
+                
+            }
         }
     };
     
@@ -1139,7 +1140,7 @@
         view.placeHolderLabel.hidden = YES;
     }else
         view.placeHolderLabel.hidden = NO;
-
+    
     view.transform = CGAffineTransformMakeScale(0.01, 0.01);
     [UIView animateWithDuration:0.3 animations:^{
         view.transform = CGAffineTransformMakeScale(1.0, 1.0);
@@ -1152,7 +1153,7 @@
                 _defContentTextDeLab.hidden = NO;
                 _contentTextDeLab.hidden = YES;
                 _defContentTextDeLab.text = @"请输入活动内容";
-
+                
             }
             else if (![str isEqualToString:[use objectForKey:@"contentText"]]){
                 _defContentTextDeLab.hidden = NO;
@@ -1165,21 +1166,21 @@
                 _contentTextDeLab.text = str;
             }
         }else{
-        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-        [user setObject:str forKey:@"contentText"];
-        [user synchronize];
-        if ([str isEqualToString:@""]){
-            _defContentTextDeLab.hidden = NO;
-            _contentTextDeLab.hidden = YES;
-            _defContentTextDeLab.text = @"请输入活动内容";
-        }else
-        {
-            _contentTextDeLab.hidden = NO;
-            _defContentTextDeLab.hidden = YES;
-            _contentTextDeLab.text = str;
-            
+            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+            [user setObject:str forKey:@"contentText"];
+            [user synchronize];
+            if ([str isEqualToString:@""]){
+                _defContentTextDeLab.hidden = NO;
+                _contentTextDeLab.hidden = YES;
+                _defContentTextDeLab.text = @"请输入活动内容";
+            }else
+            {
+                _contentTextDeLab.hidden = NO;
+                _defContentTextDeLab.hidden = YES;
+                _contentTextDeLab.text = str;
+                
+            }
         }
-     }   
     };
     
     
@@ -1221,69 +1222,69 @@
         [alert showInView:self.view completion:nil];
     }
     else{
-    btn.selected =!btn.selected;
-    switch (_selectTag) {
-        case 0:
-            if (btn.selected == YES){
-                self.leftBtn.hidden = YES;
-                NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-                [user setObject:_addressTextField.text forKey:@"address"];
-                [user setObject:_textDeLab.text forKey:@"text"];
-                [user setObject:_contentTextDeLab.text forKey:@"contentText"];
-                [_previewBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
-                PreView * view = [[PreView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-                [self.view addSubview:view];
-                view.transform = CGAffineTransformMakeScale(0.01, 0.01);
-                [UIView animateWithDuration:0.3 animations:^{
-                    view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        btn.selected =!btn.selected;
+        switch (_selectTag) {
+            case 0:
+                if (btn.selected == YES){
+                    self.leftBtn.hidden = YES;
+                    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                    [user setObject:_addressTextField.text forKey:@"address"];
+                    [user setObject:_textDeLab.text forKey:@"text"];
+                    [user setObject:_contentTextDeLab.text forKey:@"contentText"];
+                    [_previewBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
+                    PreView * view = [[PreView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+                    [self.view addSubview:view];
+                    view.transform = CGAffineTransformMakeScale(0.01, 0.01);
+                    [UIView animateWithDuration:0.3 animations:^{
+                        view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                        
+                    }];
+                    view.block =^(){
+                        self.leftBtn.hidden = NO;
+                        UIButton *btn = [self.view viewWithTag:100];
+                        if (btn.selected == YES){
+                            btn.selected = !btn.selected;
+                            [btn setBackgroundColor:[UIColor whiteColor]];
+                        }
+                    };
                     
-                }];
-                view.block =^(){
-                    self.leftBtn.hidden = NO;
-                    UIButton *btn = [self.view viewWithTag:100];
-                    if (btn.selected == YES){
-                        btn.selected = !btn.selected;
-                        [btn setBackgroundColor:[UIColor whiteColor]];
-                    }
-                };
-                
-            }
-            else{
-                [_previewBtn setBackgroundColor:[UIColor whiteColor]];
-                [_previewBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
-            }
-            break;
-        case 1:
-            if (btn.selected == YES){
-                NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-                [user setObject:_addressTextField.text forKey:@"address"];
-                [user setObject:_textDeLab.text forKey:@"text"];
-                [user setObject:_contentTextDeLab.text forKey:@"contentText"];
-                [_previewBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
-                PreView1 * view = [[PreView1 alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
-                [self.view addSubview:view];
-                view.transform = CGAffineTransformMakeScale(0.01, 0.01);
-                [UIView animateWithDuration:0.3 animations:^{
-                    view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                }
+                else{
+                    [_previewBtn setBackgroundColor:[UIColor whiteColor]];
+                    [_previewBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
+                }
+                break;
+            case 1:
+                if (btn.selected == YES){
+                    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                    [user setObject:_addressTextField.text forKey:@"address"];
+                    [user setObject:_textDeLab.text forKey:@"text"];
+                    [user setObject:_contentTextDeLab.text forKey:@"contentText"];
+                    [_previewBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
+                    PreView1 * view = [[PreView1 alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+                    [self.view addSubview:view];
+                    view.transform = CGAffineTransformMakeScale(0.01, 0.01);
+                    [UIView animateWithDuration:0.3 animations:^{
+                        view.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                        
+                    }];
+                    view.block =^(){
+                        UIButton *btn = [self.view viewWithTag:100];
+                        if (btn.selected == YES){
+                            btn.selected = !btn.selected;
+                            [btn setBackgroundColor:[UIColor whiteColor]];
+                        }
+                    };
                     
-                }];
-                view.block =^(){
-                    UIButton *btn = [self.view viewWithTag:100];
-                    if (btn.selected == YES){
-                        btn.selected = !btn.selected;
-                        [btn setBackgroundColor:[UIColor whiteColor]];
-                    }
-                };
-                
-            }
-            else{
-                [_previewBtn setBackgroundColor:[UIColor whiteColor]];
-                [_previewBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
-            }
-            break;
-        default:
-            break;
-    }
+                }
+                else{
+                    [_previewBtn setBackgroundColor:[UIColor whiteColor]];
+                    [_previewBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
 //下一步 事件
@@ -1292,7 +1293,7 @@
     [user setObject:_titleText.text forKey:@"title"];
     [user setObject:_addressTextField.text forKey:@"address"];
     [user setObject:_redBagContentTextField.text forKey:@"redContent"];
-
+    [user setObject:_redBagTextField.text forKey:@"promotion_count"];
     if (![[user objectForKey:@"photoArray"] isKindOfClass:[NSArray class]]){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"图片不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
@@ -1300,7 +1301,7 @@
     else if ([[user objectForKey:@"title"] isEqualToString:@""]){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"标题不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
-
+        
     }
     else if ([[user objectForKey:@"text"] isEqualToString:@""]){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"推荐文字不能为空" buttonTitles:@"确定", nil];
@@ -1326,24 +1327,27 @@
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动地址不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
-   
+    else if ([[user objectForKey:@"promotion_count"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠券数量不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
     else if ([[user objectForKey:@"redContent"] isEqualToString:@""]){
         HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠内容不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
     else{
-    btn.selected =!btn.selected;
-    if (btn.selected == YES){
-        btn.selected = !btn.selected;
-        [_nextBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
-        BusinessChooseViewController * bcVC = [[BusinessChooseViewController alloc]init];
-        bcVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:bcVC animated:YES];
-    }
-    else{
-        [_nextBtn setBackgroundColor:[UIColor whiteColor]];
-        [_nextBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
-    }
+        btn.selected =!btn.selected;
+        if (btn.selected == YES){
+            btn.selected = !btn.selected;
+            [_nextBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
+            BusinessChooseViewController * bcVC = [[BusinessChooseViewController alloc]init];
+            bcVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:bcVC animated:YES];
+        }
+        else{
+            [_nextBtn setBackgroundColor:[UIColor whiteColor]];
+            [_nextBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
+        }
     }
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{

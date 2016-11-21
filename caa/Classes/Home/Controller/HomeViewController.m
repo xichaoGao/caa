@@ -70,7 +70,7 @@
     _adView.layer.borderWidth = 1;
     _adView.layer.borderColor = KBorderColor;
     [self.view addSubview:_adView];
-   
+    
     
     _relImg = [[UIImageView alloc]initWithFrame:CGRectMake((_adView.width - 180*WidthRate)/2,( _adView.height - 40*WidthRate)/2, 35*WidthRate, 35*WidthRate)];
     _relImg.image = [UIImage imageNamed:@"home_advertising"];

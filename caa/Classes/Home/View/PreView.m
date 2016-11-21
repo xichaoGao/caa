@@ -54,10 +54,10 @@
         _adImg = [[UIImageView alloc]initWithFrame:CGRectMake(_bgView.right, 0, 160*WidthRate, _bgView.bottom-20*WidthRate)];
         if ([[use objectForKey:@"photoArray"] count]>0){
             NSLog(@"%@",[[use objectForKey:@"photoArray"] firstObject]);
-             [_adImg sd_setImageWithURL:nil placeholderImage:[UIImage imageWithData:[[use objectForKey:@"photoArray"] firstObject]]];
+            [_adImg sd_setImageWithURL:nil placeholderImage:[UIImage imageWithData:[[use objectForKey:@"photoArray"] firstObject]]];
         }
         else
-        [_adImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"loading_pic"]];
+            [_adImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"loading_pic"]];
         [view addSubview:_adImg];
         
         _codeImg = [[UIImageView alloc]initWithFrame:CGRectMake(_bgView.right, _adImg.bottom+10, _adImg.width-80*WidthRate, view.height - _adImg.height - 15)];
@@ -85,19 +85,19 @@
         endLab.font = [UIFont systemFontOfSize:14];
         endLab.textAlignment = NSTextAlignmentCenter;
         [view addSubview:endLab];
-//        UILabel * defaultLab = [[UILabel alloc]initWithFrame:CGRectMake(view.right-67, view.height - 45*WidthRate, 67, 40*WidthRate)];
-//        defaultLab.textColor = [UIColor redColor];
-//        defaultLab.text = @"微信扫一扫领取优惠券";
-//        defaultLab.numberOfLines = 2;
-//        defaultLab.textAlignment = NSTextAlignmentLeft;
-//        defaultLab.font = [UIFont systemFontOfSize:12];
-//        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:defaultLab.text];
-//        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-//        [paragraphStyle setLineSpacing:5];//调整行间距
-//        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [defaultLab.text length])];
-//        defaultLab.attributedText = attributedString;
-//
-//        [view addSubview:defaultLab];
+        //        UILabel * defaultLab = [[UILabel alloc]initWithFrame:CGRectMake(view.right-67, view.height - 45*WidthRate, 67, 40*WidthRate)];
+        //        defaultLab.textColor = [UIColor redColor];
+        //        defaultLab.text = @"微信扫一扫领取优惠券";
+        //        defaultLab.numberOfLines = 2;
+        //        defaultLab.textAlignment = NSTextAlignmentLeft;
+        //        defaultLab.font = [UIFont systemFontOfSize:12];
+        //        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:defaultLab.text];
+        //        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        //        [paragraphStyle setLineSpacing:5];//调整行间距
+        //        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [defaultLab.text length])];
+        //        defaultLab.attributedText = attributedString;
+        //
+        //        [view addSubview:defaultLab];
         //最后添加上即可
         
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];

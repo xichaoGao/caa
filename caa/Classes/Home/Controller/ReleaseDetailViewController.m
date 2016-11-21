@@ -1,4 +1,4 @@
- //
+//
 //  ReleaseDetailViewController.m
 //  caa
 //
@@ -66,9 +66,9 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
                 [_dataArray addObject:model];
             }
             if (_dataArray.count > 0){
-            _releaseNumLab.text = [NSString stringWithFormat:@"%d 屏",(int)[_dataArray count]];
+                _releaseNumLab.text = [NSString stringWithFormat:@"%d 屏",(int)[_dataArray count]];
             }else
-            _releaseNumLab.text = @"0 屏";
+                _releaseNumLab.text = @"0 屏";
             [_tableView reloadData];
         }
         else if (status == -1){

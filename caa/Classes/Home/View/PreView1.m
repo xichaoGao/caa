@@ -43,7 +43,7 @@
         defaultLab.textAlignment = NSTextAlignmentCenter;
         defaultLab.font = [UIFont systemFontOfSize:10];
         [view addSubview:defaultLab];
-
+        
         
         
         _contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(defaultLab.right,_bgView.bottom + 3   ,_bgView.width-130,25)];
@@ -76,7 +76,7 @@
             [_adImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"loading_pic"]];
         [view addSubview:_adImg];
         
-                //最后添加上即可
+        //最后添加上即可
         
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _closeBtn.frame = CGRectMake(view.right -30, 0, 30, 30);

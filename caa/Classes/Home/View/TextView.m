@@ -17,7 +17,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        NSUserDefaults * use = [NSUserDefaults standardUserDefaults];
         self.backgroundColor = [UIColor whiteColor];
         _textView =[ [UITextView alloc]initWithFrame:CGRectMake(15,20,frame.size.width-30 ,220)];
         _textView.delegate = self;
@@ -101,12 +100,12 @@
 //设置超出最大字数（140字）即不可输入 也是textview的代理方法
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"n"]) {     //这里"n"对应的是键盘的 return 回收键盘之用
-            
-            [textView resignFirstResponder];
-            
-            return YES;
-            
-        }
+        
+        [textView resignFirstResponder];
+        
+        return YES;
+        
+    }
     if (range.location >= 50){
         return NO;
     }else{
@@ -127,7 +126,7 @@
     }];
     [_textView resignFirstResponder];
     self.block(_textView.text,0);
-
+    
 }
 -(void)sureClick{
     self.transform = CGAffineTransformMakeScale(1, 1);
@@ -141,11 +140,11 @@
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 @end

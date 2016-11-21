@@ -207,6 +207,9 @@
             NSLog(@"loginResult==%@",result);
             int status = [[result objectForKey:@"status"] intValue];;
             if ( status == 1) {
+                NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+                [user setObject:_phoneText.text forKey:@"phone"];
+                [user synchronize];
                 LoginViewController * logVC = [[LoginViewController alloc]init];
                 [self.navigationController pushViewController:logVC animated:YES];
                 

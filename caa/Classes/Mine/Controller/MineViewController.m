@@ -133,36 +133,42 @@
 }
 //退出事件
 -(void)logoutClick{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    _pramerDic = [NSDictionary dictionary];
-    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-    _pramerDic = @{@"token":[use objectForKey:@"token"]};
-    
-    
-    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:KLogout RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-        hud.hidden = YES;
-        int status = [[result objectForKey:@"status"] intValue];;
-        if (status == 1) {
-            NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
-            [defult setObject:nil forKey:@"userID"];
-            [defult setObject:nil forKey:@"nickName"];
-            [defult setObject:nil forKey:@"token"];
-            [defult synchronize];
-            [JPUSHService setTags:nil alias:nil fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+    HYAlertView *alert = [[HYAlertView alloc]initWithTitle:@"温馨提示" message:@"您确定要退出登录" buttonTitles:@"取消", @"确定",nil];
+    [alert showWithCompletion:^(HYAlertView *alertView,NSInteger selectIndex){
+        if (selectIndex == 1) {
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            _pramerDic = [NSDictionary dictionary];
+            NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+            _pramerDic = @{@"token":[use objectForKey:@"token"]};
+            
+            
+            [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:KLogout RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+                hud.hidden = YES;
+                int status = [[result objectForKey:@"status"] intValue];;
+                if (status == 1) {
+                    NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
+                    [defult setObject:nil forKey:@"userID"];
+                    [defult setObject:nil forKey:@"nickName"];
+                    [defult setObject:nil forKey:@"token"];
+                    [defult synchronize];
+                    [JPUSHService setTags:nil alias:nil fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+                    }];
+                    LoginViewController * loginVC = [[LoginViewController alloc]init];
+                    loginVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:loginVC animated:YES];
+                }
+                else if (status == -1){
+                    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+                    [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                        LoginViewController * logVC = [[LoginViewController alloc]init];
+                        [self.navigationController pushViewController:logVC animated:YES];            }];
+                }
+                else{
+                    NSString *mess = [result objectForKey:@"message"];
+                    [self errorMessages:mess];
+                }
             }];
-            LoginViewController * loginVC = [[LoginViewController alloc]init];
-            loginVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:loginVC animated:YES];
-        }
-        else if (status == -1){
-            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
-            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
-                LoginViewController * logVC = [[LoginViewController alloc]init];
-                [self.navigationController pushViewController:logVC animated:YES];            }];
-        }
-        else{
-            NSString *mess = [result objectForKey:@"message"];
-            [self errorMessages:mess];
         }
     }];
 }
@@ -389,33 +395,33 @@
             [alert showInView:self.view completion:nil];
         }
         else{
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        _pramerDic = [NSDictionary dictionary];
-        NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-        _pramerDic = @{@"token":[use objectForKey:@"token"],@"nickname":str};
-        [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:KSetNickName RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
-            hud.hidden = YES;
-            int status = [[result objectForKey:@"status"] intValue];;
-            if (status == 1) {
-                NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
-                [defult setObject:str forKey:@"nickName"];
-                [defult synchronize];
-                _useNameLab.text = str;
-            }
-            else if (status == -1){
-                HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
-                [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
-                    LoginViewController * logVC = [[LoginViewController alloc]init];
-                    [self.navigationController pushViewController:logVC animated:YES];            }];
-            }
-            else{
-                NSString *mess = [result objectForKey:@"message"];
-                [self errorMessages:mess];
-            }
-        }];
-        
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            _pramerDic = [NSDictionary dictionary];
+            NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+            _pramerDic = @{@"token":[use objectForKey:@"token"],@"nickname":str};
+            [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:KSetNickName RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+                hud.hidden = YES;
+                int status = [[result objectForKey:@"status"] intValue];;
+                if (status == 1) {
+                    NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
+                    [defult setObject:str forKey:@"nickName"];
+                    [defult synchronize];
+                    _useNameLab.text = str;
+                }
+                else if (status == -1){
+                    HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+                    [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                        LoginViewController * logVC = [[LoginViewController alloc]init];
+                        [self.navigationController pushViewController:logVC animated:YES];            }];
+                }
+                else{
+                    NSString *mess = [result objectForKey:@"message"];
+                    [self errorMessages:mess];
+                }
+            }];
+            
         }
-        };
+    };
     
 }
 - (void)didReceiveMemoryWarning {
