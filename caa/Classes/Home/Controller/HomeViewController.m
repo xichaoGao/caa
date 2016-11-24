@@ -12,6 +12,7 @@
 #import "PerAdMesViewController.h"
 #import "ReleaseDetailViewController.h"
 #import "AdMsgModel.h"
+
 #define KLineColor RGB(0.84, 0.84, 0.84)
 #define KBorderColor RGB(0.95, 0.39, 0.21).CGColor
 #define KTextColor  RGB(0.95, 0.39, 0.21)
@@ -27,17 +28,20 @@
     self.navigationController.navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     [self getHomeDatas];
+    [self controlTheTime];
 
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    
+    [_timer invalidate];
+
     
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
     [self getHomeDatas];
+    self.showTime = 10;
     
     // Do any additional setup after loading the view.
 }
@@ -192,6 +196,21 @@
     ReleaseDetailViewController * rdVC = [[ReleaseDetailViewController alloc]init];
     rdVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:rdVC animated:YES];
+}
+
+- (void)controlTheTime
+{
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(controlTheTimeFnid:) userInfo:nil repeats:YES];
+}
+
+- (void)controlTheTimeFnid:(NSTimer *)time
+{
+    self.showTime --;
+    if (_showTime  == 0) {
+        _showTime = 10;
+        [self getHomeDatas];
+           }
+   
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

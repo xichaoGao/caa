@@ -16,7 +16,6 @@
 #import <AdSupport/AdSupport.h>
 #import <AVFoundation/AVFoundation.h>
 
-
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h> // 这里是iOS10需要用到的框架
 #endif
@@ -52,6 +51,8 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     [self.window makeKeyAndVisible];
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
     [user setObject:@[] forKey:@"city"];
+    [user setObject:@"" forKey:@"token"];
+    [user setObject:@"" forKey:@"userID"];
     [user synchronize];
     /*
      *  键盘弹出事件
@@ -120,6 +121,9 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     completionHandler(UIBackgroundFetchResultNewData);
 }
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
+
+
+
     NSDictionary * userInfo = [notification userInfo];
     NSString *content = [userInfo valueForKey:@"content"];
     NSMutableDictionary *dic = [content mj_JSONObject];
@@ -130,8 +134,7 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     NSArray * dataArr = [dic objectForKey:@"data"];
     for  ( int i = 0; i < dataArr.count ;i++){
         if ([[user objectForKey:@"userID"] isEqualToString:dataArr[i][@"user_id"]] ){
-//            NSString * nick = dataArr[i][@"nickname"];
-//            NSString * content = dataArr[i][@"content"];
+
             NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包领取成功.mp3" ofType:nil];
             NSURL *url=[NSURL fileURLWithPath:urlStr];
             NSError *error=nil;
@@ -140,10 +143,12 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
             //设置播放器属性
             _audioPlayer.numberOfLoops=0;//设置为0不循环
             [_audioPlayer play];
+          
         }
     }
     }
     else if ([[dic objectForKey:@"cmd"] isEqualToString:@"promotion_use"]){
+        if (![[user objectForKey:@"userID"] isEqualToString:@""]){
         NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包核销成功.mp3" ofType:nil];
         NSURL *url=[NSURL fileURLWithPath:urlStr];
         NSError *error=nil;
@@ -152,10 +157,7 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
         //设置播放器属性
         _audioPlayer.numberOfLoops=0;//设置为0不循环
         [_audioPlayer play];
-
-//        NSString * nick = dic[@"nickname"];
-//        NSString * content = dic[@"content"];
-        
+        }
     }else{
         if ([[dic objectForKey:@"token"] isEqualToString:[user objectForKey:@"token"]]){
             HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:[dic objectForKey:@"msg"]  buttonTitles:@"确定", nil];
@@ -166,6 +168,23 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
         }
     }
    
+}
+- (UIViewController*)topViewController {
+    return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+- (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController {
+    if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
+        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
+    } else if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* nav = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:nav.visibleViewController];
+    } else if (rootViewController.presentedViewController) {
+        UIViewController* presentedViewController = rootViewController.presentedViewController;
+        return [self topViewControllerWithRootViewController:presentedViewController];
+    } else {
+        return rootViewController;
+    }
 }
 // ---------------------------------------------------------------------------------
 
@@ -217,6 +236,8 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     //进入后台
     
     _goBackground = YES;
+   
+
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 }
@@ -225,6 +246,7 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+   
 }
 
 
@@ -236,12 +258,19 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+   
+
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    [user setObject:@[] forKey:@"city"];
+    [user setObject:@"" forKey:@"token"];
+    [user setObject:@"" forKey:@"userID"];
+    [user synchronize];
 }
 
 

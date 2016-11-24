@@ -26,4 +26,7 @@
 @property(nonatomic,strong)UILabel * useLab;//使用
 @property(nonatomic,strong)UILabel * useLabNum;//使用人数
 @property(nonatomic,strong)UIButton * detailBtn;//详情
+@property (nonatomic, retain) NSTimer *timer;
+@property (nonatomic, assign) NSInteger showTime;
+
 @end
