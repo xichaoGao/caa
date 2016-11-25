@@ -61,15 +61,17 @@
                 _faceImg.hidden = NO;
             }
             _titleLab.text = model.name;
-            //            NSMutableArray *arr = [NSMutableArray arrayWithArray:@[@"人气最高",@"小资",@"口味最佳",@"环境最佳",@"服务员最佳"]];
+            
             if ( model.tags.count > 0){
                 tagView = [self createViewWithY:_bgView.bottom+10 Title:@"餐厅标签" contentArray:model.tags];
                 _listLab.hidden = NO;
+                _listLab.frame = CGRectMake(12, tagView.bottom + 10*WidthRate, 150, 25*WidthRate);
             }
             [self.view addSubview:tagView];
             
             dataArr  = model.playlist;
             if(dataArr.count >0){
+                _listTableView.frame = CGRectMake(-5*WidthRate, _listLab.bottom + 10, kScreenWidth -24, 150);
                 _listTableView.hidden = NO;
                 [_listTableView reloadData];
             }
@@ -123,13 +125,13 @@
         [_bgView addSubview:_heartImg];
     }
     
-    _listLab = [[UILabel alloc]initWithFrame:CGRectMake(12, tagView.bottom + 10*WidthRate, 150, 25*WidthRate)];
+    _listLab = [[UILabel alloc]init];
     _listLab.textColor = RGB(0.41, 0.41, 0.41);
     _listLab.text = @"正在播放广告列表";
     _listLab.font = [UIFont systemFontOfSize:18];
     _listLab.hidden = YES;
     [self.view addSubview:_listLab];
-    _listTableView = [[UITableView alloc]initWithFrame:CGRectMake(-6*WidthRate, _listLab.bottom + 10, kScreenWidth -24, 150)];
+    _listTableView = [[UITableView alloc]init];
     _listTableView.delegate = self;
     _listTableView.rowHeight = 30;
     _listTableView.dataSource = self;
@@ -170,7 +172,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString * cellID=@"cellID";
     UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
-    cell.textLabel.text = dataArr[indexPath.row];
+    cell.textLabel.text = dataArr[indexPath.row][@"title"];
     cell.textLabel.textColor = RGB(0.41, 0.41, 0.41);
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];

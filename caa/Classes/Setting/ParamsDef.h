@@ -25,11 +25,13 @@
 #define KGetTime @"Ads/getSchedule"//时间
 #define KGetEq @"Ads/getDevicesBySchedule"//设备
 #define KSubmitAd @"Ads/submitAds"//发布广告
+#define KCancelAd @"Ads/cancelAds"//发布广告
 
 #define KLogout @"Member/userLogout"//退出登录
 #define KSetNickName @"Member/setNickname"//修改昵称
 #define KSetHeadImg @"Member/setHeadIMG"//修改头像
 #define KGetAdsList @"Member/getMyAdsList"//广告列表
 #define KGetAdsDet @"Member/getAdsDetail"//广告详情
+#define KGetMineRelease @"Ads/myAds"//我的发布
 
 #endif /* ParamsDef_h */

@@ -37,7 +37,7 @@
     [super viewDidLoad];
     self.navigationItem.title = @"我";
     self.leftBtn.hidden = YES;
-    titleArr = @[@"消息中心",@"意见反馈",@"帮助",@"软件升级"];
+    titleArr = @[@"意见反馈",@"帮助",@"软件升级"];
     [self createUI];
     
     // Do any additional setup after loading the view.

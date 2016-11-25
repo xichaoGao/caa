@@ -537,7 +537,7 @@
     
     NSString *playlistStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:_listArr options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
     
-    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"area_id":_area_id,@"content":[use objectForKey:@"text"],@"shop_name":[use objectForKey:@"contentText"],@"shop_address":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]],@"start_time":[use objectForKey:@"beginTime"],@"end_time":[use objectForKey:@"endTime"],@"promotion_count":[use objectForKey:@"promotion_count"],@"promotion_content":[use objectForKey:@"redContent"],@"promotion_expire":@"1",@"promotion_get_type":[use objectForKey:@"limit"]};
+    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"area_id":_area_id,@"content":[use objectForKey:@"content"],@"description":[use objectForKey:@"tip"],@"shop_name":[use objectForKey:@"shopName"],@"shop_address":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]],@"start_time":[use objectForKey:@"beginTime"],@"end_time":[use objectForKey:@"endTime"],@"promotion_count":[use objectForKey:@"promotion_count"],@"promotion_content":[use objectForKey:@"redContent"],@"direction_for_use":[use objectForKey:@"useDirText"]?[use objectForKey:@"useDirText"]:@"1",@"promotion_expire":[use objectForKey:@"dateLimit"],@"promotion_get_type":[use objectForKey:@"limit"]};
     AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
     managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     managers.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -548,6 +548,7 @@
         for ( int i = 0 ;i< photoArr.count ;i++){
             [formData appendPartWithFileData:photoArr[i] name:@"poster[]" fileName:@"icon.jpg" mimeType:@"image/jpg/file/png"];
         }
+//        [formData appendPartWithFileData:[[use objectForKey:@"btnPhotoArray"] firstObject] name:@"item_img" fileName:@"icon.jpg" mimeType:@"image/jpg/file/png"];
         
     }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
         

@@ -80,6 +80,8 @@
 		0E812A6E1DCB2C8500076EC1 /* ReleaseDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A6D1DCB2C8500076EC1 /* ReleaseDetailViewController.m */; };
 		0E812A711DCB2DB900076EC1 /* ScreenDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A701DCB2DB900076EC1 /* ScreenDetailViewController.m */; };
 		0E812A741DCB515700076EC1 /* ReleaseDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E812A731DCB515700076EC1 /* ReleaseDetailTableViewCell.m */; };
+		0E83C6D61DE7C07A002A9DC8 /* ProgressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83C6D51DE7C07A002A9DC8 /* ProgressModel.m */; };
+		0E83C6D91DE7C0A2002A9DC8 /* HistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83C6D81DE7C0A2002A9DC8 /* HistoryModel.m */; };
 		0E86ACFF1DE2DED10018333C /* 红包核销成功.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0E86ACFD1DE2DED10018333C /* 红包核销成功.mp3 */; };
 		0E86AD001DE2DED10018333C /* 红包领取成功.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0E86ACFE1DE2DED10018333C /* 红包领取成功.mp3 */; };
 		0E86DD7A1DD400460016E365 /* PreView1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E86DD791DD400460016E365 /* PreView1.m */; };
@@ -246,6 +248,10 @@
 		0E812A701DCB2DB900076EC1 /* ScreenDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScreenDetailViewController.m; path = Classes/Home/Controller/ScreenDetailViewController.m; sourceTree = "<group>"; };
 		0E812A721DCB515700076EC1 /* ReleaseDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReleaseDetailTableViewCell.h; path = Classes/Home/View/ReleaseDetailTableViewCell.h; sourceTree = "<group>"; };
 		0E812A731DCB515700076EC1 /* ReleaseDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReleaseDetailTableViewCell.m; path = Classes/Home/View/ReleaseDetailTableViewCell.m; sourceTree = "<group>"; };
+		0E83C6D41DE7C07A002A9DC8 /* ProgressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressModel.h; path = Classes/Mine/Model/ProgressModel.h; sourceTree = "<group>"; };
+		0E83C6D51DE7C07A002A9DC8 /* ProgressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressModel.m; path = Classes/Mine/Model/ProgressModel.m; sourceTree = "<group>"; };
+		0E83C6D71DE7C0A2002A9DC8 /* HistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryModel.h; path = Classes/Mine/Model/HistoryModel.h; sourceTree = "<group>"; };
+		0E83C6D81DE7C0A2002A9DC8 /* HistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryModel.m; path = Classes/Mine/Model/HistoryModel.m; sourceTree = "<group>"; };
 		0E86ACFD1DE2DED10018333C /* 红包核销成功.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "红包核销成功.mp3"; sourceTree = "<group>"; };
 		0E86ACFE1DE2DED10018333C /* 红包领取成功.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "红包领取成功.mp3"; sourceTree = "<group>"; };
 		0E86DD781DD400460016E365 /* PreView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreView1.h; path = Classes/Home/View/PreView1.h; sourceTree = "<group>"; };
@@ -539,6 +545,10 @@
 		0E3872281DC3113C00698B90 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0E83C6D41DE7C07A002A9DC8 /* ProgressModel.h */,
+				0E83C6D51DE7C07A002A9DC8 /* ProgressModel.m */,
+				0E83C6D71DE7C0A2002A9DC8 /* HistoryModel.h */,
+				0E83C6D81DE7C0A2002A9DC8 /* HistoryModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -883,6 +893,7 @@
 				0E89FA631DDB13A9004DD2D8 /* NSDate+extend.m in Sources */,
 				0E8F2AE41DCC9360002FDD23 /* ReleaseSuccessViewController.m in Sources */,
 				0E6BBB0B1DCA0DE000A01F44 /* JKUtil.m in Sources */,
+				0E83C6D61DE7C07A002A9DC8 /* ProgressModel.m in Sources */,
 				0E3872A11DC33E6E00698B90 /* MBProgressHUD+Package.m in Sources */,
 				0E812A741DCB515700076EC1 /* ReleaseDetailTableViewCell.m in Sources */,
 				0E38727C1DC32EF500698B90 /* GetBackPassWordViewController.m in Sources */,
@@ -933,6 +944,7 @@
 				0E38725F1DC328A900698B90 /* JSONKit.m in Sources */,
 				0E38726F1DC328E700698B90 /* HomeViewController.m in Sources */,
 				0E76D7961DCD8D260066544C /* CityModel.m in Sources */,
+				0E83C6D91DE7C0A2002A9DC8 /* HistoryModel.m in Sources */,
 				0E6BBB031DCA0DDF00A01F44 /* JKAssetsGroupsView.m in Sources */,
 				0E76D7931DCD845F0066544C /* AdMsgModel.m in Sources */,
 				0E6BBB021DCA0DDF00A01F44 /* JKAssetsGroupCell.m in Sources */,

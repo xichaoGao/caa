@@ -7,7 +7,8 @@
 //
 
 #import "MineReleaseViewController.h"
-#import "DateModel.h"
+#import "ProgressModel.h"
+#import "HistoryModel.h"
 #import "LoginViewController.h"
 #import "ReleaseDetailViewController.h"
 #import "HistoryReleaseViewController.h"
@@ -15,9 +16,11 @@
 {
     UIView *_dateView;
     NSMutableArray *_dateArr;
+    ProgressModel * _model;
 }
 @property(nonatomic,strong)NSDictionary *pramerDic;
-
+@property(nonatomic,strong)UIScrollView * bgScrollView;
+@property(nonatomic,assign)int pageID;
 @end
 
 @implementation MineReleaseViewController
@@ -35,25 +38,87 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _pageID = 0;
     self.navigationItem.title  = @"我的发布";
-    _dateArr = [NSMutableArray arrayWithArray:@[@"sdf",@"sdf",@"sd",@"sdf",@"adf",@"df"]];
-    
+    _dateArr = [NSMutableArray arrayWithCapacity:1];
     [self createUI];
+    [self getDataSoure];
     // Do any additional setup after loading the view.
 }
 -(void)getDataSoure{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _pramerDic = [NSDictionary dictionary];
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+    _pramerDic = @{@"token":[use objectForKey:@"token"],@"from":[NSString stringWithFormat:@"%d",_pageID]};
     
+    
+    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetMineRelease RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        hud.hidden = YES;
+        int status = [[result objectForKey:@"status"] intValue];;
+        if (status == 1) {
+            NSDictionary * dic = [result objectForKey:@"data"];
+            [_bgScrollView.mj_header endRefreshing];
+            [_bgScrollView.mj_footer endRefreshing];
+            _model = [ProgressModel mj_objectWithKeyValues:dic[@"in_progress"]];
+            if ([_model.status isEqualToString:@"1"]){
+                _showView.hidden = NO;
+                _relLabNum.text = [NSString stringWithFormat:@"%ld 屏",_model.device_count];
+                _playLabNum.text = [NSString stringWithFormat:@"%@ 次",_model.play_count];
+                _receLabNum.text = [NSString stringWithFormat:@"%@ 人",_model.get_count];
+                _useLabNum.text = [NSString stringWithFormat:@"%@ 人",_model.use_count];
+            }
+            else{
+                _bgView.hidden = NO;
+            }
+            if ([dic[@"history"] isKindOfClass:[NSArray class]]){
+                NSArray *arr = dic[@"history"];
+                if (arr.count >0){
+                    for (int i = 0;i<arr.count ;i++){
+                        HistoryModel * mol = [HistoryModel mj_objectWithKeyValues:arr[i]];
+                        [_dateArr addObject:mol];
+                    }
+                    if (_showView.hidden == NO){
+                        _dateView = [self createViewWithY:_showView.bottom + 20*WidthRate Title:@"历史发布:" contentArray:_dateArr part:1];
+                        [_bgScrollView addSubview:_dateView];
+                    }else{
+                        _dateView = [self createViewWithY:_bgView.bottom + 20*WidthRate Title:@"历史发布:" contentArray:_dateArr part:1];
+                        [_bgScrollView addSubview:_dateView];
+                    }
+                }
+            }
+            
+        }
+        else if (status == -1){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
+        else{
+            NSString *mess = [result objectForKey:@"message"];
+            [self errorMessages:mess];
+        }
+    }];
 }
 -(void)createUI{
+    _bgScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+    _bgScrollView.userInteractionEnabled = YES;
+    _bgScrollView.contentSize = CGSizeMake(kScreenWidth, 1.3*kScreenHeight);
+    _bgScrollView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_bgScrollView];
+    _bgScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewHeaderRefresh)];
+    _bgScrollView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewFooterRefresh)];
+    
     UILabel * nowLab = [[UILabel alloc]initWithFrame:CGRectMake(12, 20*WidthRate, 100, 30)];
     nowLab.text = @"正在发布:";
     nowLab.textAlignment = NSTextAlignmentLeft;
     nowLab.font = [UIFont systemFontOfSize:18];
     nowLab.textColor = RGB(0.47, 0.47, 0.47);
-    [self.view addSubview:nowLab];
+    [_bgScrollView addSubview:nowLab];
     
     _bgView = [[UIView alloc]initWithFrame:CGRectMake(12, nowLab.bottom + 10 * WidthRate, kScreenWidth-24, 65*WidthRate)];
-    [self.view addSubview:_bgView];
+    _bgView.hidden = YES;
+    [_bgScrollView addSubview:_bgView];
     
     UILabel * review = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 60)/2, 15*WidthRate, 60, 20)];
     review.text = @"审核中";
@@ -71,7 +136,7 @@
     
     _showView = [[UIView alloc]initWithFrame:CGRectMake(12, nowLab.bottom + 10 * WidthRate, kScreenWidth-24, 135*WidthRate)];
     _showView.hidden = YES;
-    [self.view addSubview:_showView];
+    [_bgScrollView addSubview:_showView];
     _relLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 80*WidthRate, 35*WidthRate)];
     _relLab.text = @"正在发布:";
     _relLab.textColor = RGB(0.47, 0.47, 0.47);
@@ -112,7 +177,7 @@
     [_showView addSubview:_useLabNum];
     
     _detailBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    _detailBtn.frame = CGRectMake(40*WidthRate, nowLab.bottom+85 + 10*WidthRate, kScreenWidth-80*WidthRate, 40*WidthRate);
+    _detailBtn.frame = CGRectMake(40*WidthRate, _useLabNum.bottom + 10*WidthRate, (_showView.width-120*WidthRate)/2, 40*WidthRate);
     _detailBtn.layer.cornerRadius = 20*WidthRate;
     _detailBtn.layer.masksToBounds = YES;
     [_detailBtn setTitle:@"详情" forState:UIControlStateNormal];
@@ -120,9 +185,16 @@
     [_detailBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
     [_detailBtn addTarget:self action:@selector(detailClick) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_detailBtn];
-    
-    _dateView = [self createViewWithY:_bgView.bottom + 20*WidthRate Title:@"历史发布:" contentArray:_dateArr part:1];
-    [self.view addSubview:_dateView];
+    _cancleBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _cancleBtn.frame = CGRectMake(_showView.right-(_showView.width-120*WidthRate)/2-40*WidthRate, _useLabNum.bottom + 10*WidthRate, (_showView.width-120*WidthRate)/2, 40*WidthRate);
+    _cancleBtn.layer.cornerRadius = 20*WidthRate;
+    _cancleBtn.layer.masksToBounds = YES;
+    [_cancleBtn setTitle:@"取消发布" forState:UIControlStateNormal];
+    [_cancleBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_cancleBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
+    [_cancleBtn addTarget:self action:@selector(cancleClick) forControlEvents:UIControlEventTouchUpInside];
+    [_showView addSubview:_cancleBtn];
+   
 }
 -(UIView *)createViewWithY:(CGFloat) y Title:(NSString *)title contentArray:(NSMutableArray *)array part :(NSInteger)tag{
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, y, kScreenWidth, (((array.count-1)/2 +1) *50*WidthRate)+40*WidthRate)];
@@ -133,6 +205,7 @@
     titleLab.textColor = RGB(0.47, 0.47, 0.47);
     titleLab.font = [UIFont systemFontOfSize:18];
     [view addSubview:titleLab];
+    if (array.count >0){
     for (int i = 0 ; i< array.count ; i++ ){
         UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake((i%2)*((view.width-44)/2+20) + 12, titleLab.bottom + 15*WidthRate + (i/2)*(40*WidthRate +10), (view.width-44)/2, 40*WidthRate);
@@ -142,12 +215,19 @@
         btn.layer.borderWidth = 0.5;
         btn.tag = 100*tag + i;
         btn.titleLabel.font = [UIFont systemFontOfSize:17];
-        [btn setTitle:array[i] forState:UIControlStateNormal];
+        HistoryModel * mol = array[i];
+        if ([mol.type isEqualToString:@"0"]){
+            [btn setTitle:[NSString stringWithFormat:@"%@ 中午 ",mol.time] forState:UIControlStateNormal];
+        }else{
+            [btn setTitle:[NSString stringWithFormat:@"%@ 晚上",mol.time] forState:UIControlStateNormal];
+        }
+        
         [btn setTitleColor:RGB(0.96, 0.55, 0.40) forState:UIControlStateSelected];
         [btn setTitleColor:RGB(0.44, 0.44, 0.44) forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(touchDateClick:) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:btn];
         
+    }
     }
     return view;
 }
@@ -160,6 +240,7 @@
                 NSLog(@"&&&&&&%ld",(long)sender.tag);
                 sender.layer.borderColor = RGB(0.96, 0.55, 0.40).CGColor;
                 HistoryReleaseViewController * hrVC = [[HistoryReleaseViewController alloc]init];
+                hrVC.Model = _dateArr[i];
                 hrVC.hidesBottomBarWhenPushed  = YES;
                 [self.navigationController pushViewController:hrVC animated:YES];
             }
@@ -184,7 +265,41 @@
 -(void)detailClick{
     ReleaseDetailViewController * rdVC = [[ReleaseDetailViewController alloc]init];
     rdVC.hidesBottomBarWhenPushed = YES;
+    rdVC.ads_id = _model.ads_id;
     [self.navigationController pushViewController:rdVC animated:YES];
+}
+-(void)cancleClick{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _pramerDic = [NSDictionary dictionary];
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+    _pramerDic = @{@"token":[use objectForKey:@"token"],@"ads_id":_model.ads_id};
+    
+    
+    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:KLogout RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        hud.hidden = YES;
+        int status = [[result objectForKey:@"status"] intValue];;
+        if (status == 1) {
+            _showView.hidden = YES;
+        }
+        else if (status == -1){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
+        else{
+            NSString *mess = [result objectForKey:@"message"];
+            [self errorMessages:mess];
+        }
+    }];
+}
+-(void)releaseDetailTableViewHeaderRefresh{
+    _pageID = 0;
+    [self getDataSoure];
+}
+-(void)releaseDetailTableViewFooterRefresh{
+    _pageID =+10;
+    [self getDataSoure];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -52,7 +52,10 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     _pramerDic = [NSDictionary dictionary];
     NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-    _pramerDic = @{@"token":[use objectForKey:@"token"]};
+    if (_ads_id.length > 0){
+        _pramerDic = @{@"token":[use objectForKey:@"token"],@"ads_id":_ads_id};
+    }else
+        _pramerDic = @{@"token":[use objectForKey:@"token"]};
     
     
     [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetAdsList RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
@@ -109,8 +112,8 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
     _tableView.rowHeight = 95;
     _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableView];
-    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewHeaderRefresh)];
-    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewFooterRefresh)];
+//    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewHeaderRefresh)];
+//    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewFooterRefresh)];
     
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -133,6 +136,44 @@ static NSString * ReleaseDetailTableViewCellIdenfire = @"ReleaseDetailTableViewC
     sdVC.device_id = ((AdsListModel *)_dataArray[indexPath.row]).device_id;
     [self.navigationController pushViewController:sdVC animated:YES];
 }
+////删除
+//-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return @"删除";
+//}
+//-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//    return YES;
+//}
+//-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    AdsListModel * model = _dataArray[indexPath.row];
+//    
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        _pramerDic = [NSDictionary dictionary];
+//        NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+//        _pramerDic = @{@"token":[use objectForKey:@"token"],@"ads_id":@""};
+//        
+//        
+//        [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:KCancelAd RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+//            hud.hidden = YES;
+//            int status = [[result objectForKey:@"status"] intValue];;
+//            if (status == 1) {
+//                
+//            }
+//            else if (status == -1){
+//                HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+//                [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+//                    LoginViewController * logVC = [[LoginViewController alloc]init];
+//                    [self.navigationController pushViewController:logVC animated:YES];            }];
+//            }
+//            else{
+//                NSString *mess = [result objectForKey:@"message"];
+//                [self errorMessages:mess];
+//            }
+//        }];
+//
+//    }
+//}
 -(void)releaseDetailTableViewHeaderRefresh{
     _pageID = 1;
     [self getDataSource];

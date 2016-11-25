@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-
+#import "HistoryModel.h"
 @interface HistoryReleaseViewController : BaseViewController
 @property(nonatomic,strong)UIView * showView;
 @property(nonatomic,strong)UILabel * relLab;
@@ -19,4 +19,5 @@
 @property(nonatomic,strong)UILabel * useLab;
 @property(nonatomic,strong)UILabel * useLabNum;
 @property(nonatomic,strong)UIButton * detailBtn;
+@property(nonatomic,strong)HistoryModel * Model;
 @end

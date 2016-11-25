@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface ReleaseDetailViewController : BaseViewController
-
+@property(nonatomic,strong)NSString * ads_id;
 @end

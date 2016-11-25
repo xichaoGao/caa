@@ -20,4 +20,5 @@
 @property(nonatomic,strong)UILabel * useLabNum;
 @property(nonatomic,strong)UIView * bgView;
 @property(nonatomic,strong)UIButton * detailBtn;
+@property(nonatomic,strong)UIButton * cancleBtn;
 @end

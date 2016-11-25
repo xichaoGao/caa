@@ -35,7 +35,8 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     BOOL _goBackground;
 }
 @property (nonatomic,strong) AVAudioPlayer *audioPlayer;//播放器
-
+@property (nonatomic, retain) NSTimer *timer;
+@property (nonatomic, assign) NSInteger showTime;
 @end
 @implementation AppDelegate
 //AppKey: b415106cea8b70ed3aabce2a
@@ -236,8 +237,8 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     //进入后台
     
     _goBackground = YES;
-   
-
+    [self controlTheTime];
+    
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 }
@@ -246,9 +247,30 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-   
+    
+}
+- (void)controlTheTime
+{
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(controlTheTimeFnid:) userInfo:nil repeats:YES];
 }
 
+- (void)controlTheTimeFnid:(NSTimer *)time
+{
+    NSUserDefaults * user  = [NSUserDefaults standardUserDefaults];
+    if (![[user objectForKey:@"userID"] isEqualToString:@""]){
+        while (1) {
+            NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包领取成功.mp3" ofType:nil];
+            NSURL *url=[NSURL fileURLWithPath:urlStr];
+            NSError *error=nil;
+            //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
+            _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+            //设置播放器属性
+            _audioPlayer.numberOfLoops=100;//设置为0不循环
+            [_audioPlayer play];
+        };
+        
+    }
+}
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.

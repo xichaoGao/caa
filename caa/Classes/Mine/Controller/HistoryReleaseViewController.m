@@ -8,8 +8,10 @@
 
 #import "HistoryReleaseViewController.h"
 #import "ReleaseDetailViewController.h"
-
+#import "AdMsgModel.h"
+#import "LoginViewController.h"
 @interface HistoryReleaseViewController ()
+@property(nonatomic,strong)NSDictionary *pramerDic;
 
 @end
 
@@ -30,11 +32,42 @@
     [super viewDidLoad];
     self.navigationItem.title  = @"历史发布";
     [self createUI];
+    [self getDataSoure];
     // Do any additional setup after loading the view.
 }
+-(void)getDataSoure{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _pramerDic = [NSDictionary dictionary];
+    NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+    _pramerDic = @{@"token":[use objectForKey:@"token"],@"ads_id":_Model.ads_id};
+    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KAdsMsg RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+        hud.hidden = YES;
+        NSLog(@"loginResult==%@",result);
+        int status = [[result objectForKey:@"status"] intValue];;
+        if (status == 1) {
+            if([[result objectForKey:@"data"] count] > 0){
+                _showView.hidden = NO;
+            }
+            AdMsgModel *adMsgModel = [AdMsgModel  mj_objectWithKeyValues:[result  objectForKey:@"data"]];
+            _relLabNum.text = [NSString stringWithFormat:@"%@ 屏",adMsgModel.device_count];
+            _playLabNum.text = [NSString stringWithFormat:@"%@ 次",adMsgModel.play_count];
+            _receLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.get_count];
+            _useLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.use_count];
+            
+        }
+        else if (status == -1){
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
+            [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
+                LoginViewController * logVC = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:logVC animated:YES];            }];
+        }
+        else{
+            NSString *mess = [result objectForKey:@"message"];
+            [self errorMessages:mess];
+        }
+    }];}
 -(void)createUI{
-    UILabel * nowLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 200)/2, 20*WidthRate, 200, 30)];
-    nowLab.text = @"正在发布:";
+    UILabel * nowLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 300)/2, 20*WidthRate, 300, 30)];
     nowLab.textAlignment = NSTextAlignmentCenter;
     nowLab.font = [UIFont systemFontOfSize:18];
     nowLab.textColor = RGB(0.47, 0.47, 0.47);
@@ -90,12 +123,36 @@
     [_detailBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
     [_detailBtn addTarget:self action:@selector(detailClick) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_detailBtn];
-    
+    if ([_Model.status isEqualToString:@"2"]){
+        if ([_Model.type isEqualToString:@"0"]){
+        nowLab.text = [NSString stringWithFormat:@"%@ 中午(已结束)",_Model.time];
+        }else
+        nowLab.text = [NSString stringWithFormat:@"%@ 晚上(已结束)",_Model.time];
+        nowLab.textColor = RGB(0.96, 0.60, 0.51);
+    }
+    else if([_Model.status isEqualToString:@"3"]){
+        if ([_Model.type isEqualToString:@"0"]){
+            nowLab.text = [NSString stringWithFormat:@"%@ 中午(已拒绝)",_Model.time];
+        }else
+            nowLab.text = [NSString stringWithFormat:@"%@ 晚上(已拒绝)",_Model.time];
+        nowLab.textColor = [UIColor redColor];
+        _detailBtn.enabled = NO;
+        
+    }
+    else{
+        if ([_Model.type isEqualToString:@"0"]){
+            nowLab.text = [NSString stringWithFormat:@"%@ 中午(已取消)",_Model.time];
+        }else
+            nowLab.text = [NSString stringWithFormat:@"%@ 晚上(已取消)",_Model.time];
+        nowLab.textColor = [UIColor grayColor];
+        
+    }
 }
 //详情事件
 -(void)detailClick{
     ReleaseDetailViewController * rdVC = [[ReleaseDetailViewController alloc]init];
     rdVC.hidesBottomBarWhenPushed = YES;
+    rdVC.ads_id = _Model.ads_id;
     [self.navigationController pushViewController:rdVC animated:YES];
 }
 - (void)didReceiveMemoryWarning {

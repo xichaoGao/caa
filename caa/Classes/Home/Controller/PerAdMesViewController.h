@@ -19,7 +19,9 @@
 @property(nonatomic,strong)UILabel * effectLab;//效果
 @property(nonatomic,strong)UIImageView * effectImg;//效果图片
 @property(nonatomic,strong)UILabel * effectNumLab;//效果标题
-@property(nonatomic,strong)UILabel * textLab;//推荐
+@property(nonatomic,strong)UILabel * tipLab;//推荐
+@property(nonatomic,strong)UITextField * tipTextField;//输入活动
+
 @property(nonatomic,strong)UIView * textBgView;//背景
 @property(nonatomic,strong)UILabel * textDeLab;//显示推荐的文字
 @property(nonatomic,strong)UILabel * defTextDeLab;//默认填写
@@ -31,9 +33,17 @@
 
 @property(nonatomic,strong)UIView * contentView;//活动背景
 @property(nonatomic,strong)UIView *contentBgView;//活动内容背景
-@property(nonatomic,strong)UILabel *cotentLab;//活动
+@property(nonatomic,strong)UILabel *contentLab;//活动
+@property(nonatomic,strong)UITextField * contentTextField;//输入活动
+
 @property(nonatomic,strong)UILabel * contentTextDeLab;//显示活动内容
 @property(nonatomic,strong)UILabel * defContentTextDeLab;//默认活动内容填写
+
+@property(nonatomic,strong)UILabel *shopLab;//商品
+@property(nonatomic,strong)UIButton * shopBtn;//商品图片
+
+@property(nonatomic,strong)UILabel *shopNameLab;//商铺名称
+@property(nonatomic,strong)UITextField * shopNameTextField;//输入商铺名称
 @property(nonatomic,strong)UILabel *addressLab;//地址
 @property(nonatomic,strong)UITextField * addressTextField;//输入地址
 
