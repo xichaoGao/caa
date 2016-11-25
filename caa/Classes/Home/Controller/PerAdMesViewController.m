@@ -67,7 +67,7 @@
     [user setObject:@"" forKey:@"useDirText"];
     [user setObject:@"" forKey:@"promotion_count"];
     [user setObject:@"" forKey:@"redContent"];
-    
+    [user setObject:@"0" forKey:@"limit"];
     _selectTag = -1;
     _btnImgArray = [NSMutableArray arrayWithCapacity:1];
     _btnPhotoArray = [NSMutableArray arrayWithCapacity:1];
@@ -109,13 +109,13 @@
     [_addBtn addTarget:self action:@selector(addPhotoClick:) forControlEvents:UIControlEventTouchUpInside];
     [_bgView addSubview:_addBtn];
     
-    _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _bgView.bottom + 10*WidthRate, 50, 30)];
+    _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _bgView.bottom + 15*WidthRate, 50, 30)];
     _titleLab.text = @"标题:";
     _titleLab.textColor = RGB(0.41, 0.41, 0.41);
     _titleLab.font = [UIFont systemFontOfSize:15];
     [_bgScrollView addSubview:_titleLab];
     
-    _titleText = [[UITextField alloc]initWithFrame:CGRectMake(_titleLab.right, _bgView.bottom + 10*WidthRate, kScreenWidth-_titleLab.right-12, 30)];
+    _titleText = [[UITextField alloc]initWithFrame:CGRectMake(_titleLab.right, _bgView.bottom + 15*WidthRate, kScreenWidth-_titleLab.right-12, 30)];
     _titleText.placeholder = @"请输入您的标题";
     _titleText.delegate = self;
     _titleText.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -128,14 +128,14 @@
     _titleLine.backgroundColor = RGB(0.84, 0.84, 0.84);;
     [_titleText addSubview:_titleLine];
     
-    _effectLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _titleLab.bottom + 10*WidthRate, 80, 30)];
+    _effectLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _titleLab.bottom + 15*WidthRate, 80, 30)];
     _effectLab.font = [UIFont systemFontOfSize:15];
     _effectLab.textColor = RGB(0.41, 0.41, 0.41);
     _effectLab.text = @"动画效果:";
     [_bgScrollView addSubview:_effectLab];
     
     for (int i=0 ; i<1 ; i++){
-        _effectImg = [[UIImageView alloc]initWithFrame:CGRectMake(_effectLab.right +(60*WidthRate +5)*i , _effectLab.origin.y+10, 50*WidthRate, 50*WidthRate)];
+        _effectImg = [[UIImageView alloc]initWithFrame:CGRectMake(_effectLab.right +(60*WidthRate +5)*i , _effectLab.origin.y+10, 60*WidthRate, 60*WidthRate)];
         _effectImg.userInteractionEnabled = YES;
         _effectImg.tag = i+1000;
         _effectImg.layer.cornerRadius = 3;
@@ -170,7 +170,7 @@
     [_bgScrollView addSubview:_tipLab];
     NSUserDefaults * use = [NSUserDefaults standardUserDefaults];
     
-    _tipTextField = [[UITextField alloc]initWithFrame:CGRectMake(_tipLab.right , _effectNumLab.bottom + 10*WidthRate, kScreenWidth-_tipLab.right-12, 30)];
+    _tipTextField = [[UITextField alloc]initWithFrame:CGRectMake(_tipLab.right , _effectNumLab.bottom + 15*WidthRate, kScreenWidth-_tipLab.right-12, 30)];
     _tipTextField.placeholder = @"请输入推荐文字";
     _tipTextField.delegate = self;
     _tipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -207,7 +207,7 @@
     
     
     
-    _contentView = [[UIView alloc]initWithFrame:CGRectMake(0, _tipTextField.bottom+5, kScreenWidth, 160*WidthRate)];
+    _contentView = [[UIView alloc]initWithFrame:CGRectMake(0, _tipTextField.bottom+5, kScreenWidth, 205*WidthRate)];
     [_bgScrollView addSubview:_contentView];
     _contentLab = [[UILabel alloc]initWithFrame:CGRectMake(12, 5*WidthRate, 100, 30)];
     _contentLab.font = [UIFont systemFontOfSize:15];
@@ -252,14 +252,14 @@
     //    _defContentTextDeLab.font = [UIFont systemFontOfSize:14];
     //    _defContentTextDeLab.textColor = RGB(0.78, 0.78, 0.80);
     //    [_contentBgView addSubview:_defContentTextDeLab];
-    _shopLab= [[UILabel alloc]initWithFrame:CGRectMake(12, _contentLab.bottom + 10*WidthRate, 100, 30)];
+    _shopLab= [[UILabel alloc]initWithFrame:CGRectMake(12, _contentLab.bottom + 15*WidthRate, 100, 30)];
     _shopLab.text = @"商品图片(C):";
     _shopLab.textColor = RGB(0.41, 0.41, 0.41);
     _shopLab.font = [UIFont systemFontOfSize:15];
     [_contentView addSubview:_shopLab];
     
     _shopBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _shopBtn.frame = CGRectMake(_shopLab.right,_contentLab.bottom + 10*WidthRate , 60*WidthRate, 60*WidthRate);
+    _shopBtn.frame = CGRectMake(_shopLab.right,_contentLab.bottom + 15*WidthRate , 60*WidthRate, 60*WidthRate);
     _shopBtn.layer.masksToBounds = YES;
     _shopBtn.tag = 60000000;
     _shopBtn.layer.cornerRadius = 3*WidthRate;
@@ -272,13 +272,13 @@
     
     
     
-    _shopNameLab= [[UILabel alloc]initWithFrame:CGRectMake(12, _shopBtn.bottom + 10*WidthRate, 80, 30)];
+    _shopNameLab= [[UILabel alloc]initWithFrame:CGRectMake(12, _shopBtn.bottom + 15*WidthRate, 80, 30)];
     _shopNameLab.text = @"商铺名称:";
     _shopNameLab.textColor = RGB(0.41, 0.41, 0.41);
     _shopNameLab.font = [UIFont systemFontOfSize:15];
     [_contentView addSubview:_shopNameLab];
     
-    _shopNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(_shopNameLab.right , _shopBtn.bottom + 10*WidthRate, kScreenWidth-_shopNameLab.right-12, 30)];
+    _shopNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(_shopNameLab.right , _shopBtn.bottom + 15*WidthRate, kScreenWidth-_shopNameLab.right-12, 30)];
     _shopNameTextField.placeholder = @"请输入商铺名称";
     _shopNameTextField.delegate = self;
     _shopNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -290,13 +290,13 @@
     shopNameLine.backgroundColor = RGB(0.84, 0.84, 0.84);;
     [_shopNameTextField addSubview:shopNameLine];
     
-    _addressLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _shopNameTextField.bottom + 10*WidthRate, 80, 30)];
+    _addressLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _shopNameTextField.bottom + 15*WidthRate, 80, 30)];
     _addressLab.text = @"商铺地址:";
     _addressLab.textColor = RGB(0.41, 0.41, 0.41);
     _addressLab.font = [UIFont systemFontOfSize:15];
     [_contentView addSubview:_addressLab];
     
-    _addressTextField = [[UITextField alloc]initWithFrame:CGRectMake(_addressLab.right , _shopNameTextField.bottom + 10*WidthRate, kScreenWidth-_addressLab.right-12, 30)];
+    _addressTextField = [[UITextField alloc]initWithFrame:CGRectMake(_addressLab.right , _shopNameTextField.bottom + 15*WidthRate, kScreenWidth-_addressLab.right-12, 30)];
     _addressTextField.placeholder = @"请输入商铺地址";
     _addressTextField.delegate = self;
     _addressTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -308,14 +308,14 @@
     addressLine.backgroundColor = RGB(0.84, 0.84, 0.84);;
     [_addressTextField addSubview:addressLine];
     
-    UIView *Line1 = [[UIView alloc]initWithFrame:CGRectMake(0, _contentView.bottom + 30*WidthRate, kScreenWidth, 1)];
+    UIView *Line1 = [[UIView alloc]initWithFrame:CGRectMake(0, _contentView.bottom + 15*WidthRate, kScreenWidth, 1)];
     Line1.backgroundColor = RGB(0.84, 0.84, 0.84);;
     [_bgScrollView addSubview:Line1];
     UIView *Line2 = [[UIView alloc]initWithFrame:CGRectMake(0, Line1.bottom + 5*WidthRate, kScreenWidth, 1)];
     Line2.backgroundColor = RGB(0.84, 0.84, 0.84);;
     [_bgScrollView addSubview:Line2];
     
-    UILabel * title = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 100)/2, Line2.bottom + 10*WidthRate, 100, 30)];
+    UILabel * title = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 100)/2, Line2.bottom + 15*WidthRate, 100, 30)];
     title.textAlignment = NSTextAlignmentCenter;
     title.text = @"营销活动";
     title.textColor = RGB(0.41, 0.41, 0.41);
@@ -332,7 +332,7 @@
     //    [_bgScrollView addSubview:_vouchersView];
     
     
-    _redBgView = [[UIView alloc]initWithFrame:CGRectMake(0, title.bottom + 20*WidthRate, kScreenWidth, 150)];
+    _redBgView = [[UIView alloc]initWithFrame:CGRectMake(0, title.bottom + 20*WidthRate, kScreenWidth, 170)];
     [_bgScrollView addSubview:_redBgView];
     
     _redBagCount = [[UILabel alloc]initWithFrame:CGRectMake(12, 0, 80, 30)];
@@ -351,13 +351,13 @@
     _redBagTextField.textColor = RGB(0.41, 0.41, 0.41);
     [_redBgView addSubview:_redBagTextField];
     
-    _redBagContent = [[UILabel alloc]initWithFrame:CGRectMake(12, _redBagCount.bottom+10*WidthRate, 80, 30)];
+    _redBagContent = [[UILabel alloc]initWithFrame:CGRectMake(12, _redBagCount.bottom+15*WidthRate, 80, 30)];
     _redBagContent.text = @"红包内容:";
     _redBagContent.textColor = RGB(0.41, 0.41, 0.41);
     _redBagContent.font = [UIFont systemFontOfSize:15];
     [_redBgView addSubview:_redBagContent];
     
-    _redBagContentTextField = [[UITextField alloc]initWithFrame:CGRectMake(_redBagContent.right, _redBagCount.bottom+ 10*WidthRate, kScreenWidth-_redBagContent.right-12, 30)];
+    _redBagContentTextField = [[UITextField alloc]initWithFrame:CGRectMake(_redBagContent.right, _redBagCount.bottom+ 15*WidthRate, kScreenWidth-_redBagContent.right-12, 30)];
     _redBagContentTextField.layer.borderWidth = 1;
     _redBagContentTextField.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
     _redBagContentTextField.delegate = self;
@@ -367,13 +367,13 @@
     [_redBgView addSubview:_redBagContentTextField];
     
     
-    _dateLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _redBagContent.bottom+10*WidthRate, 80, 30)];
+    _dateLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _redBagContent.bottom+15*WidthRate, 80, 30)];
     _dateLab.text = @"有效期(日):";
     _dateLab.textColor = RGB(0.41, 0.41, 0.41);
     _dateLab.font = [UIFont systemFontOfSize:15];
     [_redBgView addSubview:_dateLab];
     
-    _dateTextField = [[UITextField alloc]initWithFrame:CGRectMake(_dateLab.right, _redBagContent.bottom+ 10*WidthRate, kScreenWidth-_redBagContent.right-12, 30)];
+    _dateTextField = [[UITextField alloc]initWithFrame:CGRectMake(_dateLab.right, _redBagContent.bottom+ 15*WidthRate, kScreenWidth-_redBagContent.right-12, 30)];
     _dateTextField.layer.borderWidth = 1;
     _dateTextField.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
     _dateTextField.delegate = self;
@@ -383,13 +383,13 @@
     _dateTextField.textColor = RGB(0.41, 0.41, 0.41);
     [_redBgView addSubview:_dateTextField];
     
-    _actionTimeLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _dateLab.bottom+10*WidthRate, 80, 30)];
+    _actionTimeLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _dateLab.bottom+15*WidthRate, 80, 30)];
     _actionTimeLab.font = [UIFont systemFontOfSize:15];
     _actionTimeLab.textColor = RGB(0.41, 0.41, 0.41);
     _actionTimeLab.text = @"活动时间:";
     [_redBgView addSubview:_actionTimeLab];
     
-    _beginTimeLab = [[UILabel alloc]initWithFrame:CGRectMake(_actionTimeLab.right, _dateLab.bottom + 10*WidthRate, (kScreenWidth - _actionTimeLab.right - 42)/2, 30)];
+    _beginTimeLab = [[UILabel alloc]initWithFrame:CGRectMake(_actionTimeLab.right, _dateLab.bottom + 15*WidthRate, (kScreenWidth - _actionTimeLab.right - 42)/2, 30)];
     _beginTimeLab.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
     _beginTimeLab.layer.borderWidth = 1;
     _beginTimeLab.userInteractionEnabled = YES;
@@ -399,14 +399,14 @@
     [_redBgView addSubview:_beginTimeLab];
     UITapGestureRecognizer *tapGesBeg = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addTimeTap:)];
     [_beginTimeLab addGestureRecognizer:tapGesBeg];
-    _andLab = [[UILabel alloc]initWithFrame:CGRectMake(_beginTimeLab.right, _dateLab.bottom + 10*WidthRate, 30, 30)];
+    _andLab = [[UILabel alloc]initWithFrame:CGRectMake(_beginTimeLab.right, _dateLab.bottom + 15*WidthRate, 30, 30)];
     _andLab.text = @"至";
     _andLab.textAlignment = NSTextAlignmentCenter;
     _andLab.font = [UIFont systemFontOfSize:15];
     _andLab.textColor = RGB(0.41, 0.41, 0.41);
     [_redBgView addSubview:_andLab];
     
-    _endTimeLab = [[UILabel alloc]initWithFrame:CGRectMake(_andLab.right, _dateLab.bottom + 10*WidthRate, (kScreenWidth - _actionTimeLab.right - 42)/2, 30)];
+    _endTimeLab = [[UILabel alloc]initWithFrame:CGRectMake(_andLab.right, _dateLab.bottom + 15*WidthRate, (kScreenWidth - _actionTimeLab.right - 42)/2, 30)];
     _endTimeLab.layer.borderColor = RGB(0.84, 0.84, 0.84).CGColor;
     _endTimeLab.layer.borderWidth = 1;
     _endTimeLab.tag = 302;
@@ -469,7 +469,7 @@
     //    [_bgScrollView addSubview:useCondView];
     
     
-    _limitLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _useDirBgView.bottom +10*WidthRate, 80, 30)];
+    _limitLab = [[UILabel alloc]initWithFrame:CGRectMake(12, _useDirBgView.bottom +15*WidthRate, 80, 30)];
     _limitLab.text = @"领取限制:";
     _limitLab.textColor = RGB(0.41, 0.41, 0.41);
     _limitLab.font = [UIFont systemFontOfSize:15];
@@ -914,9 +914,7 @@
     else{
     self.assetsArray=[assets mutableCopy];
     [_imgArray removeAllObjects];
-    
-    NSLog(@"%ld",(unsigned long)self.assetsArray.count);
-    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        [imagePicker dismissViewControllerAnimated:YES completion:^{
         if (_assetsArray.count == 0){
             _defaultLab.hidden = NO;
         }else{
@@ -1406,57 +1404,57 @@
     [user setObject:_redBagContentTextField.text forKey:@"redContent"];
     [user setObject:_redBagTextField.text forKey:@"promotion_count"];
     [user setObject:_dateTextField.text forKey:@"dateLimit"];
-    if (![[user objectForKey:@"photoArray"] isKindOfClass:[NSArray class]]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"图片不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    else if ([[user objectForKey:@"title"] isEqualToString:@""]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"标题不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-        
-    }
-    else if (_selectTag == -1){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"效果图未选择" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-
-    else if ([[user objectForKey:@"tip"] isEqualToString:@""]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"推荐文字不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    
-    else if ([[user objectForKey:@"content"] isEqualToString:@""]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动内容不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    else if ([[user objectForKey:@"shopName"] isEqualToString:@""]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"商铺名称不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    else if ([[user objectForKey:@"address"] isEqualToString:@""]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动地址不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    else if ([[user objectForKey:@"promotion_count"] isEqualToString:@""]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠券数量不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    else if ([[user objectForKey:@"redContent"] isEqualToString:@""]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠内容不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    } else if ([[user objectForKey:@"beginTime"] isEqualToString:@""]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动开始时间不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    
-    else if ([[user objectForKey:@"endTime"] isEqualToString:@""]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不能为空" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    } else if ([[user objectForKey:@"endTime"] intValue] < [[user objectForKey:@"beginTime"] intValue]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不符合" buttonTitles:@"确定", nil];
-        [alert showInView:self.view completion:nil];
-    }
-    else{
+//    if (![[user objectForKey:@"photoArray"] isKindOfClass:[NSArray class]]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"图片不能为空" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    }
+//    else if ([[user objectForKey:@"title"] isEqualToString:@""]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"标题不能为空" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//        
+//    }
+//    else if (_selectTag == -1){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"效果图未选择" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    }
+//
+//    else if ([[user objectForKey:@"tip"] isEqualToString:@""]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"推荐文字不能为空" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    }
+//    
+//    else if ([[user objectForKey:@"content"] isEqualToString:@""]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动内容不能为空" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    }
+//    else if ([[user objectForKey:@"shopName"] isEqualToString:@""]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"商铺名称不能为空" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    }
+//    else if ([[user objectForKey:@"address"] isEqualToString:@""]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动地址不能为空" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    }
+//    else if ([[user objectForKey:@"promotion_count"] isEqualToString:@""]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠券数量不能为空" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    }
+//    else if ([[user objectForKey:@"redContent"] isEqualToString:@""]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠内容不能为空" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    } else if ([[user objectForKey:@"beginTime"] isEqualToString:@""]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动开始时间不能为空" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    }
+//    
+//    else if ([[user objectForKey:@"endTime"] isEqualToString:@""]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不能为空" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    } else if ([[user objectForKey:@"endTime"] intValue] < [[user objectForKey:@"beginTime"] intValue]){
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不符合" buttonTitles:@"确定", nil];
+//        [alert showInView:self.view completion:nil];
+//    }
+//    else{
         btn.selected =!btn.selected;
         if (btn.selected == YES){
             btn.selected = !btn.selected;
@@ -1469,7 +1467,7 @@
             [_nextBtn setBackgroundColor:[UIColor whiteColor]];
             [_nextBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
         }
-    }
+//    }
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [_titleText resignFirstResponder];

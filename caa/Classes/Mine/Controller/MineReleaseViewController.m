@@ -14,6 +14,7 @@
 #import "HistoryReleaseViewController.h"
 @interface MineReleaseViewController ()
 {
+    UILabel * nowLab;
     UIView *_dateView;
     NSMutableArray *_dateArr;
     ProgressModel * _model;
@@ -61,6 +62,7 @@
             [_bgScrollView.mj_footer endRefreshing];
             _model = [ProgressModel mj_objectWithKeyValues:dic[@"in_progress"]];
             if ([_model.status isEqualToString:@"1"]){
+                nowLab.text = @"正在发布:";
                 _showView.hidden = NO;
                 _relLabNum.text = [NSString stringWithFormat:@"%ld 屏",_model.device_count];
                 _playLabNum.text = [NSString stringWithFormat:@"%@ 次",_model.play_count];
@@ -68,6 +70,7 @@
                 _useLabNum.text = [NSString stringWithFormat:@"%@ 人",_model.use_count];
             }
             else{
+                nowLab.text = @"正在审核:";
                 _bgView.hidden = NO;
             }
             if ([dic[@"history"] isKindOfClass:[NSArray class]]){
@@ -109,8 +112,8 @@
     _bgScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewHeaderRefresh)];
     _bgScrollView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewFooterRefresh)];
     
-    UILabel * nowLab = [[UILabel alloc]initWithFrame:CGRectMake(12, 20*WidthRate, 100, 30)];
-    nowLab.text = @"正在发布:";
+    nowLab  = [[UILabel alloc]initWithFrame:CGRectMake(12, 20*WidthRate, 100, 30)];
+    
     nowLab.textAlignment = NSTextAlignmentLeft;
     nowLab.font = [UIFont systemFontOfSize:18];
     nowLab.textColor = RGB(0.47, 0.47, 0.47);
@@ -120,15 +123,15 @@
     _bgView.hidden = YES;
     [_bgScrollView addSubview:_bgView];
     
-    UILabel * review = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 60)/2, 15*WidthRate, 60, 20)];
+    UILabel * review = [[UILabel alloc]initWithFrame:CGRectMake((_bgView.width - 60)/2, 15*WidthRate, 60, 20)];
     review.text = @"审核中";
     review.textColor =RGB(0.47, 0.47, 0.47);
     review.textAlignment = NSTextAlignmentCenter;
     review.font = [UIFont systemFontOfSize:18];
     [_bgView addSubview:review];
     
-    UILabel * tipLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 200)/2, review.bottom + 15*WidthRate, 200, 20)];
-    tipLab.text = @"预计12：39分审核通过";
+    UILabel * tipLab = [[UILabel alloc]initWithFrame:CGRectMake((_bgView.width - 280)/2, review.bottom + 15*WidthRate, 280, 20)];
+    tipLab.text = @"正在审核，预计俩小时后审核通过";
     tipLab.textColor =RGB(0.47, 0.47, 0.47);
     tipLab.textAlignment = NSTextAlignmentCenter;
     tipLab.font = [UIFont systemFontOfSize:18];

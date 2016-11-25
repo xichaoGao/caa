@@ -124,6 +124,7 @@
         self.transform = CGAffineTransformMakeScale(0.01, 0.01);
         
     }];
+    [self removeFromSuperview];
     [_textView resignFirstResponder];
     self.block(_textView.text,0);
     
@@ -134,6 +135,7 @@
         self.transform = CGAffineTransformMakeScale(0.01, 0.01);
         
     }];
+    [self removeFromSuperview];
     [_textView resignFirstResponder];
     
     self.block(_textView.text,1);

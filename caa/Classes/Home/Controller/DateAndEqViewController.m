@@ -536,8 +536,8 @@
     NSString * sign = [self md5:[md5Str stringByAppendingString:md5Items[1]]];
     
     NSString *playlistStr = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:_listArr options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-    
-    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"area_id":_area_id,@"content":[use objectForKey:@"content"],@"description":[use objectForKey:@"tip"],@"shop_name":[use objectForKey:@"shopName"],@"shop_address":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]],@"start_time":[use objectForKey:@"beginTime"],@"end_time":[use objectForKey:@"endTime"],@"promotion_count":[use objectForKey:@"promotion_count"],@"promotion_content":[use objectForKey:@"redContent"],@"direction_for_use":[use objectForKey:@"useDirText"]?[use objectForKey:@"useDirText"]:@"1",@"promotion_expire":[use objectForKey:@"dateLimit"],@"promotion_get_type":[use objectForKey:@"limit"]};
+//    _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":@"sd",@"area_id":_area_id,@"content":@"sd",@"description":@"sd",@"shop_name":@"sd",@"shop_address":@"sd",@"playlist":[playlistStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]],@"start_time":@"sd",@"end_time":@"sd",@"promotion_count":@"43",@"promotion_content":@"sdf",@"direction_for_use":@"1",@"promotion_expire":@"23",@"promotion_get_type":[use objectForKey:@"limit"]};
+        _pramerDic = @{@"sign":sign,@"token":[use objectForKey:@"token"],@"title":[use objectForKey:@"title"],@"area_id":_area_id,@"content":[use objectForKey:@"content"],@"description":[use objectForKey:@"tip"],@"shop_name":[use objectForKey:@"shopName"],@"shop_address":[use objectForKey:@"address"],@"playlist":[playlistStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]],@"start_time":[use objectForKey:@"beginTime"],@"end_time":[use objectForKey:@"endTime"],@"promotion_count":[use objectForKey:@"promotion_count"],@"promotion_content":[use objectForKey:@"redContent"],@"direction_for_use":[use objectForKey:@"useDirText"]?[use objectForKey:@"useDirText"]:@"1",@"promotion_expire":[use objectForKey:@"dateLimit"],@"promotion_get_type":[use objectForKey:@"limit"]};
     AFHTTPSessionManager *managers = [AFHTTPSessionManager manager];
     managers.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     managers.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -545,10 +545,11 @@
         hud.hidden = YES;
         NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
         NSArray * photoArr = [user objectForKey:@"photoArray"];
+        
         for ( int i = 0 ;i< photoArr.count ;i++){
-            [formData appendPartWithFileData:photoArr[i] name:@"poster[]" fileName:@"icon.jpg" mimeType:@"image/jpg/file/png"];
+            [formData appendPartWithFileData:photoArr[i] name:@"poster[]" fileName:[NSString stringWithFormat:@"%d.jpg",i] mimeType:@"image/jpg/file/png"];
         }
-//        [formData appendPartWithFileData:[[use objectForKey:@"btnPhotoArray"] firstObject] name:@"item_img" fileName:@"icon.jpg" mimeType:@"image/jpg/file/png"];
+        [formData appendPartWithFileData:[[use objectForKey:@"btnPhotoArray"] firstObject] name:@"item_img[]" fileName:@"item_img.jpg" mimeType:@"image/jpg/file/png"];
         
     }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
         

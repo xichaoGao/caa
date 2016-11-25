@@ -48,10 +48,10 @@
     [_mineReleaseBtn addTarget:self action:@selector(mineReleaseClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_mineReleaseBtn];
     
-    _tipLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 200)/2, _mineReleaseBtn.bottom + 40, 200, 30)];
+    _tipLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 300)/2, _mineReleaseBtn.bottom + 40, 300, 30)];
     _tipLab.textColor = RGB(0.41, 0.41, 0.41);
     _tipLab.textAlignment = NSTextAlignmentCenter;
-    _tipLab.text=  @"正在提交，预计12：30审核通过";
+    _tipLab.text=  @"正在审核，预计俩小时后审核通过";
     _tipLab.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:_tipLab];
 }
