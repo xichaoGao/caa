@@ -12,6 +12,6 @@
 @property(nonatomic,strong)NSString * headimgurl;
 @property(nonatomic,strong)NSString * nickname;
 @property(nonatomic,strong)NSString * status;
-@property(nonatomic,strong)NSString * create_time;
-@property(nonatomic,strong)NSString * use_time;
+@property(nonatomic,assign)NSInteger  create_time;
+@property(nonatomic,assign)NSInteger  use_time;
 @end

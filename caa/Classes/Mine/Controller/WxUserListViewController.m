@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import "WxUserModel.h"
 #import "WxUserTableViewCell.h"
+#import "NSDate+extend.h"
 static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
 
 @interface WxUserListViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -132,21 +133,52 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
     _num = 0;
     for (int i= 0 ;i < dataArr.count;i++){
         WxUserModel * mol = dataArr[i];
-        if ([mol.status isEqualToString:[NSString stringWithFormat:@"%ld",_index-1]]){
-            _num ++;
+        if (_index == 1){
+            if (![mol.status isEqualToString:[NSString stringWithFormat:@"%d",2]]){
+                _num ++;
+            }
+        }else if (_index == 2){
+            if ([mol.status isEqualToString:[NSString stringWithFormat:@"%ld",_index-1]]){
+                _num ++;
+            }
         }
+        else{
+            if (![mol.status isEqualToString:[NSString stringWithFormat:@"%d",3]]){
+                _num ++;
+            }
+        }
+        
     }
     return _num;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     WxUserTableViewCell * wxUserTableViewCell = [tableView dequeueReusableCellWithIdentifier:WxUserTableViewCellIdenfire];
     WxUserModel * mol = dataArr[indexPath.row];
-    if ([mol.status isEqualToString:[NSString stringWithFormat:@"%ld",_index-1]]){
-        [wxUserTableViewCell.WxImg sd_setImageWithURL:[NSURL URLWithString:mol.headimgurl] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
-        wxUserTableViewCell.nickNameLab.text = mol.nickname;
-        wxUserTableViewCell.receTimeLab.text = [NSString stringWithFormat:@"%@",mol.create_time];
-        wxUserTableViewCell.useTimeLab.text = [NSString stringWithFormat:@"%@",mol.use_time];
+    if(_index == 1){
+        if (![mol.status isEqualToString:[NSString stringWithFormat:@"%d",2]]){
+            [wxUserTableViewCell.WxImg sd_setImageWithURL:[NSURL URLWithString:mol.headimgurl] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
+            wxUserTableViewCell.nickNameLab.text = mol.nickname;
+            wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:mol.create_time format:@"yyyy-MM-dd hh:mm:ss"];
+            wxUserTableViewCell.useTimeLab.text = [NSDate stringWithTimestamp:mol.use_time format:@"yyyy-MM-dd hh:mm:ss"];
+        }
     }
+    else if (_index == 2){
+        if ([mol.status isEqualToString:[NSString stringWithFormat:@"%d",1]]){
+            [wxUserTableViewCell.WxImg sd_setImageWithURL:[NSURL URLWithString:mol.headimgurl] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
+            wxUserTableViewCell.nickNameLab.text = mol.nickname;
+            wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:mol.create_time format:@"yyyy-MM-dd hh:mm:ss"];
+            wxUserTableViewCell.useTimeLab.text = [NSDate stringWithTimestamp:mol.use_time format:@"yyyy-MM-dd hh:mm:ss"];
+        }
+    }
+    else{
+        if ([mol.status isEqualToString:[NSString stringWithFormat:@"%d",3]]){
+            [wxUserTableViewCell.WxImg sd_setImageWithURL:[NSURL URLWithString:mol.headimgurl] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
+            wxUserTableViewCell.nickNameLab.text = mol.nickname;
+            wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:mol.create_time format:@"yyyy-MM-dd hh:mm:ss"];
+            wxUserTableViewCell.useTimeLab.text = [NSDate stringWithTimestamp:mol.use_time format:@"yyyy-MM-dd hh:mm:ss"];
+        }
+    }
+    
    
    
     return wxUserTableViewCell;
