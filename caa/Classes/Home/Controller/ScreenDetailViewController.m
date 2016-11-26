@@ -67,6 +67,10 @@
                 _listLab.hidden = NO;
                 _listLab.frame = CGRectMake(12, tagView.bottom + 10*WidthRate, 150, 25*WidthRate);
             }
+            else{
+                _listLab.hidden = NO;
+                _listLab.frame = CGRectMake(12, _bgView.bottom + 10*WidthRate, 150, 25*WidthRate);
+            }
             [self.view addSubview:tagView];
             
             dataArr  = model.playlist;

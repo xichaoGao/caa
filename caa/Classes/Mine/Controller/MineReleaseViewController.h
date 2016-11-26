@@ -18,6 +18,8 @@
 @property(nonatomic,strong)UILabel * receLabNum;
 @property(nonatomic,strong)UILabel * useLab;
 @property(nonatomic,strong)UILabel * useLabNum;
+@property(nonatomic,strong)UIButton * receBtn;
+@property(nonatomic,strong)UIButton * useBtn;
 @property(nonatomic,strong)UIView * bgView;
 @property(nonatomic,strong)UIButton * detailBtn;
 @property(nonatomic,strong)UIButton * cancleBtn;

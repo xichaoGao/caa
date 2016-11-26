@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 
+
+
 @interface HomeViewController : BaseViewController
 @property(nonatomic,strong)UIView * leadView;//引导图背景
 @property(nonatomic,strong)UIImageView * leadImg;//引导图片
@@ -26,7 +28,6 @@
 @property(nonatomic,strong)UILabel * useLab;//使用
 @property(nonatomic,strong)UILabel * useLabNum;//使用人数
 @property(nonatomic,strong)UIButton * detailBtn;//详情
-@property (nonatomic, retain) NSTimer *timer;
-@property (nonatomic, assign) NSInteger showTime;
-
+@property(nonatomic,strong)UIButton * receBtn;
+@property(nonatomic,strong)UIButton * useBtn;
 @end

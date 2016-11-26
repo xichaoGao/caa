@@ -295,13 +295,13 @@ static const NSInteger kTotalNum = (kRow - 1) * kCol;
         NSDate * date = [firstDay dateByAddingTimeInterval:(i - startDayIndex) *24*60*60];
         _currentMonthDateArray[i] = @(([date timeIntervalSince1970]) * 1000);
         NSString *title = INTTOSTR(date.day);
-        if ([date isToday])
-        {//今天
-            title = @"今天";
-            btn.layer.borderColor = [UIColor hexColorWithString:@"f49e79"].CGColor;
-            btn.layer.borderWidth = 0.5;
-        }
-        else if(date.day == 1)
+//        if ([date isToday])
+//        {//今天
+//            title = @"今天";
+//            btn.layer.borderColor = [UIColor hexColorWithString:@"f49e79"].CGColor;
+//            btn.layer.borderWidth = 0.5;
+//        }
+         if(date.day == 1)
         {//是1号
             //在下面标一下月份
             UILabel *monthLab = [[UILabel alloc] initWithFrame:CGRectMake(baseRect.origin.x, baseRect.origin.y + baseRect.size.height - 7, baseRect.size.width, 7)];
@@ -314,7 +314,7 @@ static const NSInteger kTotalNum = (kRow - 1) * kCol;
         }
         
         [btn setTitle:title forState:UIControlStateNormal];
-        if ([self.today compare:date] < 0) {
+        if ([self.today compare:date] <= 0) {
             //时间比今天大,同时是当前月
             [btn setTitleColor:[UIColor hexColorWithString:@"2b2b2b"] forState:UIControlStateNormal];
         }else {
@@ -388,7 +388,7 @@ static const NSInteger kTotalNum = (kRow - 1) * kCol;
     if (index < [_currentMonthDateArray count]) {
         NSNumber *interval = [_currentMonthDateArray objectAtIndex:index];
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval.doubleValue/1000.0];
-        if ([self.today  compare:date] < 0) {
+        if ([self.today  compare:date] <= 0) {
             //时间比今天大,同时是当前月
         }else {
             return;

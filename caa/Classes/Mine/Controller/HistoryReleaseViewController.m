@@ -10,6 +10,8 @@
 #import "ReleaseDetailViewController.h"
 #import "AdMsgModel.h"
 #import "LoginViewController.h"
+#import "WxUserListViewController.h"
+
 @interface HistoryReleaseViewController ()
 @property(nonatomic,strong)NSDictionary *pramerDic;
 
@@ -75,7 +77,7 @@
     
     _showView = [[UIView alloc]initWithFrame:CGRectMake(12, nowLab.bottom + 10 * WidthRate, kScreenWidth-24, 135*WidthRate)];
     [self.view addSubview:_showView];
-    _relLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 80*WidthRate, 35*WidthRate)];
+    _relLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 75*WidthRate, 35*WidthRate)];
     _relLab.text = @"正在发布:";
     _relLab.textColor = RGB(0.47, 0.47, 0.47);
     _relLab.font = [UIFont boldSystemFontOfSize:14];
@@ -84,7 +86,7 @@
     _relLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_relLabNum];
     
-    _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 140*WidthRate, 0, 80*WidthRate, 35*WidthRate)];
+    _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, 0, 75*WidthRate, 35*WidthRate)];
     _playLab.text = @"播放次数:";
     _playLab.textColor = RGB(0.47, 0.47, 0.47);
     _playLab.font = [UIFont boldSystemFontOfSize:14];
@@ -95,7 +97,7 @@
     [_showView addSubview:_playLabNum];
     
     
-    _receLab = [[UILabel alloc]initWithFrame:CGRectMake(0, _relLab.bottom + 15*WidthRate, 80*WidthRate, 35*WidthRate)];
+    _receLab = [[UILabel alloc]initWithFrame:CGRectMake(0, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
     _receLab.text = @"领取人数:";
     _receLab.textColor = RGB(0.47, 0.47, 0.47);
     _receLab.font = [UIFont boldSystemFontOfSize:14];
@@ -103,8 +105,13 @@
     _receLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_receLab.right + 3, _relLab.bottom + 15*WidthRate, 60*WidthRate, 35*WidthRate)];
     _receLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_receLabNum];
-    
-    _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 140*WidthRate, _relLab.bottom + 15*WidthRate, 80*WidthRate, 35*WidthRate)];
+    _receBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _receBtn.frame = CGRectMake(_receLabNum.right, _receLabNum.origin.y+8, 10, 20);
+    [_receBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
+    _receBtn.tag = 1000;
+    [_receBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_showView addSubview:_receBtn];
+    _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
     _useLab.text = @"使用人数:";
     _useLab.textColor = RGB(0.47, 0.47, 0.47);
     _useLab.font = [UIFont boldSystemFontOfSize:14];
@@ -113,6 +120,13 @@
     _useLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_useLab.right + 3, _relLab.bottom + 15*WidthRate, 60*WidthRate, 35*WidthRate)];
     _useLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_useLabNum];
+    
+    _useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _useBtn.frame = CGRectMake(_useLabNum.right, _useLabNum.origin.y+8, 10, 20);
+    [_useBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
+    _useBtn.tag = 2000;
+    [_useBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_showView addSubview:_useBtn];
     
     _detailBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     _detailBtn.frame = CGRectMake(40*WidthRate-12, nowLab.bottom+85 + 10*WidthRate, kScreenWidth-80*WidthRate, 40*WidthRate);
@@ -147,6 +161,13 @@
         nowLab.textColor = [UIColor grayColor];
         
     }
+}
+-(void)WxListClick:(UIButton *)sender{
+    WxUserListViewController * wulVC  = [[WxUserListViewController alloc]init];
+    wulVC.hidesBottomBarWhenPushed = YES;
+    wulVC.index = sender.tag/1000;
+    wulVC.ads_id = _Model.ads_id;
+    [self.navigationController pushViewController:wulVC animated:YES];
 }
 //详情事件
 -(void)detailClick{

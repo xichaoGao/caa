@@ -12,6 +12,7 @@
 #import "GetBackPassWordViewController.h"
 #import "TabBarViewController.h"
 #import "JPUSHService.h"
+
 @interface LoginViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)NSDictionary *pramerDic;
 

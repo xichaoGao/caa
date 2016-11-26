@@ -19,6 +19,7 @@
 #define kSetNewPassWord @"User/resetPWD"//设置新的密码
 
 #define KAdsMsg @"Ads/index"//首页
+#define KGetWxUser @"Ads/getWxUserPromotion"//微信用户
 #define KGetCity @"Ads/getCities"//城市列表
 #define KGetUrban @"Ads/getDistricts"//城市列表
 #define KGetArea @"Ads/getArea"//商圈

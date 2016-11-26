@@ -9,6 +9,7 @@
 #import "BaseModel.h"
 
 @interface AdMsgModel : BaseModel
+@property(nonatomic,strong)NSString * ads_id;
 @property(nonatomic,strong)NSString * device_count;
 @property(nonatomic,strong)NSString * play_count;
 @property(nonatomic,strong)NSString * get_count;

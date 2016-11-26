@@ -32,7 +32,7 @@
 //创建界面
 -(void)createUI{
     _successLab = [[UILabel alloc]initWithFrame:CGRectMake((kScreenWidth - 150)/2, 100*WidthRate, 150, 50)];
-    _successLab.text = @"发布成功!";
+    _successLab.text = @"上传成功!";
     _successLab.textAlignment= NSTextAlignmentCenter;
     _successLab.textColor = RGB(0.95, 0.39, 0.21);
     _successLab.font = [UIFont systemFontOfSize:30];

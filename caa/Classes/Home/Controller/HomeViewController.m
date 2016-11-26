@@ -12,13 +12,17 @@
 #import "PerAdMesViewController.h"
 #import "ReleaseDetailViewController.h"
 #import "AdMsgModel.h"
+#import "WxUserListViewController.h"
+
 
 #define KLineColor RGB(0.84, 0.84, 0.84)
 #define KBorderColor RGB(0.95, 0.39, 0.21).CGColor
 #define KTextColor  RGB(0.95, 0.39, 0.21)
 #define KTextColor1 RGB(0.47, 0.47, 0.47)
 #define KTextNumColor1 RGB(0.96, 0.60, 0.51)
-@interface HomeViewController ()
+@interface HomeViewController (){
+    AdMsgModel *_adMsgModel;
+}
 @property(nonatomic,strong)NSDictionary *pramerDic;
 @end
 
@@ -27,22 +31,16 @@
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
-    [self getHomeDatas];
-    [self controlTheTime];
-
+    
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [_timer invalidate];
-
-    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createUI];
-//    [self getHomeDatas];
-    self.showTime = 30;
-    
+    [self getHomeDatas];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(RefreshHomeData) name:@"Refresh" object:nil];
     // Do any additional setup after loading the view.
 }
 //创建界面
@@ -73,6 +71,7 @@
     _adView.layer.masksToBounds = YES;
     _adView.layer.cornerRadius = 10;
     _adView.layer.borderWidth = 1;
+    _adView.userInteractionEnabled = YES;
     _adView.layer.borderColor = KBorderColor;
     [self.view addSubview:_adView];
     
@@ -89,7 +88,7 @@
     _showView = [[UIView alloc]initWithFrame:CGRectMake(20, _adView.bottom + 30 * WidthRate, kScreenWidth-40*WidthRate, 85*WidthRate)];
     [self.view addSubview:_showView];
     _showView.hidden = YES;
-    _relLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 80*WidthRate, 35*WidthRate)];
+    _relLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 75*WidthRate, 35*WidthRate)];
     _relLab.text = @"正在发布:";
     _relLab.textColor = KTextColor1;
     _relLab.font = [UIFont boldSystemFontOfSize:14];
@@ -98,7 +97,7 @@
     _relLabNum.textColor = KTextNumColor1;
     [_showView addSubview:_relLabNum];
     
-    _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 140*WidthRate, 0, 80*WidthRate, 35*WidthRate)];
+    _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, 0, 75*WidthRate, 35*WidthRate)];
     _playLab.text = @"播放次数:";
     _playLab.textColor = KTextColor1;
     _playLab.font = [UIFont boldSystemFontOfSize:14];
@@ -109,7 +108,7 @@
     [_showView addSubview:_playLabNum];
     
     
-    _receLab = [[UILabel alloc]initWithFrame:CGRectMake(0, _relLab.bottom + 15*WidthRate, 80*WidthRate, 35*WidthRate)];
+    _receLab = [[UILabel alloc]initWithFrame:CGRectMake(0, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
     _receLab.text = @"领取人数:";
     _receLab.textColor = KTextColor1;
     _receLab.font = [UIFont boldSystemFontOfSize:14];
@@ -118,7 +117,13 @@
     _receLabNum.textColor = KTextNumColor1;
     [_showView addSubview:_receLabNum];
     
-    _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 140*WidthRate, _relLab.bottom + 15*WidthRate, 80*WidthRate, 35*WidthRate)];
+    _receBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _receBtn.frame = CGRectMake(_receLabNum.right+3, _receLabNum.origin.y+8, 10, 20);
+    [_receBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
+    _receBtn.tag = 1000;
+    [_receBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_showView addSubview:_receBtn];
+    _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
     _useLab.text = @"使用人数:";
     _useLab.textColor = KTextColor1;
     _useLab.font = [UIFont boldSystemFontOfSize:14];
@@ -127,7 +132,12 @@
     _useLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_useLab.right + 3, _relLab.bottom + 15*WidthRate, 60*WidthRate, 35*WidthRate)];
     _useLabNum.textColor = KTextNumColor1;
     [_showView addSubview:_useLabNum];
-    
+    _useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _useBtn.frame = CGRectMake(_useLabNum.right+3, _useLabNum.origin.y+8, 10, 20);
+    [_useBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
+    _useBtn.tag = 2000;
+    [_useBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_showView addSubview:_useBtn];
     
     _detailBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     _detailBtn.frame = CGRectMake(40*WidthRate, kScreenHeight-49-80*WidthRate, kScreenWidth-80*WidthRate, 50*WidthRate);
@@ -154,22 +164,22 @@
         if (status == 1) {
             if([[result objectForKey:@"data"] count] > 0){
                 
-                AdMsgModel *adMsgModel = [AdMsgModel  mj_objectWithKeyValues:[result  objectForKey:@"data"]];
-                if ([adMsgModel.device_count isEqualToString:@"0"]){
+                _adMsgModel = [AdMsgModel  mj_objectWithKeyValues:[result  objectForKey:@"data"]];
+                if ([_adMsgModel.device_count isEqualToString:@"0"]){
                     _showView.hidden = YES;
-
+                    
                 }else{
                     _showView.hidden = NO;
-
+                    _relLabNum.text = [NSString stringWithFormat:@"%@ 屏",_adMsgModel.device_count];
+                    _playLabNum.text = [NSString stringWithFormat:@"%@ 次",_adMsgModel.play_count];
+                    _receLabNum.text = [NSString stringWithFormat:@"%@ 人",_adMsgModel.get_count];
+                    _useLabNum.text = [NSString stringWithFormat:@"%@ 人",_adMsgModel.use_count];
                 }
-            _relLabNum.text = [NSString stringWithFormat:@"%@ 屏",adMsgModel.device_count];
-            _playLabNum.text = [NSString stringWithFormat:@"%@ 次",adMsgModel.play_count];
-            _receLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.get_count];
-            _useLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.use_count];
-            if ([adMsgModel.device_count isEqualToString:@"0"]){
-                UITapGestureRecognizer *tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relAdTap)];
-                [_adView addGestureRecognizer:tapGess];
-            }
+                
+                if ([_adMsgModel.device_count isEqualToString:@"0"]){
+                    UITapGestureRecognizer *tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relAdTap)];
+                    [_adView addGestureRecognizer:tapGess];
+                }
             }
         }
         else if (status == -1){
@@ -197,32 +207,32 @@
     paVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:paVC animated:YES];
 }
+-(void)WxListClick:(UIButton *)sender{
+    WxUserListViewController * wulVC  = [[WxUserListViewController alloc]init];
+    wulVC.hidesBottomBarWhenPushed = YES;
+    wulVC.index = sender.tag/1000;
+    wulVC.ads_id = _adMsgModel.ads_id;
+    [self.navigationController pushViewController:wulVC animated:YES];
+}
 //详情事件
 -(void)detailClick{
     ReleaseDetailViewController * rdVC = [[ReleaseDetailViewController alloc]init];
     rdVC.hidesBottomBarWhenPushed = YES;
+    rdVC.ads_id = _adMsgModel.ads_id;
     [self.navigationController pushViewController:rdVC animated:YES];
 }
-
-- (void)controlTheTime
-{
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(controlTheTimeFnid:) userInfo:nil repeats:YES];
+//刷新界面
+- (void)RefreshHomeData{
+    [self getHomeDatas];
 }
 
-- (void)controlTheTimeFnid:(NSTimer *)time
-{
-    self.showTime --;
-    if (_showTime  == 0) {
-        _showTime = 10;
-        [self getHomeDatas];
-           }
-   
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 /*
  #pragma mark - Navigation
  

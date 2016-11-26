@@ -91,6 +91,9 @@
 		0E89FA631DDB13A9004DD2D8 /* NSDate+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E89FA611DDB13A9004DD2D8 /* NSDate+extend.m */; };
 		0E8F2AE11DCC3AC0002FDD23 /* DateAndEqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F2AE01DCC3AC0002FDD23 /* DateAndEqViewController.m */; };
 		0E8F2AE41DCC9360002FDD23 /* ReleaseSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F2AE31DCC9360002FDD23 /* ReleaseSuccessViewController.m */; };
+		0E92B32B1DE9659400E1173B /* WxUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E92B32A1DE9659400E1173B /* WxUserListViewController.m */; };
+		0E92B32E1DE9684000E1173B /* WxUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E92B32D1DE9684000E1173B /* WxUserModel.m */; };
+		0E92B3311DE97B6B00E1173B /* WxUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E92B3301DE97B6B00E1173B /* WxUserTableViewCell.m */; };
 		0EE24EF71DD2CA2100AE6199 /* PreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE24EF61DD2CA2100AE6199 /* PreView.m */; };
 		5C16BA70F86F124C17075DFC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD18A227BB14C06C5A522C46 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -268,6 +271,12 @@
 		0E8F2AE01DCC3AC0002FDD23 /* DateAndEqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateAndEqViewController.m; path = Classes/Home/Controller/DateAndEqViewController.m; sourceTree = "<group>"; };
 		0E8F2AE21DCC9360002FDD23 /* ReleaseSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReleaseSuccessViewController.h; path = Classes/Home/Controller/ReleaseSuccessViewController.h; sourceTree = "<group>"; };
 		0E8F2AE31DCC9360002FDD23 /* ReleaseSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReleaseSuccessViewController.m; path = Classes/Home/Controller/ReleaseSuccessViewController.m; sourceTree = "<group>"; };
+		0E92B3291DE9659400E1173B /* WxUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WxUserListViewController.h; path = Classes/Mine/Controller/WxUserListViewController.h; sourceTree = "<group>"; };
+		0E92B32A1DE9659400E1173B /* WxUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WxUserListViewController.m; path = Classes/Mine/Controller/WxUserListViewController.m; sourceTree = "<group>"; };
+		0E92B32C1DE9684000E1173B /* WxUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WxUserModel.h; path = Classes/Mine/Model/WxUserModel.h; sourceTree = "<group>"; };
+		0E92B32D1DE9684000E1173B /* WxUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WxUserModel.m; path = Classes/Mine/Model/WxUserModel.m; sourceTree = "<group>"; };
+		0E92B32F1DE97B6B00E1173B /* WxUserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WxUserTableViewCell.h; path = Classes/Mine/View/WxUserTableViewCell.h; sourceTree = "<group>"; };
+		0E92B3301DE97B6B00E1173B /* WxUserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WxUserTableViewCell.m; path = Classes/Mine/View/WxUserTableViewCell.m; sourceTree = "<group>"; };
 		0EE24EF51DD2CA2100AE6199 /* PreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreView.h; path = Classes/Home/View/PreView.h; sourceTree = "<group>"; };
 		0EE24EF61DD2CA2100AE6199 /* PreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreView.m; path = Classes/Home/View/PreView.m; sourceTree = "<group>"; };
 		9A8C8286377303B5211B415D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -549,6 +558,8 @@
 				0E83C6D51DE7C07A002A9DC8 /* ProgressModel.m */,
 				0E83C6D71DE7C0A2002A9DC8 /* HistoryModel.h */,
 				0E83C6D81DE7C0A2002A9DC8 /* HistoryModel.m */,
+				0E92B32C1DE9684000E1173B /* WxUserModel.h */,
+				0E92B32D1DE9684000E1173B /* WxUserModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -556,6 +567,8 @@
 		0E3872291DC3114400698B90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0E92B32F1DE97B6B00E1173B /* WxUserTableViewCell.h */,
+				0E92B3301DE97B6B00E1173B /* WxUserTableViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -570,6 +583,8 @@
 				0E76D7A71DCDC56D0066544C /* MineReleaseViewController.m */,
 				0E76D7A91DCDC58D0066544C /* HistoryReleaseViewController.h */,
 				0E76D7AA1DCDC58D0066544C /* HistoryReleaseViewController.m */,
+				0E92B3291DE9659400E1173B /* WxUserListViewController.h */,
+				0E92B32A1DE9659400E1173B /* WxUserListViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -925,9 +940,11 @@
 				0E3872601DC328A900698B90 /* LGReachability.m in Sources */,
 				0E6BBB0C1DCA0DE000A01F44 /* PhotoAlbumManager.m in Sources */,
 				0E3872A21DC33E6E00698B90 /* NSString+Additions.m in Sources */,
+				0E92B32E1DE9684000E1173B /* WxUserModel.m in Sources */,
 				0E6BBB011DCA0DDF00A01F44 /* JKAssetsCollectionFooterView.m in Sources */,
 				0E89FA621DDB13A9004DD2D8 /* LDCalendarView.m in Sources */,
 				0E76D7991DCDA49A0066544C /* UrbanModel.m in Sources */,
+				0E92B3311DE97B6B00E1173B /* WxUserTableViewCell.m in Sources */,
 				0E3871E41DC3033F00698B90 /* AppDelegate.m in Sources */,
 				0E6BBB051DCA0DDF00A01F44 /* JKAssetsViewCell.m in Sources */,
 				0E3871E11DC3033F00698B90 /* main.m in Sources */,
@@ -941,6 +958,7 @@
 				0E6BBB081DCA0DDF00A01F44 /* JKPhotoBrowser.m in Sources */,
 				0E3872791DC32D5100698B90 /* RegisterViewController.m in Sources */,
 				0E76D7A81DCDC56D0066544C /* MineReleaseViewController.m in Sources */,
+				0E92B32B1DE9659400E1173B /* WxUserListViewController.m in Sources */,
 				0E38725F1DC328A900698B90 /* JSONKit.m in Sources */,
 				0E38726F1DC328E700698B90 /* HomeViewController.m in Sources */,
 				0E76D7961DCD8D260066544C /* CityModel.m in Sources */,

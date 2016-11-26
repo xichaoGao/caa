@@ -11,6 +11,7 @@
 #import "HistoryModel.h"
 #import "LoginViewController.h"
 #import "ReleaseDetailViewController.h"
+#import "WxUserListViewController.h"
 #import "HistoryReleaseViewController.h"
 @interface MineReleaseViewController ()
 {
@@ -69,9 +70,12 @@
                 _receLabNum.text = [NSString stringWithFormat:@"%@ 人",_model.get_count];
                 _useLabNum.text = [NSString stringWithFormat:@"%@ 人",_model.use_count];
             }
-            else{
+            else if ([_model.status isEqualToString:@"0"]){
                 nowLab.text = @"正在审核:";
                 _bgView.hidden = NO;
+            }
+            else{
+                
             }
             if ([dic[@"history"] isKindOfClass:[NSArray class]]){
                 NSArray *arr = dic[@"history"];
@@ -87,6 +91,9 @@
                         _dateView = [self createViewWithY:_bgView.bottom + 20*WidthRate Title:@"历史发布:" contentArray:_dateArr part:1];
                         [_bgScrollView addSubview:_dateView];
                     }
+                }
+                else if (arr.count >20){
+                    _bgScrollView.contentSize = CGSizeMake(kScreenWidth, 1.3*kScreenHeight);
                 }
             }
             
@@ -106,14 +113,13 @@
 -(void)createUI{
     _bgScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     _bgScrollView.userInteractionEnabled = YES;
-    _bgScrollView.contentSize = CGSizeMake(kScreenWidth, 1.3*kScreenHeight);
+    _bgScrollView.contentSize = CGSizeMake(kScreenWidth, kScreenHeight);
     _bgScrollView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_bgScrollView];
     _bgScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewHeaderRefresh)];
     _bgScrollView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewFooterRefresh)];
     
     nowLab  = [[UILabel alloc]initWithFrame:CGRectMake(12, 20*WidthRate, 100, 30)];
-    
     nowLab.textAlignment = NSTextAlignmentLeft;
     nowLab.font = [UIFont systemFontOfSize:18];
     nowLab.textColor = RGB(0.47, 0.47, 0.47);
@@ -140,7 +146,7 @@
     _showView = [[UIView alloc]initWithFrame:CGRectMake(12, nowLab.bottom + 10 * WidthRate, kScreenWidth-24, 135*WidthRate)];
     _showView.hidden = YES;
     [_bgScrollView addSubview:_showView];
-    _relLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 80*WidthRate, 35*WidthRate)];
+    _relLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 75*WidthRate, 35*WidthRate)];
     _relLab.text = @"正在发布:";
     _relLab.textColor = RGB(0.47, 0.47, 0.47);
     _relLab.font = [UIFont boldSystemFontOfSize:14];
@@ -149,7 +155,7 @@
     _relLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_relLabNum];
     
-    _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 140*WidthRate, 0, 80*WidthRate, 35*WidthRate)];
+    _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, 0, 75*WidthRate, 35*WidthRate)];
     _playLab.text = @"播放次数:";
     _playLab.textColor = RGB(0.47, 0.47, 0.47);
     _playLab.font = [UIFont boldSystemFontOfSize:14];
@@ -160,7 +166,7 @@
     [_showView addSubview:_playLabNum];
     
     
-    _receLab = [[UILabel alloc]initWithFrame:CGRectMake(0, _relLab.bottom + 15*WidthRate, 80*WidthRate, 35*WidthRate)];
+    _receLab = [[UILabel alloc]initWithFrame:CGRectMake(0, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
     _receLab.text = @"领取人数:";
     _receLab.textColor = RGB(0.47, 0.47, 0.47);
     _receLab.font = [UIFont boldSystemFontOfSize:14];
@@ -168,8 +174,13 @@
     _receLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_receLab.right + 3, _relLab.bottom + 15*WidthRate, 60*WidthRate, 35*WidthRate)];
     _receLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_receLabNum];
-    
-    _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 140*WidthRate, _relLab.bottom + 15*WidthRate, 80*WidthRate, 35*WidthRate)];
+    _receBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _receBtn.frame = CGRectMake(_receLabNum.right, _receLabNum.origin.y+8, 10, 20);
+    [_receBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
+    _receBtn.tag = 1000;
+    [_receBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_showView addSubview:_receBtn];
+    _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
     _useLab.text = @"使用人数:";
     _useLab.textColor = RGB(0.47, 0.47, 0.47);
     _useLab.font = [UIFont boldSystemFontOfSize:14];
@@ -178,7 +189,13 @@
     _useLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_useLab.right + 3, _relLab.bottom + 15*WidthRate, 60*WidthRate, 35*WidthRate)];
     _useLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_useLabNum];
-    
+    _useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _useBtn.frame = CGRectMake(_useLabNum.right, _useLabNum.origin.y+8, 10, 20);
+    [_useBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
+    _useBtn.tag = 2000;
+    [_useBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_showView addSubview:_useBtn];
+
     _detailBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     _detailBtn.frame = CGRectMake(40*WidthRate, _useLabNum.bottom + 10*WidthRate, (_showView.width-120*WidthRate)/2, 40*WidthRate);
     _detailBtn.layer.cornerRadius = 20*WidthRate;
@@ -278,10 +295,11 @@
     _pramerDic = @{@"token":[use objectForKey:@"token"],@"ads_id":_model.ads_id};
     
     
-    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:KLogout RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
+    [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"POST" SubUrlString:KCancelAd RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
         hud.hidden = YES;
         int status = [[result objectForKey:@"status"] intValue];;
         if (status == 1) {
+            nowLab.hidden = YES;
             _showView.hidden = YES;
         }
         else if (status == -1){
@@ -295,6 +313,13 @@
             [self errorMessages:mess];
         }
     }];
+}
+-(void)WxListClick:(UIButton *)sender{
+    WxUserListViewController * wulVC  = [[WxUserListViewController alloc]init];
+    wulVC.hidesBottomBarWhenPushed = YES;
+    wulVC.index = sender.tag/1000;
+    wulVC.ads_id = _model.ads_id;
+    [self.navigationController pushViewController:wulVC animated:YES];
 }
 -(void)releaseDetailTableViewHeaderRefresh{
     _pageID = 0;

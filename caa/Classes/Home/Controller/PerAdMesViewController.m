@@ -58,15 +58,17 @@
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setObject:nil forKey:@"photoArray"];
     [user setObject:@"" forKey:@"title"];
-    [user setObject:@"" forKey:@"beginTime"];
-    [user setObject:@"" forKey:@"endTime"];
-    [user setObject:@"" forKey:@"text"];
-    [user setObject:@"" forKey:@"contentText"];
+    [user setObject:@"" forKey:@"tip"];
+    [user setObject:@"" forKey:@"content"];
+    [user setObject:nil forKey:@"btnPhotoArray"];
     [user setObject:@"" forKey:@"shopName"];
     [user setObject:@"" forKey:@"address"];
-    [user setObject:@"" forKey:@"useDirText"];
     [user setObject:@"" forKey:@"promotion_count"];
     [user setObject:@"" forKey:@"redContent"];
+    [user setObject:@"" forKey:@"dateLimit"];
+    [user setObject:@"" forKey:@"beginTime"];
+    [user setObject:@"" forKey:@"endTime"];
+    [user setObject:@"" forKey:@"useDirText"];
     [user setObject:@"0" forKey:@"limit"];
     _selectTag = -1;
     _btnImgArray = [NSMutableArray arrayWithCapacity:1];
@@ -97,7 +99,7 @@
     _bgView.layer.cornerRadius = 5;
     [_bgScrollView addSubview:_bgView];
     _defaultLab = [[UILabel alloc]initWithFrame:CGRectMake((_bgView.width - 145*WidthRate)/2, (_bgView.height - 60*WidthRate)/2, 150*WidthRate, 60*WidthRate)];
-    _defaultLab.text = @"添加商品照片(B)";
+    _defaultLab.text = @"添加广告照片(B)";
     _defaultLab.textAlignment = NSTextAlignmentCenter;
     _defaultLab.textColor  = RGB(0.84, 0.84, 0.84);
     _defaultLab.font = [UIFont systemFontOfSize:18];
@@ -1303,7 +1305,7 @@
     [user setObject:_shopNameTextField.text forKey:@"shopName"];
     [user setObject:_addressTextField.text forKey:@"address"];
     if (![[user objectForKey:@"photoArray"] isKindOfClass:[NSArray class]]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"图片不能为空" buttonTitles:@"确定", nil];
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"广告图片不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
     }
     else if (_selectTag == -1){
@@ -1320,7 +1322,7 @@
         [alert showInView:self.view completion:nil];
     }
     else if(![[user objectForKey:@"btnPhotoArray"] isKindOfClass:[NSArray class]]){
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"商品图片不能为空" buttonTitles:@"确定", nil];
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠商品图片不能为空" buttonTitles:@"确定", nil];
         [alert showInView:self.view completion:nil];
 
     }
@@ -1404,57 +1406,74 @@
     [user setObject:_redBagContentTextField.text forKey:@"redContent"];
     [user setObject:_redBagTextField.text forKey:@"promotion_count"];
     [user setObject:_dateTextField.text forKey:@"dateLimit"];
-//    if (![[user objectForKey:@"photoArray"] isKindOfClass:[NSArray class]]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"图片不能为空" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    }
-//    else if ([[user objectForKey:@"title"] isEqualToString:@""]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"标题不能为空" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//        
-//    }
-//    else if (_selectTag == -1){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"效果图未选择" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    }
-//
-//    else if ([[user objectForKey:@"tip"] isEqualToString:@""]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"推荐文字不能为空" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    }
-//    
-//    else if ([[user objectForKey:@"content"] isEqualToString:@""]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动内容不能为空" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    }
-//    else if ([[user objectForKey:@"shopName"] isEqualToString:@""]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"商铺名称不能为空" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    }
-//    else if ([[user objectForKey:@"address"] isEqualToString:@""]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动地址不能为空" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    }
-//    else if ([[user objectForKey:@"promotion_count"] isEqualToString:@""]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠券数量不能为空" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    }
-//    else if ([[user objectForKey:@"redContent"] isEqualToString:@""]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠内容不能为空" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    } else if ([[user objectForKey:@"beginTime"] isEqualToString:@""]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动开始时间不能为空" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    }
-//    
-//    else if ([[user objectForKey:@"endTime"] isEqualToString:@""]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不能为空" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    } else if ([[user objectForKey:@"endTime"] intValue] < [[user objectForKey:@"beginTime"] intValue]){
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不符合" buttonTitles:@"确定", nil];
-//        [alert showInView:self.view completion:nil];
-//    }
-//    else{
+    if (![[user objectForKey:@"photoArray"] isKindOfClass:[NSArray class]]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"图片不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"title"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"标题不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+        
+    }
+    else if (_selectTag == -1){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"效果图未选择" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+
+    else if ([[user objectForKey:@"tip"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"推荐文字不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    
+    else if ([[user objectForKey:@"content"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动内容不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if(![[user objectForKey:@"btnPhotoArray"] isKindOfClass:[NSArray class]]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠商品图片不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+        
+    }
+
+    else if ([[user objectForKey:@"shopName"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"商铺名称不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"address"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动地址不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"promotion_count"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠券数量不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"redContent"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠内容不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+        
+    }
+    else if ([[user objectForKey:@"dateLimit"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"有效期限不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+        
+    }else if ([[user objectForKey:@"beginTime"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动开始时间不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    
+    else if ([[user objectForKey:@"endTime"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    } else if ([[user objectForKey:@"endTime"] intValue] < [[user objectForKey:@"beginTime"] intValue]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"活动结束时间不符合" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    else if ([[user objectForKey:@"useDirText"] isEqualToString:@""]){
+        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"优惠券或红包的使用说明不能为空" buttonTitles:@"确定", nil];
+        [alert showInView:self.view completion:nil];
+    }
+    
+    else{
         btn.selected =!btn.selected;
         if (btn.selected == YES){
             btn.selected = !btn.selected;
@@ -1467,7 +1486,7 @@
             [_nextBtn setBackgroundColor:[UIColor whiteColor]];
             [_nextBtn setTitleColor:RGB(0.45, 0.45, 0.45) forState:UIControlStateNormal];
         }
-//    }
+    }
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [_titleText resignFirstResponder];

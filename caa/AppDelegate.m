@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "JSONKit.h"
 #import "TabBarViewController.h"
+#import "HomeViewController.h"
 #import "LoginViewController.h"
 #import "NotificationConfigure.h"
 #import "IQKeyboardManager.h"
@@ -44,16 +45,19 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window.backgroundColor = [UIColor whiteColor];
-//    TabBarViewController * tabVC = [[TabBarViewController alloc]init];
-//    self.window.rootViewController = tabVC;
-    LoginViewController * logVC  = [[LoginViewController alloc]init];
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
-    self.window.rootViewController = nav;
-    [self.window makeKeyAndVisible];
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    if (![[user objectForKey:@"token"] isKindOfClass:[NSString class]]){
+        LoginViewController * logVC  = [[LoginViewController alloc]init];
+        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
+        self.window.rootViewController = nav;
+        
+    }else{
+        TabBarViewController * tabVC = [[TabBarViewController alloc]init];
+        self.window.rootViewController = tabVC;
+    }
+    
+    [self.window makeKeyAndVisible];
     [user setObject:@[] forKey:@"city"];
-    [user setObject:@"" forKey:@"token"];
-    [user setObject:@"" forKey:@"userID"];
     [user synchronize];
     /*
      *  键盘弹出事件
@@ -63,7 +67,7 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     manager.shouldResignOnTouchOutside = YES;
     manager.shouldToolbarUsesTextFieldTintColor = YES;
     manager.enableAutoToolbar = NO;
-
+    
     // 注册apns通知
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) // iOS10
     {
@@ -87,7 +91,7 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     [JPUSHService setupWithOption:launchOptions appKey:JPUSHAPPKEY channel:channel apsForProduction:isProduction advertisingIdentifier:nil];
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
-
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -122,21 +126,37 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     completionHandler(UIBackgroundFetchResultNewData);
 }
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
-
-
-
+    
+    
+    
     NSDictionary * userInfo = [notification userInfo];
     NSString *content = [userInfo valueForKey:@"content"];
     NSMutableDictionary *dic = [content mj_JSONObject];
     NSLog(@"%@",dic);
     NSLog(@"%@ %@",[dic objectForKey:@"cmd"],[dic objectForKey:@"msg"]);
-     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
     if ([[dic objectForKey:@"cmd"] isEqualToString:@"promotion_get"]){
-    NSArray * dataArr = [dic objectForKey:@"data"];
-    for  ( int i = 0; i < dataArr.count ;i++){
-        if ([[user objectForKey:@"userID"] isEqualToString:dataArr[i][@"user_id"]] ){
-
-            NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包领取成功.mp3" ofType:nil];
+        NSArray * dataArr = [dic objectForKey:@"data"];
+        for  ( int i = 0; i < dataArr.count ;i++){
+            if ([[user objectForKey:@"userID"] isEqualToString:dataArr[i][@"user_id"]] ){
+                
+                NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包领取成功.mp3" ofType:nil];
+                NSURL *url=[NSURL fileURLWithPath:urlStr];
+                NSError *error=nil;
+                //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
+                _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+                //设置播放器属性
+                _audioPlayer.numberOfLoops=0;//设置为0不循环
+                [_audioPlayer play];
+                
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
+            }
+        }
+    }
+    else if ([[dic objectForKey:@"cmd"] isEqualToString:@"promotion_use"]){
+        if (![[user objectForKey:@"userID"] isEqualToString:@""]){
+            NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包核销成功.mp3" ofType:nil];
             NSURL *url=[NSURL fileURLWithPath:urlStr];
             NSError *error=nil;
             //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
@@ -144,20 +164,8 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
             //设置播放器属性
             _audioPlayer.numberOfLoops=0;//设置为0不循环
             [_audioPlayer play];
-          
-        }
-    }
-    }
-    else if ([[dic objectForKey:@"cmd"] isEqualToString:@"promotion_use"]){
-        if (![[user objectForKey:@"userID"] isEqualToString:@""]){
-        NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包核销成功.mp3" ofType:nil];
-        NSURL *url=[NSURL fileURLWithPath:urlStr];
-        NSError *error=nil;
-        //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
-        _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
-        //设置播放器属性
-        _audioPlayer.numberOfLoops=0;//设置为0不循环
-        [_audioPlayer play];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
+            
         }
     }else{
         if ([[dic objectForKey:@"token"] isEqualToString:[user objectForKey:@"token"]]){
@@ -168,7 +176,7 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
             self.window.rootViewController = nav;
         }
     }
-   
+    
 }
 - (UIViewController*)topViewController {
     return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
@@ -237,7 +245,6 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     //进入后台
     
     _goBackground = YES;
-    [self controlTheTime];
     
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -249,28 +256,28 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
 }
-- (void)controlTheTime
-{
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(controlTheTimeFnid:) userInfo:nil repeats:YES];
-}
-
-- (void)controlTheTimeFnid:(NSTimer *)time
-{
-    NSUserDefaults * user  = [NSUserDefaults standardUserDefaults];
-    if (![[user objectForKey:@"userID"] isEqualToString:@""]){
-        while (1) {
-            NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包领取成功.mp3" ofType:nil];
-            NSURL *url=[NSURL fileURLWithPath:urlStr];
-            NSError *error=nil;
-            //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
-            _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
-            //设置播放器属性
-            _audioPlayer.numberOfLoops=100;//设置为0不循环
-            [_audioPlayer play];
-        };
-        
-    }
-}
+//- (void)controlTheTime
+//{
+//    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(controlTheTimeFnid:) userInfo:nil repeats:YES];
+//}
+//
+//- (void)controlTheTimeFnid:(NSTimer *)time
+//{
+//    NSUserDefaults * user  = [NSUserDefaults standardUserDefaults];
+//    if (![[user objectForKey:@"userID"] isEqualToString:@""]){
+//        while (1) {
+//            NSString *urlStr=[[NSBundle mainBundle]pathForResource:@"红包领取成功.mp3" ofType:nil];
+//            NSURL *url=[NSURL fileURLWithPath:urlStr];
+//            NSError *error=nil;
+//            //初始化播放器，注意这里的Url参数只能时文件路径，不支持HTTP Url
+//            _audioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+//            //设置播放器属性
+//            _audioPlayer.numberOfLoops=100;//设置为0不循环
+//            [_audioPlayer play];
+//        };
+//
+//    }
+//}
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
@@ -280,8 +287,8 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-   
-
+    
+    
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -290,8 +297,6 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
     [user setObject:@[] forKey:@"city"];
-    [user setObject:@"" forKey:@"token"];
-    [user setObject:@"" forKey:@"userID"];
     [user synchronize];
 }
 
