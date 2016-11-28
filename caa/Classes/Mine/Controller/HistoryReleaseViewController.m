@@ -55,7 +55,18 @@
             _playLabNum.text = [NSString stringWithFormat:@"%@ 次",adMsgModel.play_count];
             _receLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.get_count];
             _useLabNum.text = [NSString stringWithFormat:@"%@ 人",adMsgModel.use_count];
-            
+            if ([adMsgModel.get_count isEqualToString:@"0"]){
+                _receBtn.enabled = NO;
+            }else{
+                _receBtn.enabled = YES;
+                
+            }
+            if ([adMsgModel.use_count isEqualToString:@"0"]){
+                _useBtn.enabled = NO;
+            }else{
+                _useBtn.enabled = YES;
+                
+            }
         }
         else if (status == -1){
             HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];

@@ -174,6 +174,18 @@
                     _playLabNum.text = [NSString stringWithFormat:@"%@ 次",_adMsgModel.play_count];
                     _receLabNum.text = [NSString stringWithFormat:@"%@ 人",_adMsgModel.get_count];
                     _useLabNum.text = [NSString stringWithFormat:@"%@ 人",_adMsgModel.use_count];
+                    if ([_adMsgModel.get_count isEqualToString:@"0"]){
+                        _receBtn.enabled = NO;
+                    }else{
+                        _receBtn.enabled = YES;
+
+                    }
+                    if ([_adMsgModel.use_count isEqualToString:@"0"]){
+                        _useBtn.enabled = NO;
+                    }else{
+                        _useBtn.enabled = YES;
+
+                    }
                 }
                 
                 if ([_adMsgModel.device_count isEqualToString:@"0"]){

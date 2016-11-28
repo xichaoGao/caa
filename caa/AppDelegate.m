@@ -169,11 +169,12 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
         }
     }else{
         if ([[dic objectForKey:@"token"] isEqualToString:[user objectForKey:@"token"]]){
-            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:[dic objectForKey:@"msg"]  buttonTitles:@"确定", nil];
-            [alert showInView:self.window completion:nil];
+           
             LoginViewController * logVC  = [[LoginViewController alloc]init];
             UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:logVC];
             self.window.rootViewController = nav;
+            HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:[dic objectForKey:@"msg"]  buttonTitles:@"确定", nil];
+            [alert showInView:self.window completion:nil];
         }
     }
     
@@ -295,9 +296,7 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-    [user setObject:@[] forKey:@"city"];
-    [user synchronize];
+   
 }
 
 

@@ -15,7 +15,13 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
 
 @interface WxUserListViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    NSMutableArray * dataArr;
+    NSMutableArray * dataArr;//所有数据
+    NSArray * sortTimeArr;//排序后的时间戳
+    NSMutableArray * timeArr;//时间戳
+    NSMutableArray * useDataArr;//已使用的数据
+    NSArray * sortBeyTimeArr;//排序后的时间戳
+    NSMutableArray * beyTimeArr;//时间戳
+    NSMutableArray * beyTimeDataArr;//已使用的数据
     BOOL isRefresh;
     NSInteger _pageID;
     NSInteger _num;
@@ -43,6 +49,13 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
     _num = 0;
     self.navigationItem.title = @"领取使用情况";
     dataArr = [NSMutableArray arrayWithCapacity:1];
+    timeArr = [NSMutableArray arrayWithCapacity:1];
+    sortTimeArr = [NSArray array];
+    useDataArr = [NSMutableArray arrayWithCapacity:1];
+    
+    beyTimeArr = [NSMutableArray arrayWithCapacity:1];
+    sortBeyTimeArr = [NSArray array];
+    beyTimeDataArr = [NSMutableArray arrayWithCapacity:1];
     [self createUI];
     [self getDataSource];
     
@@ -60,10 +73,10 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
         int status = [[result objectForKey:@"status"] intValue];;
         if (status == 1) {
             if (isRefresh){
-            [_listTableView.mj_header endRefreshing];
+                [_listTableView.mj_header endRefreshing];
                 [dataArr removeAllObjects];
             }else
-            [_listTableView.mj_footer endRefreshing];
+                [_listTableView.mj_footer endRefreshing];
             NSArray * arr = [result objectForKey:@"data"];
             for (int i= 0; i < arr.count;i++){
                 WxUserModel * model = [WxUserModel mj_objectWithKeyValues:arr[i]];
@@ -96,7 +109,7 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
     _listTableView.dataSource = self;
     _listTableView.separatorStyle = UITableViewCellSelectionStyleNone;
     _listTableView.backgroundColor = [UIColor clearColor];
-     [_listTableView registerClass:[WxUserTableViewCell class] forCellReuseIdentifier:WxUserTableViewCellIdenfire];
+    [_listTableView registerClass:[WxUserTableViewCell class] forCellReuseIdentifier:WxUserTableViewCellIdenfire];
     [self.view addSubview:_listTableView];
     _listTableView.tableHeaderView = [self createtableViewHead];
     _listTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(releaseDetailTableViewHeaderRefresh)];
@@ -139,11 +152,17 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
             }
         }else if (_index == 2){
             if ([mol.status isEqualToString:[NSString stringWithFormat:@"%ld",_index-1]]){
+                [timeArr addObject:[NSString stringWithFormat:@"%ld",mol.use_time]];
+                sortTimeArr = [timeArr sortedArrayUsingSelector:@selector(compare:)];
+                [useDataArr addObject:mol];
                 _num ++;
             }
         }
         else{
             if (![mol.status isEqualToString:[NSString stringWithFormat:@"%d",3]]){
+                [beyTimeArr addObject:[NSString stringWithFormat:@"%ld",mol.use_time]];
+                sortBeyTimeArr = [timeArr sortedArrayUsingSelector:@selector(compare:)];
+                [beyTimeDataArr addObject:mol];
                 _num ++;
             }
         }
@@ -163,24 +182,31 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
         }
     }
     else if (_index == 2){
-        if ([mol.status isEqualToString:[NSString stringWithFormat:@"%d",1]]){
-            [wxUserTableViewCell.WxImg sd_setImageWithURL:[NSURL URLWithString:mol.headimgurl] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
-            wxUserTableViewCell.nickNameLab.text = mol.nickname;
-            wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:mol.create_time format:@"yyyy-MM-dd hh:mm:ss"];
-            wxUserTableViewCell.useTimeLab.text = [NSDate stringWithTimestamp:mol.use_time format:@"yyyy-MM-dd hh:mm:ss"];
+        for (int i = 0 ;i < useDataArr.count ;i++){
+            WxUserModel * useMol = useDataArr[i];
+            if ([sortTimeArr[indexPath.row] intValue] == useMol.use_time){
+                [wxUserTableViewCell.WxImg sd_setImageWithURL:[NSURL URLWithString:useMol.headimgurl] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
+                wxUserTableViewCell.nickNameLab.text = useMol.nickname;
+                wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:useMol.create_time format:@"yyyy-MM-dd hh:mm:ss"];
+                wxUserTableViewCell.useTimeLab.text = [NSDate stringWithTimestamp:useMol.use_time format:@"yyyy-MM-dd hh:mm:ss"];
+            }
         }
+       
     }
     else{
-        if ([mol.status isEqualToString:[NSString stringWithFormat:@"%d",3]]){
-            [wxUserTableViewCell.WxImg sd_setImageWithURL:[NSURL URLWithString:mol.headimgurl] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
-            wxUserTableViewCell.nickNameLab.text = mol.nickname;
-            wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:mol.create_time format:@"yyyy-MM-dd hh:mm:ss"];
-            wxUserTableViewCell.useTimeLab.text = [NSDate stringWithTimestamp:mol.use_time format:@"yyyy-MM-dd hh:mm:ss"];
+        for (int i = 0 ;i < beyTimeDataArr.count ;i++){
+            WxUserModel * useMol = beyTimeDataArr[i];
+            if ([sortBeyTimeArr[indexPath.row] intValue] == useMol.use_time){
+                [wxUserTableViewCell.WxImg sd_setImageWithURL:[NSURL URLWithString:useMol.headimgurl] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
+                wxUserTableViewCell.nickNameLab.text = useMol.nickname;
+                wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:useMol.create_time format:@"yyyy-MM-dd hh:mm:ss"];
+                wxUserTableViewCell.useTimeLab.text = [NSDate stringWithTimestamp:useMol.use_time format:@"yyyy-MM-dd hh:mm:ss"];
+            }
         }
     }
     
-   
-   
+    
+    
     return wxUserTableViewCell;
 }
 -(void)touchClick:(UIButton*)sender{

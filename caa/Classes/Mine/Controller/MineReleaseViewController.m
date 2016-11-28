@@ -19,6 +19,7 @@
     UIView *_dateView;
     NSMutableArray *_dateArr;
     ProgressModel * _model;
+     BOOL isRefresh;
 }
 @property(nonatomic,strong)NSDictionary *pramerDic;
 @property(nonatomic,strong)UIScrollView * bgScrollView;
@@ -58,9 +59,14 @@
         hud.hidden = YES;
         int status = [[result objectForKey:@"status"] intValue];;
         if (status == 1) {
-            NSDictionary * dic = [result objectForKey:@"data"];
-            [_bgScrollView.mj_header endRefreshing];
-            [_bgScrollView.mj_footer endRefreshing];
+            
+            if (isRefresh){
+                [_bgScrollView.mj_header endRefreshing];
+                [_dateArr removeAllObjects];
+            }else{
+                [_bgScrollView.mj_footer endRefreshing];
+            }
+             NSDictionary * dic = [result objectForKey:@"data"];
             _model = [ProgressModel mj_objectWithKeyValues:dic[@"in_progress"]];
             if ([_model.status isEqualToString:@"1"]){
                 nowLab.text = @"正在发布:";
@@ -69,6 +75,18 @@
                 _playLabNum.text = [NSString stringWithFormat:@"%@ 次",_model.play_count];
                 _receLabNum.text = [NSString stringWithFormat:@"%@ 人",_model.get_count];
                 _useLabNum.text = [NSString stringWithFormat:@"%@ 人",_model.use_count];
+                if ([_model.get_count isEqualToString:@"0"]){
+                    _receBtn.enabled = NO;
+                }else{
+                    _receBtn.enabled = YES;
+                    
+                }
+                if ([_model.use_count isEqualToString:@"0"]){
+                    _useBtn.enabled = NO;
+                }else{
+                    _useBtn.enabled = YES;
+                    
+                }
             }
             else if ([_model.status isEqualToString:@"0"]){
                 nowLab.text = @"正在审核:";
@@ -301,6 +319,7 @@
         if (status == 1) {
             nowLab.hidden = YES;
             _showView.hidden = YES;
+             [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
         }
         else if (status == -1){
             HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
@@ -323,10 +342,14 @@
 }
 -(void)releaseDetailTableViewHeaderRefresh{
     _pageID = 0;
+    isRefresh = YES;
+
     [self getDataSoure];
 }
 -(void)releaseDetailTableViewFooterRefresh{
     _pageID =+10;
+    isRefresh = NO;
+
     [self getDataSoure];
 }
 - (void)didReceiveMemoryWarning {
