@@ -85,6 +85,7 @@
     _relAdLab.font = [UIFont boldSystemFontOfSize:30];
     [_adView addSubview:_relAdLab];
     
+    
     _showView = [[UIView alloc]initWithFrame:CGRectMake(20, _adView.bottom + 30 * WidthRate, kScreenWidth-40*WidthRate, 85*WidthRate)];
     [self.view addSubview:_showView];
     _showView.hidden = YES;
@@ -167,6 +168,20 @@
                 _adMsgModel = [AdMsgModel  mj_objectWithKeyValues:[result  objectForKey:@"data"]];
                 if ([_adMsgModel.device_count isEqualToString:@"0"]){
                     _showView.hidden = YES;
+                    if ([[use objectForKey:@"audit"] isEqualToString:@"0"]){
+                        
+                    }else{
+                        _tipView =  [[UIView alloc]initWithFrame:CGRectMake(20, _adView.bottom + 30 * WidthRate, kScreenWidth-40*WidthRate, 80*WidthRate)];
+                        
+                        [self.view addSubview:_tipView];
+                        
+                        _tipLab = [[UILabel alloc]initWithFrame:CGRectMake((_tipView.width - 250)/2, 25*WidthRate, 250, 30*WidthRate)];
+                        _tipLab.textColor = RGB(0.41, 0.41, 0.41);
+                        _tipLab.textAlignment = NSTextAlignmentCenter;
+                        _tipLab.text=  @"正在审核，预计俩小时后审核通过";
+                        _tipLab.font = [UIFont systemFontOfSize:16];
+                        [_tipView addSubview:_tipLab];
+                    }
                     
                 }else{
                     _showView.hidden = NO;

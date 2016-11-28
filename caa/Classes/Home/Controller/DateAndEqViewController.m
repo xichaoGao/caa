@@ -557,7 +557,9 @@
         NSMutableDictionary *dic = [resultString mj_JSONObject];
         int status = [[dic objectForKey:@"status"] intValue];;
         if (status == 1) {
-            
+             NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+            [use setObject:@"1" forKey:@"audit"];
+            [use synchronize];
             ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
             rsVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:rsVC animated:YES];

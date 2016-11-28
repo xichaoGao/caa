@@ -46,6 +46,7 @@
     _dateArr = [NSMutableArray arrayWithCapacity:1];
     [self createUI];
     [self getDataSoure];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(RefreshHomeData) name:@"Refresh" object:nil];
     // Do any additional setup after loading the view.
 }
 -(void)getDataSoure{
@@ -352,9 +353,17 @@
 
     [self getDataSoure];
 }
+//刷新界面
+- (void)RefreshHomeData{
+    [self getDataSoure];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

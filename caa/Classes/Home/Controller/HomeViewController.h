@@ -18,6 +18,8 @@
 @property(nonatomic,strong)UIView * adView;//发布广告背景
 @property(nonatomic,strong)UIImageView * relImg;//发布图片
 @property(nonatomic,strong)UILabel * relAdLab;//发布广告
+@property(nonatomic,strong)UIView * tipView;//提示背景
+@property(nonatomic,strong)UILabel * tipLab;
 @property(nonatomic,strong)UIView * showView;//显示背景
 @property(nonatomic,strong)UILabel * relLab;//正在发布
 @property(nonatomic,strong)UILabel * relLabNum;//发布屏数

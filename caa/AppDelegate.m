@@ -58,6 +58,7 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     
     [self.window makeKeyAndVisible];
     [user setObject:@[] forKey:@"city"];
+    [user setObject:@"0" forKey:@"audit"];
     [user synchronize];
     /*
      *  键盘弹出事件
@@ -91,7 +92,7 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     [JPUSHService setupWithOption:launchOptions appKey:JPUSHAPPKEY channel:channel apsForProduction:isProduction advertisingIdentifier:nil];
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
-    
+   
     // Override point for customization after application launch.
     return YES;
 }
