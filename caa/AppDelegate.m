@@ -119,10 +119,12 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     
     if ([[UIDevice currentDevice].systemVersion floatValue] < 10.0 || application.applicationState > 0)
     {
+         [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
         // 程序在前台或通过点击推送进来的会弹这个alert
-        NSString *message = [NSString stringWithFormat:@"iOS7-8-9收到的推送%@", [userInfo[@"aps"] objectForKey:@"alert"]];
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
-        [alert showInView:self.window completion:nil];
+//        NSString *message = [NSString stringWithFormat:@"iOS7-8-9收到的推送%@", [userInfo[@"aps"] objectForKey:@"alert"]];
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
+//        [alert showInView:self.window completion:nil];
     }
     completionHandler(UIBackgroundFetchResultNewData);
 }
@@ -210,10 +212,12 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]])
     {
         [JPUSHService handleRemoteNotification:userInfo];
-        NSString *message = [NSString stringWithFormat:@"will%@", [userInfo[@"aps"] objectForKey:@"alert"]];
-        NSLog(@"iOS10程序在前台时收到的推送: %@", message);
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
-        [alert showInView:self.window completion:nil];
+         [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+//        NSString *message = [NSString stringWithFormat:@"will%@", [userInfo[@"aps"] objectForKey:@"alert"]];
+//        NSLog(@"iOS10程序在前台时收到的推送: %@", message);
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
+//        [alert showInView:self.window completion:nil];
     }
     
     completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
@@ -228,10 +232,12 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]])
     {
         [JPUSHService handleRemoteNotification:userInfo];
-        NSString *message = [NSString stringWithFormat:@"did%@", [userInfo[@"aps"] objectForKey:@"alert"]];
-        NSLog(@"iOS10程序关闭后通过点击推送进入程序弹出的通知: %@", message);
-        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
-        [alert showInView:self.window completion:nil];
+         [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+//        NSString *message = [NSString stringWithFormat:@"did%@", [userInfo[@"aps"] objectForKey:@"alert"]];
+//        NSLog(@"iOS10程序关闭后通过点击推送进入程序弹出的通知: %@", message);
+//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
+//        [alert showInView:self.window completion:nil];
     }
     
     completionHandler();  // 系统要求执行这个方法

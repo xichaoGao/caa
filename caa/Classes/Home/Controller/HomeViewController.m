@@ -120,7 +120,7 @@
     [_showView addSubview:_receLabNum];
     
     _receBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _receBtn.frame = CGRectMake(_receLabNum.right+3, _receLabNum.origin.y+8, 10, 20);
+    _receBtn.frame = CGRectMake(_receLabNum.right+3, _receLabNum.origin.y+5, 15, 25);
     [_receBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
     _receBtn.tag = 1000;
     [_receBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -135,7 +135,7 @@
     _useLabNum.textColor = KTextNumColor1;
     [_showView addSubview:_useLabNum];
     _useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _useBtn.frame = CGRectMake(_useLabNum.right+3, _useLabNum.origin.y+8, 10, 20);
+    _useBtn.frame = CGRectMake(_useLabNum.right, _useLabNum.origin.y+5, 15, 25);
     [_useBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
     _useBtn.tag = 2000;
     [_useBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];

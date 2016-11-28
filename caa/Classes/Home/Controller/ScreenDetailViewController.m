@@ -176,10 +176,12 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString * cellID=@"cellID";
     UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
+    
     cell.textLabel.text = dataArr[indexPath.row][@"title"];
     cell.textLabel.textColor = RGB(0.41, 0.41, 0.41);
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
     return  cell;
 }
 - (void)didReceiveMemoryWarning {
