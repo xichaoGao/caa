@@ -52,7 +52,7 @@
     _tipLab.textColor = RGB(0.41, 0.41, 0.41);
     _tipLab.textAlignment = NSTextAlignmentCenter;
     _tipLab.text=  @"正在审核，预计俩小时后审核通过";
-    _tipLab.font = [UIFont systemFontOfSize:14];
+    _tipLab.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:_tipLab];
 }
 //我的发布点击事件

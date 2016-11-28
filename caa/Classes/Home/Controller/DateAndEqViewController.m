@@ -560,6 +560,7 @@
              NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
             [use setObject:@"1" forKey:@"audit"];
             [use synchronize];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
             ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
             rsVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:rsVC animated:YES];

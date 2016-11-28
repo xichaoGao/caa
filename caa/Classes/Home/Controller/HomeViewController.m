@@ -22,6 +22,7 @@
 #define KTextNumColor1 RGB(0.96, 0.60, 0.51)
 @interface HomeViewController (){
     AdMsgModel *_adMsgModel;
+    UITapGestureRecognizer *tapGess;
 }
 @property(nonatomic,strong)NSDictionary *pramerDic;
 @end
@@ -170,7 +171,11 @@
                     _showView.hidden = YES;
                     if ([[use objectForKey:@"audit"] isEqualToString:@"0"]){
                         
+                            tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relAdTap)];
+                            [_adView addGestureRecognizer:tapGess];
+                        
                     }else{
+                        [_adView removeGestureRecognizer:tapGess];
                         _tipView =  [[UIView alloc]initWithFrame:CGRectMake(20, _adView.bottom + 30 * WidthRate, kScreenWidth-40*WidthRate, 80*WidthRate)];
                         
                         [self.view addSubview:_tipView];
@@ -203,16 +208,14 @@
                     }
                 }
                 
-                if ([_adMsgModel.device_count isEqualToString:@"0"]){
-                    UITapGestureRecognizer *tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relAdTap)];
-                    [_adView addGestureRecognizer:tapGess];
-                }
+               
             }
         }
         else if (status == -1){
             HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
             [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
                 LoginViewController * logVC = [[LoginViewController alloc]init];
+                logVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:logVC animated:YES];            }];
         }
         else{

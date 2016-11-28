@@ -30,7 +30,7 @@
         defLab.textAlignment = NSTextAlignmentCenter;
         [_bgView addSubview:defLab];
         
-        _addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, _bgView.bottom-15, _bgView.width, 10)];
+        _addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, _bgView.bottom-15, _bgView.width, 10)];
         _addressLabel.numberOfLines = 0;
         _addressLabel.textAlignment = NSTextAlignmentLeft;
         _addressLabel.backgroundColor = [UIColor clearColor];
@@ -44,7 +44,7 @@
         
         
         
-        _contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,_bgView.bottom + 15   ,_bgView.width,40)];
+        _contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(5,_bgView.bottom + 15   ,_bgView.width,40)];
         _contentLabel.textColor = [UIColor redColor];
         _contentLabel.textAlignment = NSTextAlignmentLeft;
         _contentLabel.font = [UIFont systemFontOfSize:16.0f];

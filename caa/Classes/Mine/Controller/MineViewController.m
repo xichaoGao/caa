@@ -162,6 +162,7 @@
                     HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
                     [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
                         LoginViewController * logVC = [[LoginViewController alloc]init];
+                        logVC.hidesBottomBarWhenPushed = YES;
                         [self.navigationController pushViewController:logVC animated:YES];            }];
                 }
                 else{
@@ -237,6 +238,7 @@
                 HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
                 [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
                     LoginViewController * logVC = [[LoginViewController alloc]init];
+                    logVC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:logVC animated:YES];            }];
             }
             else{
@@ -412,6 +414,7 @@
                     HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
                     [alert showInView:self.view completion:^(HYAlertView *alertView, NSInteger selectIndex) {
                         LoginViewController * logVC = [[LoginViewController alloc]init];
+                        logVC.hidesBottomBarWhenPushed = YES;
                         [self.navigationController pushViewController:logVC animated:YES];            }];
                 }
                 else{
