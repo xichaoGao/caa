@@ -120,9 +120,12 @@
     [_showView addSubview:_receLabNum];
     
     _receBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _receBtn.frame = CGRectMake(_receLabNum.right+3, _receLabNum.origin.y+5, 15, 25);
+    _receBtn.frame = CGRectMake(_receLab.left, _receLabNum.origin.y+5, _receLab.width+_receLabNum.width+15, 25);
     [_receBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
     _receBtn.tag = 1000;
+    _receBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -_receBtn.width);
+
+    _receBtn.backgroundColor = [UIColor clearColor];
     [_receBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_receBtn];
     _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
@@ -135,9 +138,11 @@
     _useLabNum.textColor = KTextNumColor1;
     [_showView addSubview:_useLabNum];
     _useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _useBtn.frame = CGRectMake(_useLabNum.right, _useLabNum.origin.y+5, 15, 25);
+    _useBtn.frame = CGRectMake(_useLab.left, _useLabNum.origin.y+5, _useLab.width+_useLabNum.width+15, 25);
     [_useBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
+    _useBtn.backgroundColor = [UIColor clearColor];
     _useBtn.tag = 2000;
+    _useBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -_useBtn.width);
     [_useBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_useBtn];
     
@@ -190,6 +195,7 @@
                     
                 }else{
                     _showView.hidden = NO;
+                    _tipView.hidden = YES;
                     _relLabNum.text = [NSString stringWithFormat:@"%@ 屏",_adMsgModel.device_count];
                     _playLabNum.text = [NSString stringWithFormat:@"%@ 次",_adMsgModel.play_count];
                     _receLabNum.text = [NSString stringWithFormat:@"%@ 人",_adMsgModel.get_count];

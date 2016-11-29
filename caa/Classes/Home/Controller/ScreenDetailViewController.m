@@ -55,7 +55,8 @@
             if ( ![model.photo isEqualToString:@""]){
                 _faceImg.hidden = YES;
                 _faceLab.hidden = YES;
-                [_screenImg sd_setImageWithURL:[NSURL URLWithString:model.photo]];
+                [_screenImg sd_setImageWithURL:[NSURL URLWithString:model.photo] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
+                
             }else{
                 _faceLab.hidden = NO;
                 _faceImg.hidden = NO;
@@ -124,7 +125,7 @@
     _hotLab.font = [UIFont systemFontOfSize:16];
     [_bgView addSubview:_hotLab];
     for (int i=0 ; i<3;i++){
-        _heartImg = [[UIImageView alloc]initWithFrame:CGRectMake(_hotLab.right+5 + i*20, 10, 15, 15)];
+        _heartImg = [[UIImageView alloc]initWithFrame:CGRectMake(_hotLab.right+5 + i*20, 5*WidthRate, 15, 15)];
         [_heartImg sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"home_detail_heat"]];
         [_bgView addSubview:_heartImg];
     }

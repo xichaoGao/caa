@@ -94,10 +94,15 @@
                 _bgView.hidden = NO;
             }
             else{
-                
+                nowLab.hidden = YES;
+                _showView.hidden = YES;
+                _bgView.hidden =  YES;
             }
+            
             if ([dic[@"history"] isKindOfClass:[NSArray class]]){
                 NSArray *arr = dic[@"history"];
+                [_dateView removeFromSuperview];
+                [_dateArr removeAllObjects];
                 if (arr.count >0){
                     for (int i = 0;i<arr.count ;i++){
                         HistoryModel * mol = [HistoryModel mj_objectWithKeyValues:arr[i]];
@@ -106,8 +111,13 @@
                     if (_showView.hidden == NO){
                         _dateView = [self createViewWithY:_showView.bottom + 20*WidthRate Title:@"历史发布:" contentArray:_dateArr part:1];
                         [_bgScrollView addSubview:_dateView];
-                    }else{
+                    }
+                    else if (_bgView.hidden == NO){
                         _dateView = [self createViewWithY:_bgView.bottom + 20*WidthRate Title:@"历史发布:" contentArray:_dateArr part:1];
+                        [_bgScrollView addSubview:_dateView];
+                    }
+                    else{
+                        _dateView = [self createViewWithY: 20*WidthRate Title:@"历史发布:" contentArray:_dateArr part:1];
                         [_bgScrollView addSubview:_dateView];
                     }
                 }
@@ -194,9 +204,12 @@
     _receLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_receLabNum];
     _receBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _receBtn.frame = CGRectMake(_receLabNum.right, _receLabNum.origin.y+5, 15, 25);
+    _receBtn.frame = CGRectMake(_receLab.left, _receLabNum.origin.y+5, _receLab.width+_receLabNum.width+15, 25);
     [_receBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
     _receBtn.tag = 1000;
+    _receBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -_receBtn.width+5);
+    
+    _receBtn.backgroundColor = [UIColor clearColor];
     [_receBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_receBtn];
     _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
@@ -209,9 +222,11 @@
     _useLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_useLabNum];
     _useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _useBtn.frame = CGRectMake(_useLabNum.right, _useLabNum.origin.y+5, 15, 25);
+    _useBtn.frame = CGRectMake(_useLab.left, _useLabNum.origin.y+5, _useLab.width+_useLabNum.width+15, 25);
     [_useBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
+    _useBtn.backgroundColor = [UIColor clearColor];
     _useBtn.tag = 2000;
+    _useBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -_useBtn.width+5);
     [_useBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_useBtn];
 
@@ -320,6 +335,7 @@
         if (status == 1) {
             nowLab.hidden = YES;
             _showView.hidden = YES;
+            
              [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
         }
         else if (status == -1){

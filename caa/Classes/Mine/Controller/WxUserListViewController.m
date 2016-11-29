@@ -198,6 +198,8 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
                     wxUserTableViewCell.nickNameLab.text = useMol.nickname;
                     wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:useMol.create_time format:@"yyyy-MM-dd hh:mm:ss"];
                     wxUserTableViewCell.useTimeLab.text = [NSDate stringWithTimestamp:useMol.use_time format:@"yyyy-MM-dd hh:mm:ss"];
+                    wxUserTableViewCell.useLab.hidden = YES;
+                    wxUserTableViewCell.useTimeLab.hidden = YES;
                 }
             }
         }
@@ -211,6 +213,8 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
                     wxUserTableViewCell.nickNameLab.text = useMol.nickname;
                     wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:useMol.create_time format:@"yyyy-MM-dd hh:mm:ss"];
                     wxUserTableViewCell.useTimeLab.text = [NSDate stringWithTimestamp:useMol.use_time format:@"yyyy-MM-dd hh:mm:ss"];
+                    wxUserTableViewCell.useLab.hidden = NO;
+                    wxUserTableViewCell.useTimeLab.hidden = NO;
                 }
             }
         }
@@ -224,6 +228,8 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
                     wxUserTableViewCell.nickNameLab.text = useMol.nickname;
                     wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:useMol.create_time format:@"yyyy-MM-dd hh:mm:ss"];
                     wxUserTableViewCell.useTimeLab.text = [NSDate stringWithTimestamp:useMol.use_time format:@"yyyy-MM-dd hh:mm:ss"];
+                    wxUserTableViewCell.useLab.hidden = YES;
+                    wxUserTableViewCell.useTimeLab.hidden = YES;
                 }
             }
         }

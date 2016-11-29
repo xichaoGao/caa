@@ -85,8 +85,34 @@
     nowLab.font = [UIFont systemFontOfSize:18];
     nowLab.textColor = RGB(0.47, 0.47, 0.47);
     [self.view addSubview:nowLab];
-    
-    _showView = [[UIView alloc]initWithFrame:CGRectMake(12, nowLab.bottom + 10 * WidthRate, kScreenWidth-24, 135*WidthRate)];
+    if ([_Model.status isEqualToString:@"2"]){
+        if ([_Model.type isEqualToString:@"0"]){
+            nowLab.text = [NSString stringWithFormat:@"%@ 中午(已结束)",_Model.time];
+        }else
+            nowLab.text = [NSString stringWithFormat:@"%@ 晚上(已结束)",_Model.time];
+        nowLab.textColor = RGB(0.96, 0.60, 0.51);
+    }
+    else if([_Model.status isEqualToString:@"3"]){
+        //        _detailBtn.enabled = NO;
+        if ([_Model.type isEqualToString:@"0"]){
+            nowLab.text = [NSString stringWithFormat:@"%@ 中午(已拒绝)",_Model.time];
+        }else
+            nowLab.text = [NSString stringWithFormat:@"%@ 晚上(已拒绝)",_Model.time];
+        nowLab.textColor = [UIColor redColor];
+        
+        
+    }
+    else{
+        //        _detailBtn.enabled = YES;
+        if ([_Model.type isEqualToString:@"0"]){
+            nowLab.text = [NSString stringWithFormat:@"%@ 中午(已取消)",_Model.time];
+        }else
+            nowLab.text = [NSString stringWithFormat:@"%@ 晚上(已取消)",_Model.time];
+        nowLab.textColor = [UIColor grayColor];
+        
+    }
+    _showView = [[UIView alloc]initWithFrame:CGRectMake(12, nowLab.bottom + 10 * WidthRate, kScreenWidth-24, 190*WidthRate)];
+    _showView.userInteractionEnabled = YES;
     [self.view addSubview:_showView];
     _relLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 75*WidthRate, 35*WidthRate)];
     _relLab.text = @"正在发布:";
@@ -117,9 +143,12 @@
     _receLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_receLabNum];
     _receBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _receBtn.frame = CGRectMake(_receLabNum.right, _receLabNum.origin.y+5, 15, 25);
+    _receBtn.frame = CGRectMake(_receLab.left, _receLabNum.origin.y+5, _receLab.width+_receLabNum.width+15, 25);
     [_receBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
     _receBtn.tag = 1000;
+    _receBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -_receBtn.width+5);
+    
+    _receBtn.backgroundColor = [UIColor clearColor];
     [_receBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_receBtn];
     _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
@@ -133,45 +162,24 @@
     [_showView addSubview:_useLabNum];
     
     _useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _useBtn.frame = CGRectMake(_useLabNum.right, _useLabNum.origin.y+5, 15, 25);
+    _useBtn.frame = CGRectMake(_useLab.left, _useLabNum.origin.y+5, _useLab.width+_useLabNum.width+15, 25);
     [_useBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
+    _useBtn.backgroundColor = [UIColor clearColor];
     _useBtn.tag = 2000;
+    _useBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -_useBtn.width+5);
     [_useBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_useBtn];
     
-    _detailBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _detailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _detailBtn.frame = CGRectMake(40*WidthRate-12, nowLab.bottom+85 + 10*WidthRate, kScreenWidth-80*WidthRate, 40*WidthRate);
     _detailBtn.layer.cornerRadius = 20*WidthRate;
     _detailBtn.layer.masksToBounds = YES;
     [_detailBtn setTitle:@"详情" forState:UIControlStateNormal];
     [_detailBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_detailBtn setBackgroundColor:RGB(0.95, 0.39, 0.21)];
-    [_detailBtn addTarget:self action:@selector(detailClick) forControlEvents:UIControlEventTouchUpInside];
+    [_detailBtn addTarget:self action:@selector(DetailClick:) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_detailBtn];
-    if ([_Model.status isEqualToString:@"2"]){
-        if ([_Model.type isEqualToString:@"0"]){
-        nowLab.text = [NSString stringWithFormat:@"%@ 中午(已结束)",_Model.time];
-        }else
-        nowLab.text = [NSString stringWithFormat:@"%@ 晚上(已结束)",_Model.time];
-        nowLab.textColor = RGB(0.96, 0.60, 0.51);
-    }
-    else if([_Model.status isEqualToString:@"3"]){
-        if ([_Model.type isEqualToString:@"0"]){
-            nowLab.text = [NSString stringWithFormat:@"%@ 中午(已拒绝)",_Model.time];
-        }else
-            nowLab.text = [NSString stringWithFormat:@"%@ 晚上(已拒绝)",_Model.time];
-        nowLab.textColor = [UIColor redColor];
-        _detailBtn.enabled = NO;
-        
-    }
-    else{
-        if ([_Model.type isEqualToString:@"0"]){
-            nowLab.text = [NSString stringWithFormat:@"%@ 中午(已取消)",_Model.time];
-        }else
-            nowLab.text = [NSString stringWithFormat:@"%@ 晚上(已取消)",_Model.time];
-        nowLab.textColor = [UIColor grayColor];
-        
-    }
+    
 }
 -(void)WxListClick:(UIButton *)sender{
     WxUserListViewController * wulVC  = [[WxUserListViewController alloc]init];
@@ -181,7 +189,7 @@
     [self.navigationController pushViewController:wulVC animated:YES];
 }
 //详情事件
--(void)detailClick{
+-(void)DetailClick:(UIButton * )sender{
     ReleaseDetailViewController * rdVC = [[ReleaseDetailViewController alloc]init];
     rdVC.hidesBottomBarWhenPushed = YES;
     rdVC.ads_id = _Model.ads_id;

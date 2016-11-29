@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 
 @interface PerAdMesViewController : BaseViewController
+@property(nonatomic,strong)UIView * effectView;//效果背景
 @property(nonatomic,strong)UIView * bgView; //背景
 @property(nonatomic,strong)UIImageView * photoImg;//广告图片
 @property(nonatomic,strong)UILabel * defaultLab;//默认字样

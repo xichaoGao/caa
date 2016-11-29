@@ -23,7 +23,7 @@
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _screenImg = [[UIImageView alloc]initWithFrame:CGRectMake(12, 10, 100, 75)];
+        _screenImg = [[UIImageView alloc]initWithFrame:CGRectMake(12, 10, 75, 75)];
         _screenImg.layer.masksToBounds = YES;
         _screenImg.layer.cornerRadius = 10;
         [self addSubview:_screenImg];
