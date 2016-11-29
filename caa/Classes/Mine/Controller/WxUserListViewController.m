@@ -161,7 +161,7 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
         WxUserModel * mol = dataArr[i];
         if (_index == 1){
             if (![mol.status isEqualToString:[NSString stringWithFormat:@"%d",2]]){
-                [receTimeArr addObject:[NSString stringWithFormat:@"%ld",mol.use_time]];
+                [receTimeArr addObject:[NSString stringWithFormat:@"%ld",mol.create_time]];
                 sortReceTimeArr = [receTimeArr sortedArrayUsingSelector:@selector(compare:)];
                 [receTimeDataArr addObject:mol];
                 _num ++;
@@ -176,7 +176,7 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
         }
         else{
             if ([mol.status isEqualToString:[NSString stringWithFormat:@"%d",2]]){
-                [beyTimeArr addObject:[NSString stringWithFormat:@"%ld",mol.use_time]];
+                [beyTimeArr addObject:[NSString stringWithFormat:@"%ld",mol.create_time]];
                 sortBeyTimeArr = [timeArr sortedArrayUsingSelector:@selector(compare:)];
                 [beyTimeDataArr addObject:mol];
                 _num ++;
@@ -193,7 +193,7 @@ static NSString * WxUserTableViewCellIdenfire = @"WxUserTableViewCell";
         if (receTimeDataArr.count >0){
             for (int i = 0 ;i < receTimeDataArr.count ;i++){
                 WxUserModel * useMol = receTimeDataArr[i];
-                if ([sortReceTimeArr[indexPath.row] intValue] == useMol.use_time){
+                if ([sortReceTimeArr[indexPath.row] intValue] == useMol.create_time){
                     [wxUserTableViewCell.WxImg sd_setImageWithURL:[NSURL URLWithString:useMol.headimgurl] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
                     wxUserTableViewCell.nickNameLab.text = useMol.nickname;
                     wxUserTableViewCell.receTimeLab.text = [NSDate stringWithTimestamp:useMol.create_time format:@"yyyy-MM-dd hh:mm:ss"];

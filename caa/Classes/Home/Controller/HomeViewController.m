@@ -99,13 +99,13 @@
     _relLabNum.textColor = KTextNumColor1;
     [_showView addSubview:_relLabNum];
     
-    _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, 0, 75*WidthRate, 35*WidthRate)];
+    _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 160*WidthRate, 0, 75*WidthRate, 35*WidthRate)];
     _playLab.text = @"播放次数:";
     _playLab.textColor = KTextColor1;
     _playLab.font = [UIFont boldSystemFontOfSize:14];
     [_showView addSubview:_playLab];
     
-    _playLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_playLab.right + 3, 0, 60*WidthRate, 35*WidthRate)];
+    _playLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_playLab.right + 3, 0, 70*WidthRate, 35*WidthRate)];
     _playLabNum.textColor = KTextNumColor1;
     [_showView addSubview:_playLabNum];
     
@@ -120,7 +120,7 @@
     [_showView addSubview:_receLabNum];
     
     _receBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _receBtn.frame = CGRectMake(_receLab.left, _receLabNum.origin.y+5, _receLab.width+_receLabNum.width+15, 25);
+    _receBtn.frame = CGRectMake(_receLab.left, _receLabNum.origin.y+5*WidthRate, _receLab.width+_receLabNum.width+15, 25*WidthRate);
     [_receBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
     _receBtn.tag = 1000;
     _receBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -_receBtn.width);
@@ -128,19 +128,18 @@
     _receBtn.backgroundColor = [UIColor clearColor];
     [_receBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_receBtn];
-    _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
+    _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 160*WidthRate, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
     _useLab.text = @"使用人数:";
     _useLab.textColor = KTextColor1;
     _useLab.font = [UIFont boldSystemFontOfSize:14];
     [_showView addSubview:_useLab];
     
-    _useLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_useLab.right + 3, _relLab.bottom + 15*WidthRate, 60*WidthRate, 35*WidthRate)];
+    _useLabNum = [[UILabel alloc]initWithFrame:CGRectMake(_useLab.right + 3, _relLab.bottom + 15*WidthRate, 70*WidthRate, 35*WidthRate)];
     _useLabNum.textColor = KTextNumColor1;
     [_showView addSubview:_useLabNum];
     _useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _useBtn.frame = CGRectMake(_useLab.left, _useLabNum.origin.y+5, _useLab.width+_useLabNum.width+15, 25);
+    _useBtn.frame = CGRectMake(_useLab.left, _useLabNum.origin.y+5*WidthRate, _useLab.width+_useLabNum.width+15, 25*WidthRate);
     [_useBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
-    _useBtn.backgroundColor = [UIColor clearColor];
     _useBtn.tag = 2000;
     _useBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -_useBtn.width);
     [_useBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];

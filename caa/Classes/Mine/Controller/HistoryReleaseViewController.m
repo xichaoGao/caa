@@ -93,7 +93,7 @@
         nowLab.textColor = RGB(0.96, 0.60, 0.51);
     }
     else if([_Model.status isEqualToString:@"3"]){
-        //        _detailBtn.enabled = NO;
+                _detailBtn.enabled = NO;
         if ([_Model.type isEqualToString:@"0"]){
             nowLab.text = [NSString stringWithFormat:@"%@ 中午(已拒绝)",_Model.time];
         }else
@@ -103,7 +103,6 @@
         
     }
     else{
-        //        _detailBtn.enabled = YES;
         if ([_Model.type isEqualToString:@"0"]){
             nowLab.text = [NSString stringWithFormat:@"%@ 中午(已取消)",_Model.time];
         }else
@@ -123,7 +122,7 @@
     _relLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_relLabNum];
     
-    _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, 0, 75*WidthRate, 35*WidthRate)];
+    _playLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 160*WidthRate, 0, 75*WidthRate, 35*WidthRate)];
     _playLab.text = @"播放次数:";
     _playLab.textColor = RGB(0.47, 0.47, 0.47);
     _playLab.font = [UIFont boldSystemFontOfSize:14];
@@ -143,7 +142,7 @@
     _receLabNum.textColor = RGB(0.96, 0.60, 0.51);
     [_showView addSubview:_receLabNum];
     _receBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _receBtn.frame = CGRectMake(_receLab.left, _receLabNum.origin.y+5, _receLab.width+_receLabNum.width+15, 25);
+    _receBtn.frame = CGRectMake(_receLab.left, _receLabNum.origin.y+5*WidthRate, _receLab.width+_receLabNum.width+15, 25*WidthRate);
     [_receBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
     _receBtn.tag = 1000;
     _receBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -_receBtn.width+5);
@@ -151,7 +150,7 @@
     _receBtn.backgroundColor = [UIColor clearColor];
     [_receBtn addTarget:self action:@selector(WxListClick:) forControlEvents:UIControlEventTouchUpInside];
     [_showView addSubview:_receBtn];
-    _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 150*WidthRate, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
+    _useLab = [[UILabel alloc]initWithFrame:CGRectMake(_showView.width - 160*WidthRate, _relLab.bottom + 15*WidthRate, 75*WidthRate, 35*WidthRate)];
     _useLab.text = @"使用人数:";
     _useLab.textColor = RGB(0.47, 0.47, 0.47);
     _useLab.font = [UIFont boldSystemFontOfSize:14];
@@ -162,7 +161,7 @@
     [_showView addSubview:_useLabNum];
     
     _useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _useBtn.frame = CGRectMake(_useLab.left, _useLabNum.origin.y+5, _useLab.width+_useLabNum.width+15, 25);
+    _useBtn.frame = CGRectMake(_useLab.left, _useLabNum.origin.y+5*WidthRate, _useLab.width+_useLabNum.width+15, 25*WidthRate);
     [_useBtn setImage:[UIImage imageNamed:@"home_public_more"] forState:UIControlStateNormal];
     _useBtn.backgroundColor = [UIColor clearColor];
     _useBtn.tag = 2000;

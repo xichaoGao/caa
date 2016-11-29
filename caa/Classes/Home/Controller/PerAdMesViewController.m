@@ -185,7 +185,7 @@
     _bgView.backgroundColor = [UIColor whiteColor];
     _bgView.layer.cornerRadius = 5;
     [_bgScrollView addSubview:_bgView];
-    _defaultLab = [[UILabel alloc]initWithFrame:CGRectMake((_bgView.width - 145*WidthRate)/2, (_bgView.height - 60*WidthRate)/2, 150*WidthRate, 60*WidthRate)];
+    _defaultLab = [[UILabel alloc]initWithFrame:CGRectMake((_bgView.width - 155*WidthRate)/2, (_bgView.height - 60*WidthRate)/2, 170*WidthRate, 60*WidthRate)];
     _defaultLab.text = @"添加广告照片(B)";
     _defaultLab.textAlignment = NSTextAlignmentCenter;
     _defaultLab.textColor  = RGB(0.84, 0.84, 0.84);
