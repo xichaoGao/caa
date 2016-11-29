@@ -87,7 +87,8 @@
 		0E86DD801DD4418A0016E365 /* AdsDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E86DD7F1DD4418A0016E365 /* AdsDetailModel.m */; };
 		0E89FA621DDB13A9004DD2D8 /* LDCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E89FA5F1DDB13A9004DD2D8 /* LDCalendarView.m */; };
 		0E89FA631DDB13A9004DD2D8 /* NSDate+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E89FA611DDB13A9004DD2D8 /* NSDate+extend.m */; };
-		0E8EC4B31DED63C800F199A9 /* caf in Resources */ = {isa = PBXBuildFile; fileRef = 0E8EC4B21DED63C800F199A9 /* caf */; };
+		0E8EC4BA1DED6AB800F199A9 /* get_promotion.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0E8EC4B81DED6AB800F199A9 /* get_promotion.caf */; };
+		0E8EC4BB1DED6AB800F199A9 /* use_promotion.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0E8EC4B91DED6AB800F199A9 /* use_promotion.caf */; };
 		0E8F2AE11DCC3AC0002FDD23 /* DateAndEqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F2AE01DCC3AC0002FDD23 /* DateAndEqViewController.m */; };
 		0E8F2AE41DCC9360002FDD23 /* ReleaseSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F2AE31DCC9360002FDD23 /* ReleaseSuccessViewController.m */; };
 		0E92B32B1DE9659400E1173B /* WxUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E92B32A1DE9659400E1173B /* WxUserListViewController.m */; };
@@ -264,7 +265,8 @@
 		0E89FA5F1DDB13A9004DD2D8 /* LDCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LDCalendarView.m; path = Classes/Thirds/LDCalenderView/LDCalendarView.m; sourceTree = "<group>"; };
 		0E89FA601DDB13A9004DD2D8 /* NSDate+extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+extend.h"; path = "Classes/Thirds/LDCalenderView/NSDate+extend.h"; sourceTree = "<group>"; };
 		0E89FA611DDB13A9004DD2D8 /* NSDate+extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+extend.m"; path = "Classes/Thirds/LDCalenderView/NSDate+extend.m"; sourceTree = "<group>"; };
-		0E8EC4B21DED63C800F199A9 /* caf */ = {isa = PBXFileReference; lastKnownFileType = folder; path = caf; sourceTree = "<group>"; };
+		0E8EC4B81DED6AB800F199A9 /* get_promotion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = get_promotion.caf; path = caa/get_promotion.caf; sourceTree = "<group>"; };
+		0E8EC4B91DED6AB800F199A9 /* use_promotion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = use_promotion.caf; path = caa/use_promotion.caf; sourceTree = "<group>"; };
 		0E8F2ADF1DCC3AC0002FDD23 /* DateAndEqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DateAndEqViewController.h; path = Classes/Home/Controller/DateAndEqViewController.h; sourceTree = "<group>"; };
 		0E8F2AE01DCC3AC0002FDD23 /* DateAndEqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateAndEqViewController.m; path = Classes/Home/Controller/DateAndEqViewController.m; sourceTree = "<group>"; };
 		0E8F2AE21DCC9360002FDD23 /* ReleaseSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReleaseSuccessViewController.h; path = Classes/Home/Controller/ReleaseSuccessViewController.h; sourceTree = "<group>"; };
@@ -336,6 +338,8 @@
 		0E3871D31DC3033F00698B90 = {
 			isa = PBXGroup;
 			children = (
+				0E8EC4B81DED6AB800F199A9 /* get_promotion.caf */,
+				0E8EC4B91DED6AB800F199A9 /* use_promotion.caf */,
 				0E3871DE1DC3033F00698B90 /* caa */,
 				0E3871F81DC3033F00698B90 /* caaTests */,
 				0E3872031DC3033F00698B90 /* caaUITests */,
@@ -358,7 +362,6 @@
 		0E3871DE1DC3033F00698B90 /* caa */ = {
 			isa = PBXGroup;
 			children = (
-				0E8EC4B21DED63C800F199A9 /* caf */,
 				0E76E2821DC86A4A008A06C1 /* caa.entitlements */,
 				0E3872241DC310D900698B90 /* Classes */,
 				0E3871E21DC3033F00698B90 /* AppDelegate.h */,
@@ -821,10 +824,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E8EC4BA1DED6AB800F199A9 /* get_promotion.caf in Resources */,
+				0E8EC4BB1DED6AB800F199A9 /* use_promotion.caf in Resources */,
 				0E6BBB071DCA0DDF00A01F44 /* JKImagePickerController.strings in Resources */,
 				0E3871EF1DC3033F00698B90 /* LaunchScreen.storyboard in Resources */,
 				0E6BBAFF1DCA0DDF00A01F44 /* ImagesPicker.xcassets in Resources */,
-				0E8EC4B31DED63C800F199A9 /* caf in Resources */,
 				0E3871EC1DC3033F00698B90 /* Assets.xcassets in Resources */,
 				0E3871EA1DC3033F00698B90 /* Main.storyboard in Resources */,
 			);
