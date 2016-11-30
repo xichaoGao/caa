@@ -168,31 +168,22 @@
         NSLog(@"loginResult==%@",result);
         int status = [[result objectForKey:@"status"] intValue];;
         if (status == 1) {
-            if([[result objectForKey:@"data"] count] > 0){
-                
                 _adMsgModel = [AdMsgModel  mj_objectWithKeyValues:[result  objectForKey:@"data"]];
-                if ([_adMsgModel.device_count isEqualToString:@"0"]){
+                if ([_adMsgModel.status isEqualToString:@"0"]){
                     _showView.hidden = YES;
-                    if ([[use objectForKey:@"audit"] isEqualToString:@"0"]){
-                        
-                            tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relAdTap)];
-                            [_adView addGestureRecognizer:tapGess];
-                        
-                    }else{
-                        [_adView removeGestureRecognizer:tapGess];
-                        _tipView =  [[UIView alloc]initWithFrame:CGRectMake(20, _adView.bottom + 30 * WidthRate, kScreenWidth-40*WidthRate, 80*WidthRate)];
-                        
-                        [self.view addSubview:_tipView];
-                        
-                        _tipLab = [[UILabel alloc]initWithFrame:CGRectMake((_tipView.width - 250)/2, 25*WidthRate, 250, 30*WidthRate)];
-                        _tipLab.textColor = RGB(0.41, 0.41, 0.41);
-                        _tipLab.textAlignment = NSTextAlignmentCenter;
-                        _tipLab.text=  @"正在审核，预计俩小时后审核通过";
-                        _tipLab.font = [UIFont systemFontOfSize:16];
-                        [_tipView addSubview:_tipLab];
-                    }
+                    [_adView removeGestureRecognizer:tapGess];
+                    _tipView =  [[UIView alloc]initWithFrame:CGRectMake(20, _adView.bottom + 30 * WidthRate, kScreenWidth-40*WidthRate, 80*WidthRate)];
                     
-                }else{
+                    [self.view addSubview:_tipView];
+                    
+                    _tipLab = [[UILabel alloc]initWithFrame:CGRectMake((_tipView.width - 250)/2, 25*WidthRate, 250, 30*WidthRate)];
+                    _tipLab.textColor = RGB(0.41, 0.41, 0.41);
+                    _tipLab.textAlignment = NSTextAlignmentCenter;
+                    _tipLab.text=  @"正在审核，预计俩小时后审核通过";
+                    _tipLab.font = [UIFont systemFontOfSize:16];
+                    [_tipView addSubview:_tipLab];
+                }
+                else if ([_adMsgModel.status isEqualToString:@"1"]){
                     _showView.hidden = NO;
                     _tipView.hidden = YES;
                     _relLabNum.text = [NSString stringWithFormat:@"%@ 屏",_adMsgModel.device_count];
@@ -203,18 +194,20 @@
                         _receBtn.enabled = NO;
                     }else{
                         _receBtn.enabled = YES;
-
+                        
                     }
                     if ([_adMsgModel.use_count isEqualToString:@"0"]){
                         _useBtn.enabled = NO;
                     }else{
                         _useBtn.enabled = YES;
-
+                        
                     }
+                    
+                }else{
+                    tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relAdTap)];
+                    [_adView addGestureRecognizer:tapGess];
                 }
-                
-               
-            }
+            
         }
         else if (status == -1){
             HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
@@ -225,6 +218,7 @@
         }
         else{
             NSString *mess = [result objectForKey:@"message"];
+            
             [self errorMessages:mess];
         }
     }];

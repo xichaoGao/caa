@@ -557,9 +557,9 @@
         NSMutableDictionary *dic = [resultString mj_JSONObject];
         int status = [[dic objectForKey:@"status"] intValue];;
         if (status == 1) {
-             NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
-            [use setObject:@"1" forKey:@"audit"];
-            [use synchronize];
+//             NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
+//            [use setObject:@"1" forKey:@"audit"];
+//            [use synchronize];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
             ReleaseSuccessViewController * rsVC = [[ReleaseSuccessViewController alloc]init];
             rsVC.hidesBottomBarWhenPushed = YES;

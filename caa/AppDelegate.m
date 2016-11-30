@@ -214,10 +214,10 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
         [JPUSHService handleRemoteNotification:userInfo];
          [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-        if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"ads_review_ok"]){
-            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-             [user setObject:@"1" forKey:@"audit"];
-        }
+//        if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"ads_review_ok"]){
+//            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+//             [user setObject:@"0" forKey:@"audit"];
+//        }
 //        NSString *message = [NSString stringWithFormat:@"will%@", [userInfo[@"aps"] objectForKey:@"alert"]];
 //        NSLog(@"iOS10程序在前台时收到的推送: %@", message);
 //        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
