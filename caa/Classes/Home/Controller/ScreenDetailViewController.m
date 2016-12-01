@@ -55,7 +55,7 @@
             if ( ![model.photo isEqualToString:@""]){
                 _faceImg.hidden = YES;
                 _faceLab.hidden = YES;
-                [_screenImg sd_setImageWithURL:[NSURL URLWithString:model.photo] placeholderImage:[UIImage imageNamed:@"epu_loading_pic"]];
+                [_screenImg sd_setImageWithURL:[NSURL URLWithString:model.photo] placeholderImage:[UIImage imageNamed:@"pub_loading_pic"]];
                 
             }else{
                 _faceLab.hidden = NO;
@@ -76,7 +76,7 @@
             
             dataArr  = model.playlist;
             if(dataArr.count >0){
-                _listTableView.frame = CGRectMake(-5*WidthRate, _listLab.bottom + 10, kScreenWidth -24, 150);
+                _listTableView.frame = CGRectMake(-3*WidthRate, _listLab.bottom + 10, kScreenWidth , 150);
                 _listTableView.hidden = NO;
                 [_listTableView reloadData];
             }
@@ -101,16 +101,16 @@
     _screenImg.layer.borderColor = RGB(0.81, 0.81, 0.81).CGColor;
     _screenImg.layer.borderWidth = 1;
     [self.view addSubview:_screenImg];
-    _faceImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"loading_pic"]];
-    _faceImg.frame = CGRectMake((_screenImg.width - 80*WidthRate)/2, (_screenImg.height - 80*WidthRate)/2-20*WidthRate, 80*WidthRate, 80*WidthRate);
-    [_screenImg addSubview:_faceImg];
-    
-    _faceLab = [[UILabel alloc]initWithFrame:CGRectMake((_screenImg.width - 150*WidthRate)/2, _faceImg.bottom + 5, 150*WidthRate, 30*WidthRate)];
-    _faceLab.text = @"正在努力加载中...";
-    _faceLab.textColor = RGB(0.84, 0.84, 0.84);
-    _faceLab.textAlignment = NSTextAlignmentCenter;
-    _faceLab.font = [UIFont systemFontOfSize:16];
-    [_screenImg addSubview:_faceLab];
+//    _faceImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"loading_pic"]];
+//    _faceImg.frame = CGRectMake((_screenImg.width - 80*WidthRate)/2, (_screenImg.height - 80*WidthRate)/2-20*WidthRate, 80*WidthRate, 80*WidthRate);
+//    [_screenImg addSubview:_faceImg];
+//    
+//    _faceLab = [[UILabel alloc]initWithFrame:CGRectMake((_screenImg.width - 150*WidthRate)/2, _faceImg.bottom + 5, 150*WidthRate, 30*WidthRate)];
+//    _faceLab.text = @"正在努力加载中...";
+//    _faceLab.textColor = RGB(0.84, 0.84, 0.84);
+//    _faceLab.textAlignment = NSTextAlignmentCenter;
+//    _faceLab.font = [UIFont systemFontOfSize:16];
+//    [_screenImg addSubview:_faceLab];
     
     _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, _screenImg.bottom + 5, kScreenWidth, 25*WidthRate)];
     _bgView.hidden = YES;

@@ -410,9 +410,9 @@
     [_useDirBgView addGestureRecognizer:tapGe];
     
     
-    _useDirCotentLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _useDirBgView.width, 30 )];
+    _useDirCotentLab = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, _useDirBgView.width-5, 30 )];
     _useDirCotentLab.font = [UIFont systemFontOfSize:12];
-    _useDirCotentLab.numberOfLines = 4;
+    _useDirCotentLab.numberOfLines = 0;
     _useDirCotentLab.text = [use objectForKey:@"useDirText"]?[use objectForKey:@"useDirText"]:@"";
     _useDirCotentLab.textColor = RGB(0.41, 0.41, 0.41);
     [_useDirBgView addSubview:_useDirCotentLab];

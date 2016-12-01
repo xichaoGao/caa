@@ -27,7 +27,7 @@
         _screenImg.layer.masksToBounds = YES;
         _screenImg.layer.cornerRadius = 10;
         [self addSubview:_screenImg];
-        _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(_screenImg.right + 20, _screenImg.top, 100, 15)];
+        _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(_screenImg.right + 20, _screenImg.top, 150, 15)];
         _titleLab.textColor = RGB(0.96, 0.55, 0.40);
         _titleLab.font = [UIFont systemFontOfSize:14];
         [self addSubview:_titleLab];

@@ -184,13 +184,11 @@
                     if (sender.selected == YES){
                         [_businessCircleView removeFromSuperview];
                         [_hotUrbanView removeFromSuperview];
-                        NSLog(@"&&&&&&%ld",(long)sender.tag);
                         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                         _pramerDic = [NSDictionary dictionary];
                         
                         NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
                         _pramerDic = @{@"token":[use objectForKey:@"token"],@"city":[_hotCity[i] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]};
-                        NSLog(@"%@",[_hotCity[i] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]);
                         [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetUrban RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                             hud.hidden = YES;
                             NSLog(@"loginResult==%@ ",result);
@@ -202,7 +200,6 @@
                                     [_hotUrban removeAllObjects];
                                     for (int i = 0 ; i<dataArr.count ; i++){
                                         UrbanModel * urbanModel  = [UrbanModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
-                                        NSLog(@"%@",urbanModel.district);
                                         [_hotUrban addObject:urbanModel.district];
                                         
                                     }
@@ -254,7 +251,7 @@
                         _pramerDic = [NSDictionary dictionary];
                         NSUserDefaults *use = [NSUserDefaults standardUserDefaults];
                         _pramerDic = @{@"token":[use objectForKey:@"token"],@"city": [_city stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] ,@"district":[_hotUrban[i] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]};
-                        NSLog(@"%@",_hotCity[i]);
+                     
                         [[GetDataHandle sharedGetDataHandle]analysisDataWithType:@"GET" SubUrlString:KGetArea RequestDic:_pramerDic ResponseBlock:^(id result, NSError *error) {
                             hud.hidden = YES;
                             NSLog(@"loginResult==%@",result);
@@ -263,9 +260,9 @@
                                 if([[result objectForKey:@"data"] count] > 0){
                                     NSArray * dataArr = [result objectForKey:@"data"];
                                     [_businessCircle removeAllObjects];
+                                    [_businessCireleID removeAllObjects];
                                     for (int i = 0 ; i<dataArr.count ; i++){
                                         BusinessCircleModel * businessCircleModel  = [BusinessCircleModel mj_objectWithKeyValues:[dataArr objectAtIndex:i]];
-                                        NSLog(@"%@",businessCircleModel.name);
                                         [_businessCircle addObject:businessCircleModel.name];
                                         [_businessCireleID addObject:businessCircleModel.area_id];
                                     }
