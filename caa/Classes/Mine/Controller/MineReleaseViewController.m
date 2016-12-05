@@ -334,6 +334,7 @@
     rdVC.ads_id = _model.ads_id;
     [self.navigationController pushViewController:rdVC animated:YES];
 }
+//取消发布
 -(void)cancleClick{
     HYAlertView *alert = [[HYAlertView alloc]initWithTitle:@"温馨提示" message:@"您确定要取消发布" buttonTitles:@"取消", @"确定",nil];
     [alert showWithCompletion:^(HYAlertView *alertView,NSInteger selectIndex){
@@ -352,6 +353,7 @@
                     _showView.hidden = YES;
                     
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
+                    [self.navigationController popToRootViewControllerAnimated:YES];
                 }
                 else if (status == -1){
                     HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:@"登录超时" buttonTitles:@"确定", nil];
