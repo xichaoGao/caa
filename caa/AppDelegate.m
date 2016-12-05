@@ -16,7 +16,7 @@
 #import "JPUSHService.h"
 #import <AdSupport/AdSupport.h>
 #import <AVFoundation/AVFoundation.h>
-
+#import <AudioToolbox/AudioToolbox.h>
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h> // 这里是iOS10需要用到的框架
 #endif
@@ -31,6 +31,8 @@ static BOOL const isProduction = TRUE; // 极光FALSE为开发环境
 static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
 
 #endif
+static SystemSoundID shake_sound_male_id1 = 0;
+static SystemSoundID shake_sound_male_id2 = 1;
 @interface AppDelegate ()<JPUSHRegisterDelegate>
 {
     BOOL _goBackground;
@@ -120,11 +122,25 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     if ([[UIDevice currentDevice].systemVersion floatValue] < 10.0 || application.applicationState > 0)
     {
          [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
-        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-        // 程序在前台或通过点击推送进来的会弹这个alert
-//        NSString *message = [NSString stringWithFormat:@"iOS7-8-9收到的推送%@", [userInfo[@"aps"] objectForKey:@"alert"]];
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
-//        [alert showInView:self.window completion:nil];
+        [JPUSHService resetBadge];
+        if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"get_promotion"]){
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"get_promotion" ofType:@"caf"];
+            if (path) {
+                //注册声音到系统
+                AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id1);
+                AudioServicesPlaySystemSound(shake_sound_male_id1);
+                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+            }
+        }
+        else if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"use_promotion"]) {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"use_promotion" ofType:@"caf"];
+            if (path) {
+                //注册声音到系统
+                AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id2);
+                AudioServicesPlaySystemSound(shake_sound_male_id2);
+                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+            }
+        }
     }
     completionHandler(UIBackgroundFetchResultNewData);
 }
@@ -213,11 +229,25 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     {
         [JPUSHService handleRemoteNotification:userInfo];
          [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
-        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-//        if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"ads_review_ok"]){
-//            NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
-//             [user setObject:@"0" forKey:@"audit"];
-//        }
+        [JPUSHService resetBadge];
+        if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"get_promotion"]){
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"get_promotion" ofType:@"caf"];
+            if (path) {
+                //注册声音到系统
+                AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id1);
+                AudioServicesPlaySystemSound(shake_sound_male_id1);
+                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+            }
+        }
+        else if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"use_promotion"]) {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"use_promotion" ofType:@"caf"];
+            if (path) {
+                //注册声音到系统
+                AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id2);
+                AudioServicesPlaySystemSound(shake_sound_male_id2);
+                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+            }
+        }
 //        NSString *message = [NSString stringWithFormat:@"will%@", [userInfo[@"aps"] objectForKey:@"alert"]];
 //        NSLog(@"iOS10程序在前台时收到的推送: %@", message);
 //        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
@@ -238,11 +268,25 @@ static BOOL const isProduction = FALSE; // 极光TRUE为生产环境
     {
         [JPUSHService handleRemoteNotification:userInfo];
          [[NSNotificationCenter defaultCenter]postNotificationName:@"Refresh" object:nil];
-        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-//        NSString *message = [NSString stringWithFormat:@"did%@", [userInfo[@"aps"] objectForKey:@"alert"]];
-//        NSLog(@"iOS10程序关闭后通过点击推送进入程序弹出的通知: %@", message);
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
-//        [alert showInView:self.window completion:nil];
+        [JPUSHService resetBadge];
+        if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"get_promotion"]){
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"get_promotion" ofType:@"caf"];
+            if (path) {
+                //注册声音到系统
+                AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id1);
+                AudioServicesPlaySystemSound(shake_sound_male_id1);
+                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+            }
+        }
+        else if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"use_promotion"]) {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"use_promotion" ofType:@"caf"];
+            if (path) {
+                //注册声音到系统
+                AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id2);
+                AudioServicesPlaySystemSound(shake_sound_male_id2);
+                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+            }
+        }
     }
     
     completionHandler(UNNotificationPresentationOptionAlert|UNNotificationPresentationOptionSound);  // 系统要求执行这个方法
