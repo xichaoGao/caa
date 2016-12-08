@@ -129,7 +129,6 @@ static SystemSoundID shake_sound_male_id2 = 1;
                 //注册声音到系统
                 AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id1);
                 AudioServicesPlaySystemSound(shake_sound_male_id1);
-                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
             }
         }
         else if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"use_promotion"]) {
@@ -138,7 +137,7 @@ static SystemSoundID shake_sound_male_id2 = 1;
                 //注册声音到系统
                 AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id2);
                 AudioServicesPlaySystemSound(shake_sound_male_id2);
-                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+                
             }
         }
     }
@@ -198,23 +197,6 @@ static SystemSoundID shake_sound_male_id2 = 1;
     }
     
 }
-- (UIViewController*)topViewController {
-    return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
-}
-- (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController {
-    if ([rootViewController isKindOfClass:[UITabBarController class]]) {
-        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
-        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
-    } else if ([rootViewController isKindOfClass:[UINavigationController class]]) {
-        UINavigationController* nav = (UINavigationController*)rootViewController;
-        return [self topViewControllerWithRootViewController:nav.visibleViewController];
-    } else if (rootViewController.presentedViewController) {
-        UIViewController* presentedViewController = rootViewController.presentedViewController;
-        return [self topViewControllerWithRootViewController:presentedViewController];
-    } else {
-        return rootViewController;
-    }
-}
 // ---------------------------------------------------------------------------------
 
 #pragma mark - iOS10: 收到推送消息调用(iOS10是通过Delegate实现的回调)
@@ -236,7 +218,7 @@ static SystemSoundID shake_sound_male_id2 = 1;
                 //注册声音到系统
                 AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id1);
                 AudioServicesPlaySystemSound(shake_sound_male_id1);
-                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+               
             }
         }
         else if ([[userInfo objectForKey:@"cmd"] isEqualToString:@"use_promotion"]) {
@@ -245,13 +227,10 @@ static SystemSoundID shake_sound_male_id2 = 1;
                 //注册声音到系统
                 AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id2);
                 AudioServicesPlaySystemSound(shake_sound_male_id2);
-                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+                
             }
         }
-//        NSString *message = [NSString stringWithFormat:@"will%@", [userInfo[@"aps"] objectForKey:@"alert"]];
-//        NSLog(@"iOS10程序在前台时收到的推送: %@", message);
-//        HYAlertView *alert = [[HYAlertView alloc] initWithTitle:@"温馨提示" message:message  buttonTitles:@"确定", nil];
-//        [alert showInView:self.window completion:nil];
+
     }
     
     completionHandler(UNNotificationPresentationOptionAlert|UNNotificationPresentationOptionSound);
@@ -284,7 +263,7 @@ static SystemSoundID shake_sound_male_id2 = 1;
                 //注册声音到系统
                 AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id2);
                 AudioServicesPlaySystemSound(shake_sound_male_id2);
-                //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+               
             }
         }
     }

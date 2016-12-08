@@ -102,7 +102,7 @@
             if ([dic[@"history"] isKindOfClass:[NSArray class]]){
                 NSArray *arr = dic[@"history"];
                 [_dateView removeFromSuperview];
-                [_dateArr removeAllObjects];
+               
                 if (arr.count >0){
                     for (int i = 0;i<arr.count ;i++){
                         HistoryModel * mol = [HistoryModel mj_objectWithKeyValues:arr[i]];

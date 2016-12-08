@@ -170,7 +170,9 @@
         if (status == 1) {
                 _adMsgModel = [AdMsgModel  mj_objectWithKeyValues:[result  objectForKey:@"data"]];
                 if ([_adMsgModel.status isEqualToString:@"0"]){
+                    _detailBtn.enabled = NO;
                     _showView.hidden = YES;
+                    _defView.hidden = YES;
                     [_adView removeGestureRecognizer:tapGess];
                     _tipView =  [[UIView alloc]initWithFrame:CGRectMake(20, _adView.bottom + 30 * WidthRate, kScreenWidth-40*WidthRate, 80*WidthRate)];
                     
@@ -185,7 +187,9 @@
                 }
                 else if ([_adMsgModel.status isEqualToString:@"1"]){
                     _showView.hidden = NO;
+                    _detailBtn.enabled = YES;
                     _tipView.hidden = YES;
+                    _defView.hidden = YES;
                     _relLabNum.text = [NSString stringWithFormat:@"%@ 屏",_adMsgModel.device_count];
                     _playLabNum.text = [NSString stringWithFormat:@"%@ 次",_adMsgModel.play_count];
                     _receLabNum.text = [NSString stringWithFormat:@"%@ 人",_adMsgModel.get_count];
@@ -204,8 +208,20 @@
                     }
                     
                 }else{
+                    _detailBtn.enabled = NO;
                     tapGess = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relAdTap)];
                     [_adView addGestureRecognizer:tapGess];
+                    _defView =  [[UIView alloc]initWithFrame:CGRectMake(20, _adView.bottom + 30 * WidthRate, kScreenWidth-40*WidthRate, 80*WidthRate)];
+                    
+                    [self.view addSubview:_defView];
+                    
+                    _defLab = [[UILabel alloc]initWithFrame:CGRectMake((_defView.width - 250)/2, 25*WidthRate, 250, 30*WidthRate)];
+                    _defLab.textColor = RGB(0.41, 0.41, 0.41);
+                    _defLab.textAlignment = NSTextAlignmentCenter;
+                    _defLab.text=  @"暂无广告信息";
+                    _defLab.font = [UIFont systemFontOfSize:16];
+                    [_defView addSubview:_defLab];
+                    
                 }
             
         }
