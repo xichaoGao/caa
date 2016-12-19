@@ -30,6 +30,8 @@
 @property (nonatomic, strong)NSMutableArray *seletedDays;//选择的日期
 @property (nonatomic, strong)LDCalendarView    *calendarView;//日历控件
 @property (strong,nonatomic)NSMutableArray *assetsArray;
+@property (strong,nonatomic)NSMutableArray *defAssetsArray;
+
 @property(nonatomic,strong)NSMutableArray * imgArray;
 @property(nonatomic,strong)NSMutableArray  *photoArray;
 @property(nonatomic,strong)NSMutableArray * btnImgArray;
@@ -76,6 +78,7 @@
     _btnAssetsArray= [NSMutableArray arrayWithCapacity:1];
     _photoArray = [NSMutableArray arrayWithCapacity:1];
     _assetsArray = [NSMutableArray array];
+    _defAssetsArray = [NSMutableArray arrayWithCapacity:1];
     _imgArray = [NSMutableArray array];
     //    vouchersArr = [NSArray arrayWithObjects:@"红包代金券",@"实物券", nil];
     //    useTypeArr = [NSArray arrayWithObjects:@"立即使用",@"隔日使用", nil];
@@ -880,6 +883,7 @@
     }
     else{
     self.assetsArray=[assets mutableCopy];
+        _defAssetsArray = [assets mutableCopy];
     [_imgArray removeAllObjects];
         [imagePicker dismissViewControllerAnimated:YES completion:^{
         if (_assetsArray.count == 0){
@@ -939,7 +943,7 @@
          }
          else{
         if (_assetsArray.count >0&&_bgView.subviews.count>2){
-            
+            _assetsArray = _defAssetsArray;
         }
         else if (_assetsArray.count>0&&_bgView.subviews.count==2){
             [_assetsArray removeAllObjects];
