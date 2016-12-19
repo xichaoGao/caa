@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>您的位置信息将用来获取您位置附近的体验店，为您提供更好的服务</string>
+	<key>CFBundleDisplayName</key>
+	<string>乐享传媒</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleExecutable</key>
@@ -38,11 +38,14 @@
 		<key>NSIncludesSubdomains</key>
 		<true/>
 	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>您的位置信息将用来获取您位置附近的体验店，为您提供更好的服务</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>亲啊，打开相册可以吗</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

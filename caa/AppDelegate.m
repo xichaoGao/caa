@@ -60,7 +60,6 @@ static SystemSoundID shake_sound_male_id2 = 1;
     
     [self.window makeKeyAndVisible];
     [user setObject:@[] forKey:@"city"];
-    [user setObject:@"0" forKey:@"audit"];
     [user synchronize];
     /*
      *  键盘弹出事件
@@ -319,6 +318,8 @@ static SystemSoundID shake_sound_male_id2 = 1;
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     [application setApplicationIconBadgeNumber:0];
     [application cancelAllLocalNotifications];
+    [JPUSHService resetBadge];
+
 }
 
 

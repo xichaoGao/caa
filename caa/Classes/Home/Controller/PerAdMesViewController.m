@@ -925,7 +925,36 @@
 - (void)imagePickerControllerDidCancel:(JKImagePickerController *)imagePicker
 {
     [imagePicker dismissViewControllerAnimated:YES completion:^{
-        
+         if (_btnSelectIndex == 1){
+             if (_btnAssetsArray.count>0){
+                 UIButton * btn = [self.view viewWithTag:60000000];
+                 
+                 if ([btn.currentImage isEqual: [UIImage imageNamed:@"home_addphotos"] ]){
+                 [_btnAssetsArray removeAllObjects];
+                 }
+             }else{
+                 UIButton * btn = [self.view viewWithTag:60000000];
+                 [btn setImage:[UIImage imageNamed:@"home_addphotos"] forState:UIControlStateNormal];
+             }
+         }
+         else{
+        if (_assetsArray.count >0&&_bgView.subviews.count>2){
+            
+        }
+        else if (_assetsArray.count>0&&_bgView.subviews.count==2){
+            [_assetsArray removeAllObjects];
+ 
+        }
+        else{
+        [_bgView removeAllSubviews];
+        [_bgView addSubview:_addBtn];
+        [_bgView addSubview:_defaultLab];
+        _defaultLab.hidden = NO;
+        NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+        [user setObject:@"" forKey:@"photoArray"];
+        [user synchronize];
+        }
+         }
     }];
 }
 //这个方法是使拍照的时候控制照片的自动旋转

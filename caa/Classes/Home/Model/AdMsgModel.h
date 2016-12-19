@@ -14,5 +14,5 @@
 @property(nonatomic,strong)NSString * play_count;
 @property(nonatomic,strong)NSString * get_count;
 @property(nonatomic,strong)NSString * use_count;
-@property(nonatomic,strong)NSString  * status;
+@property(nonatomic,strong)NSString * status;
 @end
